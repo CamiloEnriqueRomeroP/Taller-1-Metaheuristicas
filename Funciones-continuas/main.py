@@ -18,7 +18,7 @@ repetitions = 31
 
 # Afinamiento de parametros
 bw = 0.1
-max_local = 100
+max_local = 99
 
 functions = [sphere(), step(), schwefel(), ackley(), griewank(), rastrigin()]
 #functions = [sphere(), step(), ackley(), griewank(), rastrigin()]

@@ -13,7 +13,7 @@ from algorithms.HCRR import HCRR
 from algorithms.SA import SA
 
 d = 50
-max_efos = 500
+max_efos = 50000
 repetitions = 31
 
 # Afinamiento de parametros
@@ -126,7 +126,7 @@ for f in functions:
   #                          'Execution Time':str(alg_time[3])}, index=[0])
   # df4 = pd.concat([df4.loc[:], new_row4]).reset_index(drop=True)
 
-df.to_csv("Funciones-continuas/result/HC.csv", index=False)
-df2.to_csv("Funciones-continuas/result/HCRR.csv", index=False)
-df3.to_csv("Funciones-continuas/result/SA.csv", index=False)
+df.to_csv("Funciones-continuas/result/HC"+ "-bw-" + str(bw) + "-max_local-" + str(max_local) + ".csv", index=False)
+df2.to_csv("Funciones-continuas/result/HCRR"+ "-bw-" + str(bw) + "-max_local-" + str(max_local) + ".csv", index=False)
+df3.to_csv("Funciones-continuas/result/SA"+ "-bw-" + str(bw) + "-max_local-" + str(max_local) + ".csv", index=False)
 # df4.to_csv("Funciones-continuas/Compilado.csv", index=False)

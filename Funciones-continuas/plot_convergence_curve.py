@@ -12,8 +12,8 @@ class plot_convergence_curve:
         plt.ylabel("Fitness")
         plt.plot(efos, fitness_history, label=str(names_alg))
         plt.legend()
-        #name = "Convergence curve for " + str(num_f) + "-bw-" + str(bw) + "-max_local-" + str(max_local) + ".png"
-        #plt.savefig(name)
+        name = "Funciones-continuas/result/Convergence curve for " + str(num_f) + "-bw-" + str(bw) + "-max_local-" + str(max_local) + ".png"
+        plt.savefig(name)
         plt.figure()
         plt.show()
         plt.clf()
@@ -28,7 +28,6 @@ class plot_convergence_curve:
         for a in range(algorithms):
             plt.plot(efos, fitness_history[a], label=str(names_alg[a]))            
         plt.legend()
-        #name = "D:/Metaheuristicas/Taller 1/Funciones-continuas/result/Convergence curve for " + str(num_f) + "-bw-" + str(bw) + "-max_local-" + str(max_local) + ".png"
         name = "Funciones-continuas/result/Convergence curve for " + str(num_f) + "-bw-" + str(bw) + "-max_local-" + str(max_local) + ".png"
         print(name)
         plt.savefig(name)    

@@ -126,7 +126,12 @@ for f in functions:
   #                          'Execution Time':str(alg_time[3])}, index=[0])
   # df4 = pd.concat([df4.loc[:], new_row4]).reset_index(drop=True)
 
-df.to_csv("D:/Metaheuristicas/Taller 1/Funciones-continuas/result/HC.csv", index=False)
-df2.to_csv("D:/Metaheuristicas/Taller 1/Funciones-continuas/result/HCRR.csv", index=False)
-df3.to_csv("D:/Metaheuristicas/Taller 1/Funciones-continuas/result/SA.csv", index=False)
+#df.to_csv("D:/Metaheuristicas/Taller 1/Funciones-continuas/result/HC.csv", index=False)
+#df2.to_csv("D:/Metaheuristicas/Taller 1/Funciones-continuas/result/HCRR.csv", index=False)
+#df3.to_csv("D:/Metaheuristicas/Taller 1/Funciones-continuas/result/SA.csv", index=False)
 # df4.to_csv("D:/Metaheuristicas/Taller 1/Funciones-continuas/Compilado.csv", index=False)
+
+df.to_csv("Funciones-continuas/result/HC.csv", index=False)
+df2.to_csv("Funciones-continuas/result/HCRR.csv", index=False)
+df3.to_csv("Funciones-continuas/result/SA.csv", index=False)
+# df4.to_csv("Funciones-continuas/Compilado.csv", index=False)

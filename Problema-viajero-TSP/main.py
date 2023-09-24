@@ -10,11 +10,11 @@ from plot_convergence_curve import plot_convergence_curve
 # myPath = "/problems/"
 myPath = "Problema-viajero-TSP/problems/"
 
-max_efos = 500
+max_efos = 50000
 repetitions = 31
 
 # Afinamiento de parametros
-max_local = 10
+max_local = 100
 
 myP1 = tsp(myPath + "01-easy5.txt")
 myP2 = tsp(myPath + "02-ulysses16.txt")
@@ -56,7 +56,7 @@ df4 = pd.DataFrame({'Problem': pd.Series(dtype='str'),
 num_p = 0
 
 for p in problems:
-
+    start_timer_p = time.time()
     names_alg = []
     avg_curve_alg = []
     best_avg_fitness_alg = []
@@ -92,12 +92,15 @@ for p in problems:
         worst_fitness_along_seeds.append(max(best_fitnes))
         alg_avg_time.append(avg_time)
 
-    name_problem = ["f1", "f2", "f3", "f4", "f5", "f6", "f7", "f8", "f9",
-                    "f10", "Knapsack1", "Knapsack2", "Knapsack3", "Knapsack4", "Knapsack5"]
+    name_problem = ["01-easy5", "02-ulysses16", "03-fri26", "04-dantzig42", "05-att48"]
     plot_convergence_curve.plot_convergence_curve_comparison(
         avg_curve_alg, p, names_alg, name_problem[num_p], max_local)
     num_p = num_p + 1
-
+    
+    end_timer_p = time.time()
+    time_p = end_timer_p - start_timer_p
+    print("Tiempo de ejecucion problema: " + str(time_p))
+    
     new_row = pd.DataFrame({'Problem': str(p),
                             'Average Fitness': str(best_avg_fitness_alg[0]),
                             'Standard Deviation': str(best_std_fitness_alg[0]),

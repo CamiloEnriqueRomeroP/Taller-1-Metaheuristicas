@@ -12,6 +12,8 @@ class HCRR:
         np.random.seed (seed)
         best_fitness_history = np.zeros(self.max_efos, float)
         efos = 0
+        optimal = self.problem.bestFitness
+        stop_optimal = optimal + 0.00001
         while efos < self.max_efos:
           S = solution(problem) # S is a new Solution
           S.Initialization() # Random initialization and calculating fitness
@@ -30,6 +32,10 @@ class HCRR:
                   self.best.from_solution(S) # self.best is a full copy of S
               best_fitness_history[efos] = self.best.fitness
               efos+=1
+              if S.fitness <= stop_optimal:
+                best_fitness_history[efos:self.max_efos] = self.best.fitness
+                efos = self.max_efos
+                break
               if efos >= self.max_efos:
                 break
         return best_fitness_history

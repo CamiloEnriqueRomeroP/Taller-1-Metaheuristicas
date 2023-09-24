@@ -11,11 +11,11 @@ import math
 myPath = "Problema-de-la-mochila-binaria/problems/"
 # myPath = "content/sample_data/problems/"
 
-max_efos = 5000
+max_efos = 50000
 repetitions = 31
 
 # Afinamiento de parametros
-max_local = 10
+max_local = 100
 
 myP1 = knapsack(myPath + "f1.txt")
 myP2 = knapsack(myPath + "f2.txt")
@@ -33,8 +33,8 @@ myP13 = knapsack(myPath + "Knapsack3.txt")
 myP14 = knapsack(myPath + "Knapsack4.txt")
 myP15 = knapsack(myPath + "Knapsack5.txt")
 # problems = [myP1, myP2, myP3, myP4, myP5, myP6, myP7,myP8, myP9, myP10, myP11, myP12, myP13, myP14, myP15]
-problems = [myP1, myP2, myP3, myP4, myP5, myP6, myP7,
-            myP8, myP9, myP10, myP11, myP12, myP13, myP14, myP15]
+#problems = [myP1, myP2, myP3, myP4, myP5, myP6, myP7, myP8, myP9, myP10, myP11, myP12, myP13, myP14, myP15]
+problems = [myP2]
 hc = HC(max_efos=max_efos)
 hcrr = HCRR(max_efos=max_efos, max_local=max_local)
 sa = SA(max_efos=max_efos)
@@ -125,7 +125,7 @@ for p in problems:
 
     end_timer_p = time.time()
     time_p = end_timer_p - start_timer_p
-    #print("Tiempo de ejecucion problema: " + str(time_p))
+    print("Tiempo de ejecucion problema: " + str(time_p))
 
     new_row = pd.DataFrame({'Problem': str(p),
                             'Average Fitness': str(best_avg_fitness_alg[0]),

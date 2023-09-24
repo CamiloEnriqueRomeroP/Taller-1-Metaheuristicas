@@ -17,7 +17,7 @@ class HC:
 
         S = self.best  # S is a pointer to self.best, not a full copy
         optimal = S.problem.OptimalKnown
-        stop_optimal = optimal - optimal*0.00005
+        stop_optimal = optimal - 0.00001
         for iteration in range(1, self.max_efos):
             R = solution(S.problem)
             R.from_solution(S)  # R is a full copy of S

@@ -1,6 +1,7 @@
 import numpy as np
 import knapsack
 
+
 class solution:
     def __init__(self, p: knapsack):
         self.problem = p
@@ -16,10 +17,34 @@ class solution:
 
     def evaluate(self):
         self.fitness, self.weight = self.problem.evaluate(self.cells)
-        
+
+    # Original code
+    # def Initialization(self):
+    #     positions = np.random.choice(self.problem.size, self.problem.size, replace=False)
+    #     self.cells = np.zeros(self.problem.size, int)
+    #     self.add_items_while_keep_capacity(positions, 0)
+    #     self.evaluate()
+
+    # def add_items_while_keep_capacity(self, positions, weight):
+    #     self.weight = weight
+    #     for p in positions:
+    #         if self.weight + self.problem.weights[p] < self.problem.capacity:
+    #             self.cells[p] = 1
+    #             self.weight += self.problem.weights[p]
+
+    # def tweak(self):
+    #     selectedPositions = np.where(self.cells == 1)[0]
+    #     unselectedPositions = np.where(self.cells == 0)[0]
+    #     x = np.random.randint(len(selectedPositions), size=1)
+    #     elementToRemove = selectedPositions[x[0]]
+    #     self.cells[elementToRemove] = 0
+    #     self.weight = self.weight - self.problem.weights[elementToRemove]
+    #     self.fitness = self.fitness - self.problem.profits[elementToRemove]
+    #     self.complete(unselectedPositions, False)
 
     def Initialization(self):
-        positions = np.random.choice(self.problem.size, self.problem.size, replace=False)
+        positions = np.random.choice(
+            self.problem.size, self.problem.size, replace=False)
         self.cells = np.zeros(self.problem.size, int)
         self.add_items_while_keep_capacity(positions, 0)
         self.evaluate()
@@ -47,12 +72,15 @@ class solution:
 
         empty = self.problem.capacity - self.weight
         while empty > 0 and len(unselectedPositions) > 0:
-            fitUnselected = np.array([unselectedPositions, self.problem.weights[unselectedPositions]])
-            fitUnselected = fitUnselected[:, np.where(fitUnselected[1, :] < empty)][0]
+            fitUnselected = np.array(
+                [unselectedPositions, self.problem.weights[unselectedPositions]])
+            fitUnselected = fitUnselected[:, np.where(
+                fitUnselected[1, :] < empty)][0]
             unselectedPositions = np.copy(fitUnselected[0])
             if len(fitUnselected[0]) == 0:
                 break
-            elementToAdd = int(fitUnselected[0][np.random.randint(len(fitUnselected[0]))])
+            elementToAdd = int(
+                fitUnselected[0][np.random.randint(len(fitUnselected[0]))])
             self.cells[elementToAdd] = 1
             self.weight = self.weight + self.problem.weights[elementToAdd]
             self.fitness = self.fitness + self.problem.profits[elementToAdd]
@@ -64,4 +92,3 @@ class solution:
         result = "Cells:" + str(self.cells) + \
                  "-fitness:" + str(self.fitness)
         return result
-    

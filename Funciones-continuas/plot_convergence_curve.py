@@ -14,7 +14,7 @@ class plot_convergence_curve:
         plt.legend()
         name = "Funciones-continuas/result/Convergence curve for " + str(num_f) + "-bw-" + str(bw) + "-max_local-" + str(max_local) + ".png"
         plt.savefig(name)
-        plt.show()
+        #plt.show()
         plt.clf()
 
     # Plot convergence curve comparison for two or more algorithms
@@ -30,7 +30,7 @@ class plot_convergence_curve:
         name = "Funciones-continuas/result/Convergence curve for " + str(num_f) + "-bw-" + str(bw) + "-max_local-" + str(max_local) + ".png"
         print(name)
         plt.savefig(name)    
-        plt.show()
+        #plt.show()
         plt.clf()        
 
     def print_alorithms_with_avg_fitness(alg, avg_fitness):

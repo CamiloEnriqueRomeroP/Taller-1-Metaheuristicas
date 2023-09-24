@@ -13,15 +13,15 @@ from algorithms.HCRR import HCRR
 from algorithms.SA import SA
 
 d = 50
-max_efos = 500
+max_efos = 50000
 repetitions = 31
 
 # Afinamiento de parametros
 bw = 0.1
-max_local = 10
+max_local = 100
 
 functions = [sphere(), step(), schwefel(), ackley(), griewank(), rastrigin()]
-#functions = [sphere(), step(), ackley(), griewank(), rastrigin()]
+functions = [sphere()]
 hc = HC(max_efos = max_efos, bandwidth = bw)
 hcrr = HCRR(max_efos= max_efos, max_local = max_local, bandwidth = bw)
 sa = SA(max_efos = max_efos, bandwidth = bw)
@@ -55,7 +55,7 @@ df4 = pd.DataFrame({'Problem': pd.Series(dtype='str'),
 num_f = 0
 
 for f in functions:
-
+  start_timer_p = time.time()
   names_alg = []
   avg_curve_alg = []
   best_avg_fitness_alg = []
@@ -98,6 +98,10 @@ for f in functions:
   name_functions=["Sphere","Step","Schwefel","Ackley","Griewank","Rastrigin"]  
   plot_convergence_curve.plot_convergence_curve_comparison(avg_curve_alg, f, names_alg, name_functions[num_f], bw, max_local)
   num_f = num_f + 1 
+  
+  end_timer_p = time.time()
+  time_p = end_timer_p - start_timer_p
+  print("Tiempo de ejecucion problema: " + str(time_p))
   
   new_row = pd.DataFrame({'Problem': str(f),
                            'Average Fitness':str(best_avg_fitness_alg[0]),

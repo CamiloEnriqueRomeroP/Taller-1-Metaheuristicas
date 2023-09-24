@@ -12,13 +12,14 @@ class SA:
         self.problem = problem
         np.random.seed (seed)
         best_fitness_history = np.zeros(self.max_efos, float)
-
         S = solution(self.problem)
         S.Initialization()
         best_fitness_history[0] = S.fitness
         self.best = solution(self.problem)
         self.best.from_solution(S) # self.best is a full copy of S
         t= to
+        optimal = S.problem.bestFitness
+        stop_optimal = optimal + 0.00001
         for iteration in range(1, self.max_efos):
             R = solution(S.problem)
             R.from_solution(S) # R is a full copy of S
@@ -30,7 +31,11 @@ class SA:
                 S.from_solution(R)
             if S.fitness < self.best.fitness: # Minimizing
                 self.best.from_solution(S)
-            best_fitness_history[iteration] = self.best.fitness
+            best_fitness_history[iteration] = self.best.fitness              
+            if S.fitness <= stop_optimal:
+                best_fitness_history[iteration:self.max_efos] = self.best.fitness
+                iteration = self.max_efos
+                break
         return best_fitness_history
 
     def __str__(self):

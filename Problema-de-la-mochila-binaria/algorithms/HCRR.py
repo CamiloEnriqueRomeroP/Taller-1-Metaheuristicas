@@ -13,7 +13,7 @@ class HCRR:
         best_fitness_history = np.zeros(self.max_efos, float)
         efos = 0
         optimal = self.problem.OptimalKnown
-        stop_optimal = optimal - optimal*0.00005
+        stop_optimal = optimal - optimal*0.00001
         while efos < self.max_efos:
 
             S = solution(problem)  # S is a new Solution

@@ -12,7 +12,7 @@ class plot_convergence_curve:
         plt.legend()
         name = "Problema-viajero-TSP/result/Convergence curve for " + name_problem + "-max_local-" + str(max_local) + ".png"
         plt.savefig(name)
-        plt.show()
+        #plt.show()
         plt.clf()
 
     # Plot convergence curve comparison for two or more algorithms
@@ -27,7 +27,7 @@ class plot_convergence_curve:
         plt.legend()
         name = "Problema-viajero-TSP/result/Convergence curve for " + name_problem + "-max_local-" + str(max_local) + ".png"
         plt.savefig(name)
-        plt.show()
+        #plt.show()
         plt.clf()
 
     def print_alorithms_with_avg_fitness(alg, avg_fitness):

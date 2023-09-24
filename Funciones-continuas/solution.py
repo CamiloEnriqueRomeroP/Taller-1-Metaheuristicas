@@ -1,5 +1,6 @@
 import numpy as np
 
+
 class solution:
 
     def __init__(self, d: int, f):
@@ -14,16 +15,35 @@ class solution:
         self.fitness = origin.fitness
         self.function = origin.function
 
+    # Original code
+    # def Initialization(self):
+    #     self.cells = np.random.uniform(
+    #         low=self.function.lower_bound, high=self.function.upper_bound, size=(self.size,))
+    #     self.fitness = self.function.evaluate(self.cells)
+
+    # def tweak(self, bandwidth: float):
+    #     bandwidths = np.random.uniform(
+    #         low=-bandwidth, high=bandwidth, size=(self.size,))
+    #     self.cells = self.cells + bandwidths
+    #     self.cells[self.cells <
+    #                self.function.lower_bound] = self.function.lower_bound
+    #     self.cells[self.cells >
+    #                self.function.upper_bound] = self.function.upper_bound
+    #     self.fitness = self.function.evaluate(self.cells)
+
     def Initialization(self):
-        self.cells = np.random.uniform(low=self.function.lower_bound, high=self.function.upper_bound,
-                                       size=(self.size,))
+        self.cells = np.random.uniform(
+            low=self.function.lower_bound, high=self.function.upper_bound, size=(self.size,))
         self.fitness = self.function.evaluate(self.cells)
 
     def tweak(self, bandwidth: float):
-        bandwidths = np.random.uniform(low=-bandwidth, high=bandwidth, size=(self.size,))
+        bandwidths = np.random.uniform(
+            low=-bandwidth, high=bandwidth, size=(self.size,))
         self.cells = self.cells + bandwidths
-        self.cells[self.cells < self.function.lower_bound] = self.function.lower_bound
-        self.cells[self.cells > self.function.upper_bound] = self.function.upper_bound
+        self.cells[self.cells <
+                   self.function.lower_bound] = self.function.lower_bound
+        self.cells[self.cells >
+                   self.function.upper_bound] = self.function.upper_bound
         self.fitness = self.function.evaluate(self.cells)
 
     def __str__(self):

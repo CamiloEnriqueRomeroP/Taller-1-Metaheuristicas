@@ -13,7 +13,7 @@ class SA:
         np.random.seed(seed)
         best_fitness_history = np.zeros(self.max_efos, float)
         optimal = self.problem.OptimalKnown
-        stop_optimal = optimal - optimal*0.00005
+        stop_optimal = optimal - optimal*0.00001
         S = solution(self.problem)
         S.Initialization()
         best_fitness_history[0] = S.fitness

@@ -5,17 +5,20 @@ import numpy as np
 class plot_convergence_curve:
         
     # Plot convergence curve
-    def plot_convergence_curve(fitness_history, p, alg):
+    def plot_convergence_curve(fitness_history, p, alg, name_problem, max_local):
         efos = np.arange(len(fitness_history))
         plt.title("Convergence curve for " + str(p))
         plt.xlabel("EFOs")
         plt.ylabel("Fitness")
         plt.plot(efos, fitness_history, label=str(alg))
         plt.legend()
+        name = "Problema-de-la-mochila-binaria/result/Convergence curve for " + name_problem + "-max_local-" + str(max_local) + ".png"
+        plt.savefig(name)
         plt.show()
+        plt.clf()
 
     # Plot convergence curve comparison for two or more algorithms
-    def plot_convergence_curve_comparison(fitness_history, p, alg):
+    def plot_convergence_curve_comparison(fitness_history, p, alg, name_problem, max_local):
         efos = np.arange(len(fitness_history[0]))
         plt.title("Convergence curve for " + str(p))
         plt.xlabel("EFOs")
@@ -24,7 +27,10 @@ class plot_convergence_curve:
         for a in range(algorithms):
             plt.plot(efos, fitness_history[a], label=str(alg[a]))
         plt.legend()
+        name = "Problema-de-la-mochila-binaria/result/Convergence curve for " + name_problem + "-max_local-" + str(max_local) + ".png"
+        plt.savefig(name)
         plt.show()
+        
 
     def print_alorithms_with_avg_fitness(alg, avg_fitness):
         rows = len(alg)

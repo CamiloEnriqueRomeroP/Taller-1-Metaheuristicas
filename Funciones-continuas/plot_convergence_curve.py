@@ -14,7 +14,6 @@ class plot_convergence_curve:
         plt.legend()
         name = "Funciones-continuas/result/Convergence curve for " + str(num_f) + "-bw-" + str(bw) + "-max_local-" + str(max_local) + ".png"
         plt.savefig(name)
-        plt.figure()
         plt.show()
         plt.clf()
 

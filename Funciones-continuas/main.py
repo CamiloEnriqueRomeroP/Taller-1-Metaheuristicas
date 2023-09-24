@@ -13,12 +13,12 @@ from algorithms.HCRR import HCRR
 from algorithms.SA import SA
 
 d = 50
-max_efos = 50000
+max_efos = 500
 repetitions = 31
 
 # Afinamiento de parametros
 bw = 0.1
-max_local = 99
+max_local = 10
 
 functions = [sphere(), step(), schwefel(), ackley(), griewank(), rastrigin()]
 #functions = [sphere(), step(), ackley(), griewank(), rastrigin()]
@@ -62,12 +62,14 @@ for f in functions:
   best_std_fitness_alg = []
   best_fitness_along_seeds = []
   worst_fitness_along_seeds = []
-  alg_time = []
+  #alg_time = []
+  alg_avg_time = []
 
   for alg in algorithms:
     avg_curve = np.zeros(max_efos, float)
     best_fitnes = np.zeros(repetitions, float)    
-    time_by_repetition = 0    
+    #time_by_repetition = 0       
+    time_by_repetition = np.zeros(repetitions, float) 
 
     for s in range(0, repetitions):
       start_timer = time.time()
@@ -75,12 +77,14 @@ for f in functions:
       end_timer = time.time()
       time_spend = end_timer - start_timer
       avg_curve = avg_curve + curve_data
-      time_by_repetition = time_by_repetition + time_spend
+      time_by_repetition[s] = time_spend
+      #time_by_repetition = time_by_repetition + time_spend
       best_fitnes[s] = alg.best.fitness
 
     avg_curve = avg_curve/ repetitions
     avg_best_fitnes = np.average(best_fitnes)
     std_best_fitnes = np.std(best_fitnes)
+    avg_time = np.average(time_by_repetition)
 
     names_alg.append(str(alg))
     avg_curve_alg.append(avg_curve)
@@ -88,7 +92,8 @@ for f in functions:
     best_std_fitness_alg.append(std_best_fitnes)
     best_fitness_along_seeds.append(min(best_fitnes))
     worst_fitness_along_seeds.append(max(best_fitnes))
-    alg_time.append(time_by_repetition)
+    #alg_time.append(time_by_repetition)
+    alg_avg_time.append(avg_time)
   
   name_functions=["Sphere","Step","Schwefel","Ackley","Griewank","Rastrigin"]  
   plot_convergence_curve.plot_convergence_curve_comparison(avg_curve_alg, f, names_alg, name_functions[num_f], bw, max_local)
@@ -99,7 +104,7 @@ for f in functions:
                            'Standard Deviation':str(best_std_fitness_alg[0]),
                            'Best Fitness':str(best_fitness_along_seeds[0]),
                            'Worst Fitness':str(worst_fitness_along_seeds[0]),
-                           'Execution Time':str(alg_time[0])}, index=[0])
+                           'Execution Time':str(alg_avg_time[0])}, index=[0])
   df = pd.concat([df.loc[:], new_row]).reset_index(drop=True)
 
   new_row2 = pd.DataFrame({'Problem': str(f),
@@ -107,7 +112,7 @@ for f in functions:
                            'Standard Deviation':str(best_std_fitness_alg[1]),
                            'Best Fitness':str(best_fitness_along_seeds[1]),
                            'Worst Fitness':str(worst_fitness_along_seeds[1]),
-                           'Execution Time':str(alg_time[1])}, index=[0])
+                           'Execution Time':str(alg_avg_time[1])}, index=[0])
   df2 = pd.concat([df2.loc[:], new_row2]).reset_index(drop=True)
 
   new_row3 = pd.DataFrame({'Problem': str(f),
@@ -115,7 +120,7 @@ for f in functions:
                            'Standard Deviation':str(best_std_fitness_alg[2]),
                            'Best Fitness':str(best_fitness_along_seeds[2]),
                            'Worst Fitness':str(worst_fitness_along_seeds[2]),
-                           'Execution Time':str(alg_time[2])}, index=[0])
+                           'Execution Time':str(alg_avg_time[2])}, index=[0])
   df3 = pd.concat([df3.loc[:], new_row3]).reset_index(drop=True)
 
   # new_row4 = pd.DataFrame({'Problem': str(f),

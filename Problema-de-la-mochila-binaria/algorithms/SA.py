@@ -10,18 +10,19 @@ class SA:
     def evolve(self, seed: int, problem):
         to = 100
         self.problem = problem
-        np.random.seed (seed)
+        np.random.seed(seed)
         best_fitness_history = np.zeros(self.max_efos, float)
-
+        optimal = self.problem.OptimalKnown
+        stop_optimal = optimal - optimal*0.00005
         S = solution(self.problem)
         S.Initialization()
         best_fitness_history[0] = S.fitness
         self.best = solution(self.problem)
-        self.best.from_solution(S) # self.best is a full copy of S
-        t= to
+        self.best.from_solution(S)  # self.best is a full copy of S
+        t = to
         for iteration in range(1, self.max_efos):
             R = solution(S.problem)
-            R.from_solution(S) # R is a full copy of S
+            R.from_solution(S)  # R is a full copy of S
             R.tweak()
             t = t - to/(self.max_efos + 1)
             ale = np.random.uniform()
@@ -31,6 +32,10 @@ class SA:
             if S.fitness > self.best.fitness:
                 self.best.from_solution(S)
             best_fitness_history[iteration] = self.best.fitness
+            if S.fitness >= stop_optimal:
+                best_fitness_history[iteration:self.max_efos] = self.best.fitness
+                iteration = self.max_efos
+                break
         return best_fitness_history
 
     def __str__(self):

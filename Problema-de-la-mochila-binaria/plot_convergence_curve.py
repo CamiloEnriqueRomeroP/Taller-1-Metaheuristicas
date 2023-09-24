@@ -29,8 +29,8 @@ class plot_convergence_curve:
         plt.legend()
         name = "Problema-de-la-mochila-binaria/result/Convergence curve for " + name_problem + "-max_local-" + str(max_local) + ".png"
         plt.savefig(name)
-        plt.show()
-        
+        #plt.show()        
+        plt.clf()        
 
     def print_alorithms_with_avg_fitness(alg, avg_fitness):
         rows = len(alg)

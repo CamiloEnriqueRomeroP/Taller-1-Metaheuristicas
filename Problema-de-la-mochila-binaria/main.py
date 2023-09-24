@@ -6,11 +6,12 @@ from algorithms.HC import HC
 from algorithms.HCRR import HCRR
 from algorithms.SA import SA
 from plot_convergence_curve import plot_convergence_curve
+import math
 
 myPath = "Problema-de-la-mochila-binaria/problems/"
 # myPath = "content/sample_data/problems/"
 
-max_efos = 500
+max_efos = 5000
 repetitions = 31
 
 # Afinamiento de parametros
@@ -31,9 +32,9 @@ myP12 = knapsack(myPath + "Knapsack2.txt")
 myP13 = knapsack(myPath + "Knapsack3.txt")
 myP14 = knapsack(myPath + "Knapsack4.txt")
 myP15 = knapsack(myPath + "Knapsack5.txt")
+# problems = [myP1, myP2, myP3, myP4, myP5, myP6, myP7,myP8, myP9, myP10, myP11, myP12, myP13, myP14, myP15]
 problems = [myP1, myP2, myP3, myP4, myP5, myP6, myP7,
             myP8, myP9, myP10, myP11, myP12, myP13, myP14, myP15]
-# problems = [myP1]
 hc = HC(max_efos=max_efos)
 hcrr = HCRR(max_efos=max_efos, max_local=max_local)
 sa = SA(max_efos=max_efos)
@@ -44,30 +45,38 @@ df = pd.DataFrame({'Problem': pd.Series(dtype='str'),
                    'Standard Deviation': pd.Series(dtype='float'),
                    'Best Fitness': pd.Series(dtype='float'),
                    'Worst Fitness': pd.Series(dtype='float'),
-                   'Execution Time': pd.Series(dtype='float')})
+                   'Average Execution Time': pd.Series(dtype='float')
+                   #,"Total Execution Time": pd.Series(dtype='float')
+                   })
 df2 = pd.DataFrame({'Problem': pd.Series(dtype='str'),
                    'Average Fitness': pd.Series(dtype='float'),
-                    'Standard Deviation': pd.Series(dtype='float'),
-                    'Best Fitness': pd.Series(dtype='float'),
-                    'Worst Fitness': pd.Series(dtype='float'),
-                    'Execution Time': pd.Series(dtype='float')})
+                   'Standard Deviation': pd.Series(dtype='float'),
+                   'Best Fitness': pd.Series(dtype='float'),
+                   'Worst Fitness': pd.Series(dtype='float'),
+                   'Average Execution Time': pd.Series(dtype='float')
+                   #,"Total Execution Time": pd.Series(dtype='float')
+                   })
 df3 = pd.DataFrame({'Problem': pd.Series(dtype='str'),
                    'Average Fitness': pd.Series(dtype='float'),
-                    'Standard Deviation': pd.Series(dtype='float'),
-                    'Best Fitness': pd.Series(dtype='float'),
-                    'Worst Fitness': pd.Series(dtype='float'),
-                    'Execution Time': pd.Series(dtype='float')})
+                   'Standard Deviation': pd.Series(dtype='float'),
+                   'Best Fitness': pd.Series(dtype='float'),
+                   'Worst Fitness': pd.Series(dtype='float'),
+                   'Average Execution Time': pd.Series(dtype='float')
+                   #,"Total Execution Time": pd.Series(dtype='float')
+                   })
 df4 = pd.DataFrame({'Problem': pd.Series(dtype='str'),
                    'Average Fitness': pd.Series(dtype='float'),
-                    'Standard Deviation': pd.Series(dtype='float'),
-                    'Best Fitness': pd.Series(dtype='float'),
-                    'Worst Fitness': pd.Series(dtype='float'),
-                    'Execution Time': pd.Series(dtype='float')})
+                   'Standard Deviation': pd.Series(dtype='float'),
+                   'Best Fitness': pd.Series(dtype='float'),
+                   'Worst Fitness': pd.Series(dtype='float'),
+                   'Average Execution Time': pd.Series(dtype='float')
+                   #,"Total Execution Time": pd.Series(dtype='float')
+                   })
 
 num_p = 0
 
 for p in problems:
-
+    start_timer_p = time.time()
     names_alg = []
     avg_curve_alg = []
     best_avg_fitness_alg = []
@@ -75,6 +84,10 @@ for p in problems:
     best_fitness_along_seeds = []
     worst_fitness_along_seeds = []
     alg_avg_time = []
+    total_time = []
+    iter_stop = 0
+    copy_iteration = 0
+    detect_iter_stop = False
 
     for alg in algorithms:
         avg_curve = np.zeros(max_efos, float)
@@ -99,22 +112,29 @@ for p in problems:
         avg_curve_alg.append(avg_curve)
         best_avg_fitness_alg.append(avg_best_fitnes)
         best_std_fitness_alg.append(std_best_fitnes)
-        best_fitness_along_seeds.append(min(best_fitnes))
-        worst_fitness_along_seeds.append(max(best_fitnes))
+        best_fitness_along_seeds.append(max(best_fitnes))
+        worst_fitness_along_seeds.append(min(best_fitnes))
         alg_avg_time.append(avg_time)
-
+        total_time.append(math.fsum(time_by_repetition))
+        
     name_problem = ["f1", "f2", "f3", "f4", "f5", "f6", "f7", "f8", "f9",
                     "f10", "Knapsack1", "Knapsack2", "Knapsack3", "Knapsack4", "Knapsack5"]
     plot_convergence_curve.plot_convergence_curve_comparison(
         avg_curve_alg, p, names_alg, name_problem[num_p], max_local)
     num_p = num_p + 1
 
+    end_timer_p = time.time()
+    time_p = end_timer_p - start_timer_p
+    #print("Tiempo de ejecucion problema: " + str(time_p))
+
     new_row = pd.DataFrame({'Problem': str(p),
                             'Average Fitness': str(best_avg_fitness_alg[0]),
                             'Standard Deviation': str(best_std_fitness_alg[0]),
                             'Best Fitness': str(best_fitness_along_seeds[0]),
                             'Worst Fitness': str(worst_fitness_along_seeds[0]),
-                            'Execution Time': str(alg_avg_time[0])}, index=[0])
+                            'Average Execution Time': str(alg_avg_time[0]),
+                            #"Total Execution Time": str(total_time[0])
+                            }, index=[0])
     df = pd.concat([df.loc[:], new_row]).reset_index(drop=True)
 
     new_row2 = pd.DataFrame({'Problem': str(p),
@@ -122,7 +142,9 @@ for p in problems:
                              'Standard Deviation': str(best_std_fitness_alg[1]),
                              'Best Fitness': str(best_fitness_along_seeds[1]),
                              'Worst Fitness': str(worst_fitness_along_seeds[1]),
-                             'Execution Time': str(alg_avg_time[1])}, index=[0])
+                             'Average Execution Time': str(alg_avg_time[1])
+                             #,"Total Execution Time": str(total_time[1])
+                             }, index=[0])
     df2 = pd.concat([df2.loc[:], new_row2]).reset_index(drop=True)
 
     new_row3 = pd.DataFrame({'Problem': str(p),
@@ -130,7 +152,9 @@ for p in problems:
                              'Standard Deviation': str(best_std_fitness_alg[2]),
                              'Best Fitness': str(best_fitness_along_seeds[2]),
                              'Worst Fitness': str(worst_fitness_along_seeds[2]),
-                             'Execution Time': str(alg_avg_time[2])}, index=[0])
+                             'Average Execution Time': str(alg_avg_time[2])
+                             #,"Total Execution Time": str(total_time[2])
+                             }, index=[0])
     df3 = pd.concat([df3.loc[:], new_row3]).reset_index(drop=True)
 
     # new_row4 = pd.DataFrame({'Problem': str(p),
@@ -140,7 +164,7 @@ for p in problems:
     #                          'Worst Fitness':str(worst_fitness_along_seeds[3]),
     #                          'Execution Time':str(alg_time[3])}, index=[0])
     # df4 = pd.concat([df4.loc[:], new_row4]).reset_index(drop=True)
-
+    
 df.to_csv("Problema-de-la-mochila-binaria/result/HC" +
           "-max_local-" + str(max_local) + ".csv", index=False)
 df2.to_csv("Problema-de-la-mochila-binaria/result/HCRR" +

@@ -18,10 +18,10 @@ repetitions = 31
 
 # Afinamiento de parametros
 bw = 0.1
-max_local = 100
+max_local = 102
 
 functions = [sphere(), step(), schwefel(), ackley(), griewank(), rastrigin()]
-functions = [sphere()]
+#functions = [sphere()]
 hc = HC(max_efos = max_efos, bandwidth = bw)
 hcrr = HCRR(max_efos= max_efos, max_local = max_local, bandwidth = bw)
 sa = SA(max_efos = max_efos, bandwidth = bw)

@@ -5,6 +5,7 @@ from knapsack import knapsack
 from algorithms.HC import HC
 from algorithms.HCRR import HCRR
 from algorithms.SA import SA
+from algorithms.GRASP import GRASP
 from plot_convergence_curve import plot_convergence_curve
 import math
 
@@ -15,7 +16,7 @@ max_efos = 50000
 repetitions = 31
 
 # Afinamiento de parametros
-max_local = 100
+max_local = 101
 
 myP1 = knapsack(myPath + "f1.txt")
 myP2 = knapsack(myPath + "f2.txt")
@@ -32,13 +33,16 @@ myP12 = knapsack(myPath + "Knapsack2.txt")
 myP13 = knapsack(myPath + "Knapsack3.txt")
 myP14 = knapsack(myPath + "Knapsack4.txt")
 myP15 = knapsack(myPath + "Knapsack5.txt")
+myP16 = knapsack(myPath + "Knapsack6.txt")
 # problems = [myP1, myP2, myP3, myP4, myP5, myP6, myP7,myP8, myP9, myP10, myP11, myP12, myP13, myP14, myP15]
 #problems = [myP1, myP2, myP3, myP4, myP5, myP6, myP7, myP8, myP9, myP10, myP11, myP12, myP13, myP14, myP15]
-problems = [myP2]
+problems = [myP1]
 hc = HC(max_efos=max_efos)
 hcrr = HCRR(max_efos=max_efos, max_local=max_local)
 sa = SA(max_efos=max_efos)
-algorithms = [hc, hcrr, sa]
+grasp = GRASP(max_efos=max_efos, max_local=max_local)
+#algorithms = [hc, hcrr, sa]
+algorithms = [grasp]
 
 df = pd.DataFrame({'Problem': pd.Series(dtype='str'),
                    'Average Fitness': pd.Series(dtype='float'),

@@ -12,7 +12,7 @@ import math
 myPath = "Problema-de-la-mochila-binaria/problems/"
 # myPath = "content/sample_data/problems/"
 
-max_efos = 5000
+max_efos = 500
 repetitions = 31
 
 # Afinamiento de parametros

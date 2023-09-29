@@ -15,19 +15,17 @@ class GRASP:
         optimal = self.problem.OptimalKnown
         stop_optimal = optimal - optimal*0.00001
         while efos < self.max_efos:
-            C = solution(problem)      
-            #S = solution(problem)  # S is a new empty Solution
-            #S = []            
-            S = []
+            C = solution(problem)                 
+            S_rand = []
             self.best = solution(problem)                 
-            S_solution = solution(problem)  
+            S = solution(problem)  
+            S_copy = solution(S.problem)
             C_prima = []
             C_2_prima = []
             # S.Initialization()  # Random initialization and calculating fitness
             # Perform the hill climbig optimization (local)
             if efos == 0:
-                self.best = solution(problem)
-                self.best.from_solution(S_solution)  # self.best is a full copy of S
+                self.best.from_solution(S)  # self.best is a full copy of S
                 best_fitness_history[0] = self.best.fitness
             C_prima = C.problem.items
             for var in range(C.cells.size):
@@ -41,44 +39,45 @@ class GRASP:
                     C_Ordernado = sorted(C_prima, key=lambda x: x[3], reverse=True)
                     C_dos_prima = C_Ordernado[0:int(len(C_Ordernado)*0.5)+1]
                     i = np.random.randint(len(C_dos_prima))
-                    s_random_component = C_dos_prima[i]
-                    S_solution.cells[s_random_component[0]]=1
-                    S_solution.evaluate()
-                    weight = S_solution.weight
+                    s_random_component = C_dos_prima[i]                    
+                    S_copy.cells = np.copy(S.cells)
+                    S_copy.cells[s_random_component[0]]=1
+                    S_copy.evaluate()
+                    #S.cells[s_random_component[0]]=1
+                    #S.evaluate()
+                    weight = S_copy.weight
                     if weight < problem.capacity: 
-                        if not bool(S):
-                            S.append(s_random_component)
+                        if not bool(S_rand):
+                            S_rand.append(s_random_component)
                             continue     
-                        S.append(s_random_component)      
-                        S_set = {tuple(sublista) for sublista in S}
+                        S_rand.append(s_random_component)      
+                        S_set = {tuple(sublista) for sublista in S_rand}
                         C_sin_repeticiones = [sublista for sublista in C.problem.items if tuple(sublista) not in S_set]
-                        C_prima = C_sin_repeticiones                        
-                        print(S_solution.cells)
+                        C_prima = C_sin_repeticiones  
+                        S.cells[s_random_component[0]]=1                      
+                        print(S)
                     else:
                         print("No es factible")
-                        break
+                        S.evaluate()
+                        weight = S.weight
+                        break                    
 
-                    # for p in S_solution.cells:
-                    #     if weight + problem.weights[p] < problem.capacity:
-                    #         S_solution.cells[p] = 1
-                    #         weight += problem.weights[p]                           
-
-            # for opt in range(1, self.max_local):
-            #     R = solution(S.problem)
-            #     R.from_solution(S)  # R is a full copy of S
-            #     R.tweak()  # Tweeking and calculating fitness
-            #     if R.fitness > S.fitness:
-            #         S.from_solution(R)
-            #     if S.fitness > self.best.fitness:
-            #         self.best.from_solution(S)  # self.best is a full copy of S
-            #     best_fitness_history[efos] = self.best.fitness
-            #     efos += 1
-            #     if S.fitness >= stop_optimal:
-            #         best_fitness_history[efos:self.max_efos] = self.best.fitness
-            #         efos = self.max_efos
-            #         break
-            #     if efos >= self.max_efos:
-            #         break
+            for opt in range(1, self.max_local):
+                R = solution(S.problem)
+                R.from_solution(S)  # R is a full copy of S
+                R.tweak()  # Tweeking and calculating fitness
+                if R.fitness > S.fitness:
+                    S.from_solution(R)
+                if S.fitness > self.best.fitness:
+                    self.best.from_solution(S)  # self.best is a full copy of S
+                best_fitness_history[efos] = self.best.fitness
+                efos += 1
+                if S.fitness >= stop_optimal:
+                    best_fitness_history[efos:self.max_efos] = self.best.fitness
+                    efos = self.max_efos
+                    break
+                if efos >= self.max_efos:
+                    break        
         return best_fitness_history
 
     def __str__(self):

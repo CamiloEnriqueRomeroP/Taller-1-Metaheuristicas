@@ -1,2 +1,2 @@
-Problem                                 ,Average Fitness    ,Standard Deviation ,Best Fitness ,Worst Fitness ,Average Execution Time
-file:Knapsack6-size:10000-opt:1099893.0 ,1073432.1935483871 ,3490.2716635126935 ,   1082416.0 ,    1067119.0 ,    14.225360001287152
+Problem,Average Fitness,Standard Deviation,Best Fitness,Worst Fitness,Average Execution Time
+file:f1-size:10-opt:295.0,294.0,0.0,294.0,294.0,0.203635984851468

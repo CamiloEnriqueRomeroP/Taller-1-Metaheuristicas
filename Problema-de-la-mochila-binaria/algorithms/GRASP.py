@@ -12,13 +12,13 @@ class GRASP:
         np.random.seed(seed)
         best_fitness_history = np.zeros(self.max_efos, float)
         efos = 0
-        optimal = self.problem.OptimalKnown
-        stop_optimal = optimal - optimal*0.00001
+        stop_optimal = self.problem.OptimalKnown
+        self.best = solution(problem)
+        stop = False
         while efos < self.max_efos:
-            C = solution(problem)                 
+            C = solution(problem)
             S_rand = []
-            self.best = solution(problem)                 
-            S = solution(problem)  
+            S = solution(problem)
             S_copy = solution(S.problem)
             C_prima = []
             C_2_prima = []
@@ -29,38 +29,42 @@ class GRASP:
                 best_fitness_history[0] = self.best.fitness
             C_prima = C.problem.items
             for var in range(C.cells.size):
-                #print("Entra al ciclo")
-                #if S:
+                # print("Entra al ciclo")
+                # if S:
                 if not bool(C_prima):
-                    #print("C_prima Is empty")
+                    # print("C_prima Is empty")
                     break
                 else:
-                    #print("C_prima Is not empty")
-                    C_Ordernado = sorted(C_prima, key=lambda x: x[3], reverse=True)
-                    C_dos_prima = C_Ordernado[0:int(len(C_Ordernado)*0.5)+1]
-                    i = np.random.randint(len(C_dos_prima))
-                    s_random_component = C_dos_prima[i]                    
+                    # print("C_prima Is not empty")
+                    C_Ordernado = sorted(
+                        C_prima, key=lambda x: x[3], reverse=True)
+                    # C_dos_prima = C_Ordernado[0:int(len(C_Ordernado)*0.33)+1]
+                    C_dos_prima = int(len(C_Ordernado)*0.33)
+
+                    i = np.random.randint(C_dos_prima)
+                    s_random_component = C_Ordernado[i]
                     S_copy.cells = np.copy(S.cells)
-                    S_copy.cells[s_random_component[0]]=1
+                    S_copy.cells[s_random_component[0]] = 1
                     S_copy.evaluate()
-                    #S.cells[s_random_component[0]]=1
-                    #S.evaluate()
+                    # S.cells[s_random_component[0]]=1
+                    # S.evaluate()
                     weight = S_copy.weight
-                    if weight < problem.capacity: 
+                    if weight < problem.capacity:
                         if not bool(S_rand):
                             S_rand.append(s_random_component)
-                            continue     
-                        S_rand.append(s_random_component)      
+                            continue
+                        S_rand.append(s_random_component)
                         S_set = {tuple(sublista) for sublista in S_rand}
-                        C_sin_repeticiones = [sublista for sublista in C.problem.items if tuple(sublista) not in S_set]
-                        C_prima = C_sin_repeticiones  
-                        S.cells[s_random_component[0]]=1                      
-                        print(S)
+                        C_sin_repeticiones = [
+                            sublista for sublista in C.problem.items if tuple(sublista) not in S_set]
+                        C_prima = C_sin_repeticiones
+                        S.cells[s_random_component[0]] = 1
+                        # print(S)
                     else:
-                        print("No es factible")
+                        # print("No es factible")
                         S.evaluate()
                         weight = S.weight
-                        break                    
+                        break
 
             for opt in range(1, self.max_local):
                 R = solution(S.problem)
@@ -75,10 +79,11 @@ class GRASP:
                 if S.fitness >= stop_optimal:
                     best_fitness_history[efos:self.max_efos] = self.best.fitness
                     efos = self.max_efos
+                    stop = True
                     break
                 if efos >= self.max_efos:
-                    break        
-        return best_fitness_history
+                    break
+        return best_fitness_history, stop
 
     def __str__(self):
         result = "GRASP-maxlocal:" + str(self.max_local)

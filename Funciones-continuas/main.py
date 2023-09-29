@@ -14,7 +14,7 @@ from algorithms.SA import SA
 from algorithms.GRASP import GRASP
 
 d = 50
-max_efos = 50000
+max_efos = 5000
 repetitions = 31
 
 # Afinamiento de parametros
@@ -26,10 +26,10 @@ functions = [sphere()]
 hc = HC(max_efos = max_efos, bandwidth = bw)
 hcrr = HCRR(max_efos= max_efos, max_local = max_local, bandwidth = bw)
 sa = SA(max_efos = max_efos, bandwidth = bw)
-grasp = GRASP(max_efos = max_efos, bandwidth = bw)
+grasp = GRASP(max_local = max_local, max_efos = max_efos, bandwidth = bw)
 #algorithms = [hc, hcrr, sa]
 
-algorithms = [grasp]
+algorithms = [hc, hcrr, grasp]
 
 df = pd.DataFrame({'Problem': pd.Series(dtype='str'),
                    'Average Fitness': pd.Series(dtype='float'),

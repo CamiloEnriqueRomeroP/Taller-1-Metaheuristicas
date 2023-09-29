@@ -16,8 +16,8 @@ class HC:
         best_fitness_history[0] = self.best.fitness
 
         S = self.best  # S is a pointer to self.best, not a full copy
-        optimal = S.problem.OptimalKnown
-        stop_optimal = optimal - 0.00001
+        stop_optimal = S.problem.OptimalKnown
+        stop = False
         for iteration in range(1, self.max_efos):
             R = solution(S.problem)
             R.from_solution(S)  # R is a full copy of S
@@ -28,8 +28,9 @@ class HC:
             if S.fitness >= stop_optimal:
                 best_fitness_history[iteration:self.max_efos] = self.best.fitness
                 iteration = self.max_efos
+                stop = True
                 break
-        return best_fitness_history
+        return best_fitness_history, stop
 
     def __str__(self):
         result = "HC:"

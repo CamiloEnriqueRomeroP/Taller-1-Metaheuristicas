@@ -12,8 +12,9 @@ class HCRR:
         np.random.seed(seed)
         best_fitness_history = np.zeros(self.max_efos, float)
         efos = 0
-        optimal = self.problem.OptimalKnown
-        stop_optimal = optimal - optimal*0.00001
+        stop_optimal = self.problem.OptimalKnown
+        #stop_optimal = optimal - 0.00001
+        stop = False
         while efos < self.max_efos:
 
             S = solution(problem)  # S is a new Solution
@@ -35,11 +36,12 @@ class HCRR:
                 efos += 1
                 if S.fitness >= stop_optimal:
                     best_fitness_history[efos:self.max_efos] = self.best.fitness
+                    stop = True
                     efos = self.max_efos
                     break
                 if efos >= self.max_efos:
                     break
-        return best_fitness_history
+        return best_fitness_history, stop
 
     def __str__(self):
         result = "HCRR-maxlocal:" + str(self.max_local)

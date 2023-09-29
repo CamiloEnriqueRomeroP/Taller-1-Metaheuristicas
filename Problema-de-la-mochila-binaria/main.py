@@ -35,14 +35,14 @@ myP14 = knapsack(myPath + "Knapsack4.txt")
 myP15 = knapsack(myPath + "Knapsack5.txt")
 myP16 = knapsack(myPath + "Knapsack6.txt")
 # problems = [myP1, myP2, myP3, myP4, myP5, myP6, myP7,myP8, myP9, myP10, myP11, myP12, myP13, myP14, myP15]
-#problems = [myP1, myP2, myP3, myP4, myP5, myP6, myP7, myP8, myP9, myP10, myP11, myP12, myP13, myP14, myP15]
-problems = [myP1]
+problems = [myP1, myP2, myP3, myP4, myP5, myP6, myP7, myP8, myP9, myP10, myP11, myP12, myP13, myP14, myP15, myP16]
+#problems = [myP1]
 hc = HC(max_efos=max_efos)
 hcrr = HCRR(max_efos=max_efos, max_local=max_local)
 sa = SA(max_efos=max_efos)
 grasp = GRASP(max_efos=max_efos, max_local=max_local)
 #algorithms = [hc, hcrr, sa]
-algorithms = [hc, hcrr,grasp]
+algorithms = [hc, hcrr,sa, grasp]
 
 df = pd.DataFrame({'Problem': pd.Series(dtype='str'),
                    'Average Fitness': pd.Series(dtype='float'),
@@ -92,7 +92,8 @@ for p in problems:
     iter_stop = 0
     copy_iteration = 0
     detect_iter_stop = False
-
+    name_problem = ["f1", "f2", "f3", "f4", "f5", "f6", "f7", "f8", "f9",
+                    "f10", "Knapsack1", "Knapsack2", "Knapsack3", "Knapsack4", "Knapsack5", "Knapsack6"]
     for alg in algorithms:
         avg_curve = np.zeros(max_efos, float)
         best_fitnes = np.zeros(repetitions, float)
@@ -100,12 +101,14 @@ for p in problems:
 
         for s in range(0, repetitions):
             start_timer = time.time()
-            curve_data = alg.evolve(seed=s, problem=p)
+            curve_data, stop = alg.evolve(seed=s, problem=p)            
             end_timer = time.time()
+            if stop:
+                print("In " + str(name_problem[num_p])+ " " + str(alg) + " repetition "+ str(s) + " STOP")
             time_spend = end_timer - start_timer
             avg_curve = avg_curve + curve_data
             time_by_repetition[s] = time_spend
-            best_fitnes[s] = alg.best.fitness
+            best_fitnes[s] = alg.best.fitness           
 
         avg_curve = avg_curve / repetitions
         avg_best_fitnes = np.average(best_fitnes)
@@ -121,16 +124,15 @@ for p in problems:
         alg_avg_time.append(avg_time)
         total_time.append(math.fsum(time_by_repetition))
         
-    name_problem = ["f1", "f2", "f3", "f4", "f5", "f6", "f7", "f8", "f9",
-                    "f10", "Knapsack1", "Knapsack2", "Knapsack3", "Knapsack4", "Knapsack5"]
+    #name_problem = ["f1", "f2", "f3", "f4", "f5", "f6", "f7", "f8", "f9",
+    #                "f10", "Knapsack1", "Knapsack2", "Knapsack3", "Knapsack4", "Knapsack5", "Knapsack6"]
     plot_convergence_curve.plot_convergence_curve_comparison(
         avg_curve_alg, p, names_alg, name_problem[num_p], max_local)
     num_p = num_p + 1
 
     end_timer_p = time.time()
     time_p = end_timer_p - start_timer_p
-    print("Tiempo de ejecucion problema: " + str(time_p))
-
+    print("Tiempo de ejecucion " + str(name_problem[num_p]) + " : "+ str(time_p))
     new_row = pd.DataFrame({'Problem': str(p),
                             'Average Fitness': str(best_avg_fitness_alg[0]),
                             'Standard Deviation': str(best_std_fitness_alg[0]),
@@ -161,13 +163,15 @@ for p in problems:
                              }, index=[0])
     df3 = pd.concat([df3.loc[:], new_row3]).reset_index(drop=True)
 
-    # new_row4 = pd.DataFrame({'Problem': str(p),
-    #                          'Average Fitness':str(best_avg_fitness_alg[3]),
-    #                          'Standard Deviation':str(best_std_fitness_alg[3]),
-    #                          'Best Fitness':str(best_fitness_along_seeds[3]),
-    #                          'Worst Fitness':str(worst_fitness_along_seeds[3]),
-    #                          'Execution Time':str(alg_time[3])}, index=[0])
-    # df4 = pd.concat([df4.loc[:], new_row4]).reset_index(drop=True)
+    new_row4 = pd.DataFrame({'Problem': str(p),
+                             'Average Fitness': str(best_avg_fitness_alg[3]),
+                             'Standard Deviation': str(best_std_fitness_alg[3]),
+                             'Best Fitness': str(best_fitness_along_seeds[3]),
+                             'Worst Fitness': str(worst_fitness_along_seeds[3]),
+                             'Average Execution Time': str(alg_avg_time[3])
+                             #,"Total Execution Time": str(total_time[2])
+                             }, index=[0])
+    df4 = pd.concat([df4.loc[:], new_row4]).reset_index(drop=True)
     
 df.to_csv("Problema-de-la-mochila-binaria/result/HC" +
           "-max_local-" + str(max_local) + ".csv", index=False)
@@ -175,4 +179,5 @@ df2.to_csv("Problema-de-la-mochila-binaria/result/HCRR" +
            "-max_local-" + str(max_local) + ".csv", index=False)
 df3.to_csv("Problema-de-la-mochila-binaria/result/SA" +
            "-max_local-" + str(max_local) + ".csv", index=False)
-# df4.to_csv("Funciones-continuas/Compilado.csv", index=False)
+df4.to_csv("Problema-de-la-mochila-binaria/result/GRASP" +
+           "-max_local-" + str(max_local) + ".csv", index=False)

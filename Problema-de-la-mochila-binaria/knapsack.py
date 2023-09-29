@@ -37,8 +37,8 @@ class knapsack:
         fitness = -1
         if weight <= self.capacity:
             fitness = (cells * self.profits).sum()
-        else:
-            print('Error')
+        #else:
+            #print("Error")
         return fitness, weight
 
     def __str__(self):

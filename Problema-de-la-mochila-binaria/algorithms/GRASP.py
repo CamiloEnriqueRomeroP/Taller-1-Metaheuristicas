@@ -16,10 +16,11 @@ class GRASP:
         stop_optimal = optimal - optimal*0.00001
         while efos < self.max_efos:
             C = solution(problem)      
-            S = solution(problem)  # S is a new empty Solution
+            #S = solution(problem)  # S is a new empty Solution
             #S = []            
+            S = []
             self.best = solution(problem)                 
-            S_solution = solution(problem)         
+            S_solution = solution(problem)  
             C_prima = []
             C_2_prima = []
             # S.Initialization()  # Random initialization and calculating fitness
@@ -42,17 +43,21 @@ class GRASP:
                     i = np.random.randint(len(C_dos_prima))
                     s_random_component = C_dos_prima[i]
                     S_solution.cells[s_random_component[0]]=1
-                    print(S_solution.cells)
                     S_solution.evaluate()
                     weight = S_solution.weight
-                    if weight < problem.capacity:
-                        S.cells = S.cells + S_solution.cells
-                        S_set = {tuple(sublista) for sublista in S.problem.items}
+                    if weight < problem.capacity: 
+                        if not bool(S):
+                            S.append(s_random_component)
+                            continue     
+                        S.append(s_random_component)      
+                        S_set = {tuple(sublista) for sublista in S}
                         C_sin_repeticiones = [sublista for sublista in C.problem.items if tuple(sublista) not in S_set]
-                        C_prima = C_sin_repeticiones
-                        print(S.cells)
+                        C_prima = C_sin_repeticiones                        
+                        print(S_solution.cells)
                     else:
                         print("No es factible")
+                        break
+
                     # for p in S_solution.cells:
                     #     if weight + problem.weights[p] < problem.capacity:
                     #         S_solution.cells[p] = 1

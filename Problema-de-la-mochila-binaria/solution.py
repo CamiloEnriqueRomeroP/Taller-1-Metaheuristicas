@@ -47,7 +47,31 @@ class solution:
             self.problem.size, self.problem.size, replace=False)
         self.cells = np.zeros(self.problem.size, int)
         self.add_items_while_keep_capacity(positions, 0)
-        self.evaluate()
+        self.evaluate()    
+    
+    # def Initialization_GRASP(self,Solution):
+    #     C_Ordernado = sorted(C_prima, key=lambda x: x[3], reverse=True)
+    #     C_dos_prima = int(len(C_Ordernado)*0.33)+1
+    #     i = np.random.randint(C_dos_prima)
+    #     s_random_component = C_Ordernado[i]   
+    #     Solution.cells = np.copy(S.cells)
+    #     Solution.cells[s_random_component[0]] = 1
+    #     Solution.evaluate()
+    #     weight = Solution.weight
+    #     if weight < problem.capacity:
+    #         if not bool(S_rand):
+    #             S_rand.append(s_random_component)
+    #         S_rand.append(s_random_component)
+    #         S_set = {tuple(sublista) for sublista in S_rand}
+    #         C_sin_repeticiones = [
+    #             sublista for sublista in C.problem.items if tuple(sublista) not in S_set]
+    #         C_prima = C_sin_repeticiones
+    #         S.cells[s_random_component[0]] = 1
+    #     else:
+    #         # print("No es factible")
+    #         S.evaluate()
+    #         weight = S.weight
+    #         break
 
     def add_items_while_keep_capacity(self, positions, weight):
         self.weight = weight

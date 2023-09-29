@@ -1,35 +1,123 @@
 import numpy as np
-import matplotlib.pyplot as plt
+from solution import solution
 
-lower_bound = -32.768
-upper_bound = 32.768
 
-# Cantidad de valores
-size = 50
-# Parámetros de la primera campana gaussiana
-mu_1, sigma_1 = lower_bound/2, abs(lower_bound/4+1)
-size_1 = size//2  # Dividimos n en dos para generar la mitad de valores en cada campana
+class GRASP:
+    def __init__(self, max_efos: int, max_local: int):
+        self.max_efos = max_efos
+        self.max_local = max_local
 
-# Parámetros de la segunda campana gaussiana
-mu_2, sigma_2 = upper_bound/2, (upper_bound/4+1)
-size_2 = size-size_1 # La otra mitad de valores
+    def evolve(self, seed: int, problem):
+        self.problem = problem
+        np.random.seed(seed)
+        best_fitness_history = np.zeros(self.max_efos, float)
+        efos = 0
+        stop_optimal = self.problem.OptimalKnown
+        self.best = solution(problem)
+        stop = False
+        while efos < self.max_efos:
+            C = solution(problem)
+            S_rand = []
+            S = solution(problem)
+            S = []
+            S_copy = solution(S.problem)
+            S_solution = solution(problem)  
+            C_prima = []
+            C_dos_prima = []
+            weight = 0
+            # S.Initialization()  # Random initialization and calculating fitness
+            # Perform the hill climbig optimization (local)
+            if efos == 0:
+                self.best.from_solution(S)  # self.best is a full copy of S
+                best_fitness_history[0] = self.best.fitness
+            C_prima = C.problem.items
+            for var in range(C.cells.size):
+                if not bool(C_prima):
+                    break
+                else:
+                    C_Ordernado = sorted(C_prima, key=lambda x: x[3], reverse=True)
+                    C_dos_prima = int(len(C_Ordernado)*0.33)+1
+                    i = np.random.randint(C_dos_prima)
+                    s_random_component = C_Ordernado[i]  
+                                                     
+                    S_copy.cells = np.copy(S.cells)
+                    S_copy.cells[s_random_component[0]] = 1
+                    new_weight = s_random_component[1]
+                    
+                    # C_Ordernado = sorted(C_prima, key=lambda x: x[3], reverse=True)
+                    # C_dos_prima = C_Ordernado[0:int(len(C_Ordernado)*0.5)+1]
+                    # i = np.random.randint(len(C_dos_prima))
+                    # s_random_component = C_dos_prima[i]
+                    
+                    S_solution.cells[s_random_component[0]]=1
+                    S_solution.evaluate()
+                    weight = S_solution.weight
+                    #s_random_component = C_dos_prima[i]   
+                                     
+                    # S_copy.cells = np.copy(S.cells)
+                    # S_copy.cells[s_random_component[0]]=1
+                    
+                    S_copy.evaluate()
+                    weight = S_copy.weight
+                    
+                    if weight < problem.capacity: 
+                        if not bool(S):
+                            S.append(s_random_component)
+                        if not bool(S_rand):
+                            S_rand.append(s_random_component)
+                            continue     
+                        S.append(s_random_component)      
+                        S_set = {tuple(sublista) for sublista in S}
+                        S_rand.append(s_random_component)      
+                        S_set = {tuple(sublista) for sublista in S_rand}
+                        C_sin_repeticiones = [sublista for sublista in C.problem.items if tuple(sublista) not in S_set]
+                        C_prima = C_sin_repeticiones                        
+                        print(S_solution.cells)
+                        C_prima = C_sin_repeticiones  
+                        S.cells[s_random_component[0]]=1                      
+                        print(S)                    
+                    else:
+                        print("No es factible")
+                        break
+                        S.evaluate()
+                        weight = S.weight
+                        break  
+                    
+                    # if weight + new_weight < problem.capacity:
+                    #     weight = weight + new_weight
+                    #     if S_rand != []:
+                    #         S_rand.append(s_random_component)
+                    #         S_set = {tuple(sublista) for sublista in S_rand}
+                    #         C_sin_repeticiones = [
+                    #         sublista for sublista in C.problem.items if tuple(sublista) not in S_set]
+                    #         C_prima = C_sin_repeticiones
+                    #         S.cells[s_random_component[0]] = 1
+                    #         print(S.cells)
+                    #     else:
+                    #         S_rand.append(s_random_component)
+                    # else:
+                    #     # print("No es factible")
+                    #     break
 
-# Generar valores aleatorios para cada campana
-cells_1 = np.random.normal(loc=mu_1, scale=sigma_1, size=size_1)
-cells_2 = np.random.normal(loc=mu_2, scale=sigma_2, size=size_2)
+            for opt in range(1, self.max_local):
+                R = solution(S.problem)
+                R.from_solution(S)  # R is a full copy of S
+                R.tweak()  # Tweeking and calculating fitness
+                if R.fitness > S.fitness:
+                    S.from_solution(R)
+                if S.fitness > self.best.fitness:
+                    self.best.from_solution(S)  # self.best is a full copy of S
+                best_fitness_history[efos] = self.best.fitness
+                efos += 1
+                if S.fitness >= stop_optimal:
+                    best_fitness_history[efos:self.max_efos] = self.best.fitness
+                    efos = self.max_efos
+                    stop = True
+                    break
+                if efos >= self.max_efos:
+                    break
+        return best_fitness_history, stop
 
-# Combinar ambas campanas en un solo vector
-cells = np.concatenate((cells_1, cells_2))
-
-cells[cells < lower_bound] = lower_bound
-cells[cells > upper_bound] = upper_bound
-
-print(cells)
-
-# Graficar las campanas gaussianas
-plt.hist(cells, bins=30, density=True, alpha=0.6, color='b')
-plt.xlabel('Valores Aleatorios')
-plt.ylabel('Frecuencia')
-plt.title('Sample gauss s')
-plt.grid(True)
-plt.show()
+    def __str__(self):
+        result = "GRASP-maxlocal:" + str(self.max_local)
+        return result

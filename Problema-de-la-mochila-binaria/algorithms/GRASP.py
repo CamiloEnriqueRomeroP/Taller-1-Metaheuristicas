@@ -15,47 +15,49 @@ class GRASP:
         optimal = self.problem.OptimalKnown
         stop_optimal = optimal - optimal*0.00001
         while efos < self.max_efos:
-            C = solution(problem)
-            C.Initialization()           
-            #S = solution(problem)  # S is a new empty Solution
-            S = []            
-            self.best = solution(problem)            
+            C = solution(problem)      
+            S = solution(problem)  # S is a new empty Solution
+            #S = []            
+            self.best = solution(problem)                 
+            S_solution = solution(problem)         
             C_prima = []
             C_2_prima = []
             # S.Initialization()  # Random initialization and calculating fitness
             # Perform the hill climbig optimization (local)
+            if efos == 0:
+                self.best = solution(problem)
+                self.best.from_solution(S_solution)  # self.best is a full copy of S
+                best_fitness_history[0] = self.best.fitness
+            C_prima = C.problem.items
             for var in range(C.cells.size):
-                print("Entra al ciclo")
-                if S:
-                    C_prima = C_sin_repeticiones
-                    if not bool(C_prima):
-                        print("C_prima Is empty")
-                        break
-                    else:
-                        print("C_prima Is not empty")
-                        C_Ordernado = sorted(C_prima, key=lambda x: x[3], reverse=True)
-                        C_dos_prima = C_Ordernado[0:int(len(C_Ordernado)*0.5)+1]
-                        i = np.random.randint(len(C_dos_prima))
-                        s_random_component = C_dos_prima[i]
-                        S.append(s_random_component)
-                        #s_random_component = np.random.choice(C_dos_prima, size=1)                   
-                        print("hola")
-                        S_set = {tuple(sublista) for sublista in S}
-                        C_sin_repeticiones = [sublista for sublista in C.problem.items if tuple(sublista) not in S_set]
-                        
-
+                #print("Entra al ciclo")
+                #if S:
+                if not bool(C_prima):
+                    #print("C_prima Is empty")
+                    break
                 else:
-                    print("S Is empty")
-                    C_prima = C.problem.items
+                    #print("C_prima Is not empty")
                     C_Ordernado = sorted(C_prima, key=lambda x: x[3], reverse=True)
                     C_dos_prima = C_Ordernado[0:int(len(C_Ordernado)*0.5)+1]
                     i = np.random.randint(len(C_dos_prima))
                     s_random_component = C_dos_prima[i]
-                    S.append(s_random_component)
-                    #s_random_component = np.random.choice(C_dos_prima, size=1)                   
-                    print("hola")
-                    S_set = {tuple(sublista) for sublista in S}
-                    C_sin_repeticiones = [sublista for sublista in C.problem.items if tuple(sublista) not in S_set]
+                    S_solution.cells[s_random_component[0]]=1
+                    print(S_solution.cells)
+                    S_solution.evaluate()
+                    weight = S_solution.weight
+                    if weight < problem.capacity:
+                        S.cells = S.cells + S_solution.cells
+                        S_set = {tuple(sublista) for sublista in S.problem.items}
+                        C_sin_repeticiones = [sublista for sublista in C.problem.items if tuple(sublista) not in S_set]
+                        C_prima = C_sin_repeticiones
+                        print(S.cells)
+                    else:
+                        print("No es factible")
+                    # for p in S_solution.cells:
+                    #     if weight + problem.weights[p] < problem.capacity:
+                    #         S_solution.cells[p] = 1
+                    #         weight += problem.weights[p]                           
+
             # for opt in range(1, self.max_local):
             #     R = solution(S.problem)
             #     R.from_solution(S)  # R is a full copy of S

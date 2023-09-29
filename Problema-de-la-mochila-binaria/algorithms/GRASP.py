@@ -38,12 +38,12 @@ class GRASP:
                     s_random_component = C_Ordernado[i]
                     S_copy.cells = np.copy(S.cells)
                     S_copy.cells[s_random_component[0]]=1
-                    #S_copy.evaluate()
+                    S_copy.evaluate()
                     
                     weight_test = s_random_component[1]
                     total_weight = total_weight + weight_test
                     weight = S_copy.weight                    
-                    if total_weight <= problem.capacity: 
+                    if weight <= problem.capacity: 
                         if not bool(S_rand):
                             S_rand.append(s_random_component)
                             S.cells[s_random_component[0]]=1     

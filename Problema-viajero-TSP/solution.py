@@ -12,20 +12,11 @@ class solution:
         self.cells = np.copy(origin.cells)
         self.fitness = origin.fitness
 
-    # Original code 
-    # def Initialization(self):
-    #     self.cells = np.random.choice(self.problem.size, self.problem.size, replace=False)
-    #     self.fitness = self.problem.evaluate(self.cells)
-
-    # def tweak(self):
-    #     pos = np.random.choice(np.arange(1, self.problem.size), 2, replace=False)
-    #     pos.sort()
-    #     i = pos[0]
-    #     k = pos[1]
-    #     self.cells[i:k] = self.cells[k - 1:i - 1:-1]
-    #     self.fitness = self.problem.evaluate(self.cells)
-
     def Initialization(self):
+        self.cells = np.random.choice(self.problem.size, self.problem.size, replace=False)
+        self.fitness = self.problem.evaluate(self.cells)
+        
+    def Initialization_GRASP(self):
         self.cells = np.random.choice(self.problem.size, self.problem.size, replace=False)
         self.fitness = self.problem.evaluate(self.cells)
 

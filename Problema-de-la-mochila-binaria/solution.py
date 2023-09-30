@@ -25,34 +25,26 @@ class solution:
         self.evaluate()    
     
     def Initialization_GRASP(self):   
-        S_rand = []  
+        S_rand = [] 
+        total_weight = 0 
         C_prima = self.problem.items
         for var in range(self.cells.size):
             if not bool(C_prima):
-                #print("C_prima Is empty")
                 break
             else:
-                #print("C_prima Is not empty")
                 C_Ordernado = sorted(C_prima, key=lambda x: x[3], reverse=True)                    
                 C_dos_prima = int(len(C_Ordernado)*0.33)+1
                 i = np.random.randint(C_dos_prima)
                 s_random_component = C_Ordernado[i]
-                self.cells[s_random_component[0]]=1
-                self.evaluate()                        
-                if self.weight <= self.problem.capacity: 
-                    if not bool(S_rand):
-                        S_rand.append(s_random_component)
-                        self.cells[s_random_component[0]]=1     
-                        continue     
+                weight_test = s_random_component[1]
+                total_weight = total_weight + weight_test           
+                if total_weight <= self.problem.capacity: 
                     S_rand.append(s_random_component)      
                     S_set = {tuple(sublista) for sublista in S_rand}
-                    C_sin_repeticiones = [sublista for sublista in self.problem.items if tuple(sublista) not in S_set]
-                    C_prima = C_sin_repeticiones  
+                    C_prima = [sublista for sublista in self.problem.items if tuple(sublista) not in S_set]  
                     self.cells[s_random_component[0]]=1      
                 else:
-                    #print("No es factible")
-                    self.cells[s_random_component[0]]=0  
-                    #S.evaluate() 
+                    self.evaluate()  
                     break            
 
     def add_items_while_keep_capacity(self, positions, weight):

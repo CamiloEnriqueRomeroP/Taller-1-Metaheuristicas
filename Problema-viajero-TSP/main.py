@@ -5,12 +5,13 @@ from tsp import tsp
 from algorithms.HC import HC
 from algorithms.HCRR import HCRR
 from algorithms.SA import SA
+from algorithms.GRASP import GRASP
 from plot_convergence_curve import plot_convergence_curve
 
 # myPath = "/problems/"
 myPath = "Problema-viajero-TSP/problems/"
 
-max_efos = 50000
+max_efos = 5000
 repetitions = 31
 
 # Afinamiento de parametros
@@ -22,11 +23,11 @@ myP3 = tsp(myPath + "03-fri26.txt")
 myP4 = tsp(myPath + "04-dantzig42.txt")
 myP5 = tsp(myPath + "05-att48.txt")
 problems = [myP1, myP2, myP3, myP4, myP5]
-# problems = [myP5]
 hc = HC(max_efos=max_efos)
 hcrr = HCRR(max_efos=max_efos, max_local=max_local)
 sa = SA(max_efos=max_efos)
-algorithms = [hc, hcrr, sa]
+grasp = GRASP(max_efos=max_efos, max_local=max_local)
+algorithms = [hc, hcrr, sa, grasp]
 
 df = pd.DataFrame({'Problem': pd.Series(dtype='str'),
                    'Average Fitness': pd.Series(dtype='float'),
@@ -64,6 +65,7 @@ for p in problems:
     best_fitness_along_seeds = []
     worst_fitness_along_seeds = []
     alg_avg_time = []
+    name_problem = ["01-easy5", "02-ulysses16", "03-fri26", "04-dantzig42", "05-att48"]
 
     for alg in algorithms:
         avg_curve = np.zeros(max_efos, float)
@@ -72,8 +74,10 @@ for p in problems:
 
         for s in range(0, repetitions):
             start_timer = time.time()
-            curve_data = alg.evolve(seed=s, problem=p)
+            curve_data, stop = alg.evolve(seed=s, problem=p)
             end_timer = time.time()
+            if stop:
+                print("In " + str(name_problem[num_p])+ " " + str(alg) + " repetition "+ str(s) + " STOP")
             time_spend = end_timer - start_timer
             avg_curve = avg_curve + curve_data
             time_by_repetition[s] = time_spend
@@ -92,14 +96,13 @@ for p in problems:
         worst_fitness_along_seeds.append(max(best_fitnes))
         alg_avg_time.append(avg_time)
 
-    name_problem = ["01-easy5", "02-ulysses16", "03-fri26", "04-dantzig42", "05-att48"]
     plot_convergence_curve.plot_convergence_curve_comparison(
-        avg_curve_alg, p, names_alg, name_problem[num_p], max_local)
-    num_p = num_p + 1
-    
+        avg_curve_alg, p, names_alg, name_problem[num_p], max_local)  
+
     end_timer_p = time.time()
     time_p = end_timer_p - start_timer_p
-    print("Tiempo de ejecucion problema: " + str(time_p))
+    print("Tiempo de ejecucion " + str(name_problem[num_p]) + " : "+ str(time_p))
+    num_p = num_p + 1
     
     new_row = pd.DataFrame({'Problem': str(p),
                             'Average Fitness': str(best_avg_fitness_alg[0]),
@@ -125,13 +128,13 @@ for p in problems:
                              'Execution Time': str(alg_avg_time[2])}, index=[0])
     df3 = pd.concat([df3.loc[:], new_row3]).reset_index(drop=True)
 
-    # new_row4 = pd.DataFrame({'Problem': str(p),
-    #                          'Average Fitness':str(best_avg_fitness_alg[3]),
-    #                          'Standard Deviation':str(best_std_fitness_alg[3]),
-    #                          'Best Fitness':str(best_fitness_along_seeds[3]),
-    #                          'Worst Fitness':str(worst_fitness_along_seeds[3]),
-    #                          'Execution Time':str(alg_time[3])}, index=[0])
-    # df4 = pd.concat([df4.loc[:], new_row4]).reset_index(drop=True)
+    new_row4 = pd.DataFrame({'Problem': str(p),
+                             'Average Fitness':str(best_avg_fitness_alg[3]),
+                             'Standard Deviation':str(best_std_fitness_alg[3]),
+                             'Best Fitness':str(best_fitness_along_seeds[3]),
+                             'Worst Fitness':str(worst_fitness_along_seeds[3]),
+                             'Execution Time': str(alg_avg_time[3])}, index=[0])
+    df4 = pd.concat([df4.loc[:], new_row4]).reset_index(drop=True)
 
 df.to_csv("Problema-viajero-TSP/result/HC" +
           "-max_local-" + str(max_local) + ".csv", index=False)
@@ -139,4 +142,5 @@ df2.to_csv("Problema-viajero-TSP/result/HCRR" +
            "-max_local-" + str(max_local) + ".csv", index=False)
 df3.to_csv("Problema-viajero-TSP/result/SA" +
            "-max_local-" + str(max_local) + ".csv", index=False)
-# df4.to_csv("Funciones-continuas/Compilado.csv", index=False)
+df4.to_csv("Problema-viajero-TSP/result/GRASP" +
+           "-max_local-" + str(max_local) + ".csv", index=False)

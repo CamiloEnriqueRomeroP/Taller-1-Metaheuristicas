@@ -22,7 +22,14 @@ class solution:
         positions = np.random.choice(self.problem.size, self.problem.size, replace=False)
         self.cells = np.zeros(self.problem.size, int)
         self.add_items_while_keep_capacity(positions, 0)
-        self.evaluate()    
+        self.evaluate()           
+
+    def add_items_while_keep_capacity(self, positions, weight):
+        self.weight = weight
+        for p in positions:
+            if self.weight + self.problem.weights[p] < self.problem.capacity:
+                self.cells[p] = 1
+                self.weight += self.problem.weights[p]   
     
     def Initialization_GRASP(self):   
         S_rand = [] 
@@ -45,14 +52,7 @@ class solution:
                     self.cells[s_random_component[0]]=1      
                 else:
                     self.evaluate()  
-                    break            
-
-    def add_items_while_keep_capacity(self, positions, weight):
-        self.weight = weight
-        for p in positions:
-            if self.weight + self.problem.weights[p] < self.problem.capacity:
-                self.cells[p] = 1
-                self.weight += self.problem.weights[p]
+                    break  
 
     def tweak(self):
         selectedPositions = np.where(self.cells == 1)[0]

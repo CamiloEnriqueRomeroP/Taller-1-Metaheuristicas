@@ -1,123 +1,41 @@
-import numpy as np
-from solution import solution
+import proc
 
 
-class GRASP:
-    def __init__(self, max_efos: int, max_local: int):
-        self.max_efos = max_efos
-        self.max_local = max_local
+proc LS_3_Opt(tour: var Tour_Array) =
+  ## Iteratively optimizes given tour using 3-opt moves.
+  # Shortens the tour by repeating 3-opt moves until no improvement
+  # can by done; in every iteration immediatelly makes permanent
+  # change from the first move found that gives any length gain.
+  var
+    locallyOptimal: bool = false
+    i, j, k: Tour_Index
+    X1, X2, Y1, Y2, Z1, Z2: City_Number
+    optCase: Reconnection_3_optCase
+    gainExpected: Length_Gain
 
-    def evolve(self, seed: int, problem):
-        self.problem = problem
-        np.random.seed(seed)
-        best_fitness_history = np.zeros(self.max_efos, float)
-        efos = 0
-        stop_optimal = self.problem.OptimalKnown
-        self.best = solution(problem)
-        stop = False
-        while efos < self.max_efos:
-            C = solution(problem)
-            S_rand = []
-            S = solution(problem)
-            S = []
-            S_copy = solution(S.problem)
-            S_solution = solution(problem)  
-            C_prima = []
-            C_dos_prima = []
-            weight = 0
-            # S.Initialization()  # Random initialization and calculating fitness
-            # Perform the hill climbig optimization (local)
-            if efos == 0:
-                self.best.from_solution(S)  # self.best is a full copy of S
-                best_fitness_history[0] = self.best.fitness
-            C_prima = C.problem.items
-            for var in range(C.cells.size):
-                if not bool(C_prima):
-                    break
-                else:
-                    C_Ordernado = sorted(C_prima, key=lambda x: x[3], reverse=True)
-                    C_dos_prima = int(len(C_Ordernado)*0.33)+1
-                    i = np.random.randint(C_dos_prima)
-                    s_random_component = C_Ordernado[i]  
-                                                     
-                    S_copy.cells = np.copy(S.cells)
-                    S_copy.cells[s_random_component[0]] = 1
-                    new_weight = s_random_component[1]
-                    
-                    # C_Ordernado = sorted(C_prima, key=lambda x: x[3], reverse=True)
-                    # C_dos_prima = C_Ordernado[0:int(len(C_Ordernado)*0.5)+1]
-                    # i = np.random.randint(len(C_dos_prima))
-                    # s_random_component = C_dos_prima[i]
-                    
-                    S_solution.cells[s_random_component[0]]=1
-                    S_solution.evaluate()
-                    weight = S_solution.weight
-                    #s_random_component = C_dos_prima[i]   
-                                     
-                    # S_copy.cells = np.copy(S.cells)
-                    # S_copy.cells[s_random_component[0]]=1
-                    
-                    S_copy.evaluate()
-                    weight = S_copy.weight
-                    
-                    if weight < problem.capacity: 
-                        if not bool(S):
-                            S.append(s_random_component)
-                        if not bool(S_rand):
-                            S_rand.append(s_random_component)
-                            continue     
-                        S.append(s_random_component)      
-                        S_set = {tuple(sublista) for sublista in S}
-                        S_rand.append(s_random_component)      
-                        S_set = {tuple(sublista) for sublista in S_rand}
-                        C_sin_repeticiones = [sublista for sublista in C.problem.items if tuple(sublista) not in S_set]
-                        C_prima = C_sin_repeticiones                        
-                        print(S_solution.cells)
-                        C_prima = C_sin_repeticiones  
-                        S.cells[s_random_component[0]]=1                      
-                        print(S)                    
-                    else:
-                        print("No es factible")
-                        break
-                        S.evaluate()
-                        weight = S.weight
-                        break  
-                    
-                    # if weight + new_weight < problem.capacity:
-                    #     weight = weight + new_weight
-                    #     if S_rand != []:
-                    #         S_rand.append(s_random_component)
-                    #         S_set = {tuple(sublista) for sublista in S_rand}
-                    #         C_sin_repeticiones = [
-                    #         sublista for sublista in C.problem.items if tuple(sublista) not in S_set]
-                    #         C_prima = C_sin_repeticiones
-                    #         S.cells[s_random_component[0]] = 1
-                    #         print(S.cells)
-                    #     else:
-                    #         S_rand.append(s_random_component)
-                    # else:
-                    #     # print("No es factible")
-                    #     break
+  while not locallyOptimal:
+    locallyOptimal = true
 
-            for opt in range(1, self.max_local):
-                R = solution(S.problem)
-                R.from_solution(S)  # R is a full copy of S
-                R.tweak()  # Tweeking and calculating fitness
-                if R.fitness > S.fitness:
-                    S.from_solution(R)
-                if S.fitness > self.best.fitness:
-                    self.best.from_solution(S)  # self.best is a full copy of S
-                best_fitness_history[efos] = self.best.fitness
-                efos += 1
-                if S.fitness >= stop_optimal:
-                    best_fitness_history[efos:self.max_efos] = self.best.fitness
-                    efos = self.max_efos
-                    stop = True
-                    break
-                if efos >= self.max_efos:
-                    break
-        return best_fitness_history, stop
+    block four_loops:
+      for counter_1 in 0 .. N-1:
+        i = counter_1 # first cut after i
+        X1 = tour[i]
+        X2 = tour[(i+1) mod N]
+        for counter_2 in 1 .. N-3:
+          j = (i + counter_2) mod N # second cut after j
+          Y1 = tour[j]
+          Y2 = tour[(j+1) mod N]
+          for counter_3 in counter_2+1 .. N-1:
+            k = (i + counter_3) mod N  # third cut after k
+            Z1 = tour[k]
+            Z2 = tour[(k+1) mod N]
 
-    def __str__(self):
-        result = "GRASP-maxlocal:" + str(self.max_local)
-        return result
+            for optCase in [opt3_case_3, opt3_case_6, opt3_case_7]:
+              gainExpected = Gain_From_3_Opt(X1, X2,
+                                             Y1, Y2,
+                                             Z1, Z2,
+                                             optCase)
+              if gainExpected > 0:
+                Make_3_Opt_Move(tour, i, j, k, optCase)
+                locallyOptimal = false
+                break four_loops

@@ -25,8 +25,11 @@ class SA:
             R.from_solution(S)  # R is a full copy of S
             R.tweak()
             t = t - to/(self.max_efos + 1)
-            ale = np.random.uniform()
-            prob = math.exp((R.fitness - S.fitness) / t)
+            ale = np.random.uniform()            
+            try: 
+                prob = math.exp((R.fitness - S.fitness) / t) # Minimizing
+            except:
+                prob = 1
             if R.fitness > S.fitness or ale < prob:
                 S.from_solution(R)
             if S.fitness > self.best.fitness:

@@ -15,7 +15,7 @@ class GRASP:
         stop_optimal = self.problem.bestFitness
         stop = False                 
         while efos < self.max_efos:            
-            S = solution(problem)  
+            S = solution(problem) 
             S.Initialization_GRASP()                  
             if efos == 0:
                 self.best = solution(problem) 
@@ -25,13 +25,13 @@ class GRASP:
                 R = solution(S.problem)
                 R.from_solution(S)  # R is a full copy of S
                 R.tweak()  # Tweeking and calculating fitness
-                if R.fitness > S.fitness:
+                if R.fitness < S.fitness:
                     S.from_solution(R)
-                if S.fitness > self.best.fitness:
+                if S.fitness < self.best.fitness:
                     self.best.from_solution(S)  # self.best is a full copy of S
                 best_fitness_history[efos] = self.best.fitness
                 efos += 1
-                if S.fitness >= stop_optimal:
+                if S.fitness <= stop_optimal:
                     best_fitness_history[efos:self.max_efos] = self.best.fitness
                     stop = True
                     efos = self.max_efos                    

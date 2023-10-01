@@ -18,8 +18,8 @@ class SA:
         self.best = solution(d, f)
         self.best.from_solution(S) # self.best is a full copy of S
         t= to
-        optimal = self.function.optimum
-        stop_optimal = optimal + 0.00001
+        stop_optimal = self.function.optimum + 0.00001
+        stop = False
         for iteration in range(1, self.max_efos):
             R = solution(S.size, S.function)
             R.from_solution(S) # R is a full copy of S
@@ -37,10 +37,11 @@ class SA:
             best_fitness_history[iteration] = self.best.fitness
             if S.fitness <= stop_optimal:
                 best_fitness_history[iteration:self.max_efos] = self.best.fitness
+                stop = True
                 iteration = self.max_efos
                 break
-        return best_fitness_history
+        return best_fitness_history, stop
 
     def __str__(self):
-        result = "SA:-bandwidth:" + str(self.bandwidth)
+        result = "SA-bandwidth:" + str(self.bandwidth)
         return result

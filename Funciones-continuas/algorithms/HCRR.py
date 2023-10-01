@@ -12,8 +12,8 @@ class HCRR:
         np.random.seed (seed)
         best_fitness_history = np.zeros(self.max_efos, float)
         efos = 0
-        optimal = self.function.optimum
-        stop_optimal = optimal + 0.00001
+        stop_optimal = self.function.optimum + 0.00001
+        stop = False
         while efos < self.max_efos:
           S = solution(d, f) # S is a new Solution
           S.Initialization() # Random initialization and calculating fitness
@@ -34,13 +34,14 @@ class HCRR:
               efos+=1
               if S.fitness <= stop_optimal:
                 best_fitness_history[efos:self.max_efos] = self.best.fitness
+                stop = True
                 efos = self.max_efos
                 break
               if efos >= self.max_efos:
                 break
-        return best_fitness_history
+        return best_fitness_history, stop
 
     def __str__(self):
-        result = "HCRR:-bandwidth:" + str(self.bandwidth)
+        result = "HCRR-bandwidth:" + str(self.bandwidth)
         result += "-maxlocal:" + str(self.max_local)
         return result

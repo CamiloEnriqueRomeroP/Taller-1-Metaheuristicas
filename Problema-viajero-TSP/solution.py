@@ -57,51 +57,75 @@ class solution:
         self.fitness = self.problem.evaluate(self.cells)
 
     def tweak_3opt(self):
-        Inicial_Solution = self.cells
-        Part_1 = Inicial_Solution[0:int(len(Inicial_Solution)/3)+1]   
-        Part_2 = Inicial_Solution[int(len(Inicial_Solution)/3)+1:int(len(Inicial_Solution)*2/3)+1] 
-        Part_3 = Inicial_Solution[int(len(Inicial_Solution)*2/3)+1:int(len(Inicial_Solution))] 
-        X1 = np.random.choice(Part_1[0:len(Part_1)-1], 1)
-        X2 = Part_1[X1+1]
-        if X1 == Part_1[0]:
-            X0 = Part_3[-1]
+        Part_1 = self.cells[0:int(len(self.cells)/3)+1]   
+        Part_2 = self.cells[int(len(self.cells)/3)+1:int(len(self.cells)*2/3)+1] 
+        Part_3 = self.cells[int(len(self.cells)*2/3)+1:int(len(self.cells))] 
+        
+        partial_solucion = [Part_1, Part_2, Part_3]
+        print("Fitness caculado con formula antes") 
+        print(self.fitness)
+        
+        x0, x1, x2, x3 = self.construct_partial_solution(partial_solucion, 0)
+        y0, y1, y2, y3 = self.construct_partial_solution(partial_solucion, 1)
+        z0, z1, z2, z3 = self.construct_partial_solution(partial_solucion, 2)
+              
+        # A = x1,x2
+        # B = y1,y2
+        # C = z1,z2 
+        # A, B, C = original
+        
+        self.fitness = self.new_fitness(x0, x1, x2, x3)         
+        self.cells = self.swapPositions(self.cells, x1, x2)  
+            
+        # A,B',C =
+        #     self.fitness = self.new_fitness(y0, y1, y2, y3)         
+        #     self.cells = self.swapPositions(self.cells, y1, y2) 
+            
+        # A,B,C' =
+        #     self.fitness = self.new_fitness(z0, z1, z2, z3)         
+        #     self.cells = self.swapPositions(self.cells, z1, z2)  
+
+
+
+    def construct_partial_solution(self,partial_solucion, count):
+        local_part = partial_solucion[count]
+        i = np.random.randint(len(local_part)-1)
+        pos_1 = local_part[i]
+        pos_2 = local_part[i+1]       
+        if i == 0:
+            if count == 0:
+                previous_part = partial_solucion[2]
+                pos_0 = previous_part[-1]
+            else:
+                previous_part = partial_solucion[count-1]
+                pos_0 = previous_part[-1]
         else:
-            X0 = Part_1[X1-1]
-            
-            
-            
-        self.fitness = self.problem.evaluate(self.cells)
-        # falta definir las seis ciudades a modificar
-        C_1 = 0
-        C_2 = 1
-        C_3 = 2
-        C_4 = 3
-        C_5 = 4
-        X1 = C_2
-        X2 = C_2+1
-        Y1 = C_3
-        Y2 = C_3+1
-        Z1 = C_4
-        Z2 = C_4+1
-        self.fitness = self.new_fitness(X1, X2)  
-        self.cells = self.swapPositions(self.cells, X1, X2)
-             
+            pos_0 = local_part[i-1]            
+        if i == len(local_part)-2:
+            if count == 2:
+                next_part = partial_solucion[0]
+                pos_3 = next_part[0]
+            else:
+                next_part = partial_solucion[count+1]
+                pos_3 = next_part[0]
+        else:              
+            pos_3 = local_part[i+2]             
+        return pos_0, pos_1, pos_2, pos_3
 
-        self.fitness = self.new_fitness(Y1, Y2) 
-        self.cells = self.swapPositions(self.cells, Y1, Y2)
-        print(self.cells)
-        print(self.fitness)
-        self.fitness = self.new_fitness(Z1, Z2) 
-        self.cells = self.swapPositions(self.cells, Z1, Z2)
-        print(self.cells)
-        print(self.fitness)
-
-    def new_fitness(self, Start, End):
-        subtraction = self.problem.distance(self.cells[Start-1], self.cells[Start])+self.problem.distance(self.cells[End], self.cells[End+1])
-        addition = self.problem.distance(self.cells[Start-1], self.cells[End])+self.problem.distance(self.cells[Start], self.cells[End+1])
+    def new_fitness(self, Previous_Start, Start, End, Post_End):
+        subtraction = self.problem.distance(Previous_Start, Start)+self.problem.distance(End, Post_End)
+        addition = self.problem.distance(Previous_Start, End)+self.problem.distance(Start, Post_End)
         return self.fitness-subtraction+addition
     
-    def swapPositions(self, cells, pos1, pos2):
+    def swapPositions(self, cells, start, end):
+        for i in range(len(cells)):
+            if cells[i] == start:
+                pos1 = i                
+                break
+        for j in range(len(cells)):
+            if cells[j] == end:
+                pos2 = j                
+                break                
         cells[pos1], cells[pos2] = cells[pos2], cells[pos1]
         return self.cells
 

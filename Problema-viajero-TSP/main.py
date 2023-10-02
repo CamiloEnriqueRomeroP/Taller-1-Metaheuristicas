@@ -28,8 +28,8 @@ hc = HC(max_efos=max_efos)
 hcrr = HCRR(max_efos=max_efos, max_local=max_local)
 sa = SA(max_efos=max_efos)
 grasp = GRASP(max_efos=max_efos, max_local=max_local)
-#algorithms = [hc, hcrr, sa, grasp]
-algorithms = [grasp]
+algorithms = [hc, hcrr, sa, grasp]
+#algorithms = [grasp]
 
 df = pd.DataFrame({'Problem': pd.Series(dtype='str'),
                    'Average Fitness': pd.Series(dtype='float'),

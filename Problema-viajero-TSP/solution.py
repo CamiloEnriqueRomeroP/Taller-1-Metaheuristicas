@@ -29,8 +29,7 @@ class solution:
             if len(C_prima) == 0:
                 break
             else:
-                C_sorted = sorted(
-                    C_prima, key=lambda x: x[last_location+1], reverse=False)
+                C_sorted = sorted(C_prima, key=lambda x: x[last_location+1], reverse=False)
                 C_two_prima = int(len(C_sorted)*0.33)+1
                 pos = np.random.randint(C_two_prima)
                 s_random_component = C_sorted[pos]
@@ -57,37 +56,69 @@ class solution:
         self.fitness = self.problem.evaluate(self.cells)
 
     def tweak_3opt(self):
+        acum_fitness = []
         Part_1 = self.cells[0:int(len(self.cells)/3)+1]   
         Part_2 = self.cells[int(len(self.cells)/3)+1:int(len(self.cells)*2/3)+1] 
         Part_3 = self.cells[int(len(self.cells)*2/3)+1:int(len(self.cells))] 
         
         partial_solucion = [Part_1, Part_2, Part_3]
-        print("Fitness caculado con formula antes") 
-        print(self.fitness)
-        
+       
         x0, x1, x2, x3 = self.construct_partial_solution(partial_solucion, 0)
         y0, y1, y2, y3 = self.construct_partial_solution(partial_solucion, 1)
         z0, z1, z2, z3 = self.construct_partial_solution(partial_solucion, 2)
-              
-        # A = x1,x2
-        # B = y1,y2
-        # C = z1,z2 
-        # A, B, C = original
         
-        self.fitness = self.new_fitness(x0, x1, x2, x3)         
-        self.cells = self.swapPositions(self.cells, x1, x2)  
-            
-        # A,B',C =
-        #     self.fitness = self.new_fitness(y0, y1, y2, y3)         
-        #     self.cells = self.swapPositions(self.cells, y1, y2) 
-            
-        # A,B,C' =
-        #     self.fitness = self.new_fitness(z0, z1, z2, z3)         
-        #     self.cells = self.swapPositions(self.cells, z1, z2)  
+        copy_cells = np.copy(self.cells)
+                        
+        # A, B, C
+        fitness_ABC = self.fitness
+        solution_ABC = np.copy(self.cells)
+        
+        # A', B, C
+        fitness_ApBC = self.fitness-self.new_fitness(x0, x1, x2, x3)  
+        solution_ApBC = self.swapPositions(copy_cells, x1, x2) 
+        copy_cells = np.copy(self.cells)
+        # A, B', C        
+        fitness_ABpC = self.fitness-self.new_fitness(y0, y1, y2, y3)  
+        solution_ABpC = self.swapPositions(copy_cells, y1, y2) 
+        copy_cells = np.copy(self.cells)
+        # A, B, C'
+        fitness_ABCp = self.fitness-self.new_fitness(z0, z1, z2, z3)  
+        solution_ABCp = self.swapPositions(copy_cells, z1, z2) 
+        copy_cells = np.copy(self.cells)
+        # A', B', C
+        fitness_ApBpC = self.fitness-self.new_fitness(x0, x1, x2, x3)-self.new_fitness(y0, y1, y2, y3)   
+        solution_ApBpC = self.swapPositions(copy_cells, x1, x2) 
+        solution_ApBpC = self.swapPositions(copy_cells, y1, y2) 
+        copy_cells = np.copy(self.cells)
+        # A, B', C'
+        fitness_ABpCp = self.fitness-self.new_fitness(y0, y1, y2, y3)-self.new_fitness(z0, z1, z2, z3)    
+        solution_ABpCp = self.swapPositions(copy_cells, y1, y2)   
+        solution_ABpCp = self.swapPositions(copy_cells, z1, z2) 
+        copy_cells = np.copy(self.cells)
+        # A', B, C'
+        fitness_ApBCp = self.fitness-self.new_fitness(x0, x1, x2, x3)-self.new_fitness(z0, z1, z2, z3)  
+        solution_ApBCp = self.swapPositions(copy_cells, x1, x2) 
+        solution_ApBCp = self.swapPositions(copy_cells, z1, z2) 
+        copy_cells = np.copy(self.cells)
+        # A', B', C'
+        fitness_ApBpCp = self.fitness-self.new_fitness(x0, x1, x2, x3)-self.new_fitness(y0, y1, y2, y3)-self.new_fitness(z0, z1, z2, z3)     
+        solution_ApBpCp = self.swapPositions(copy_cells, x1, x2) 
+        solution_ApBpCp = self.swapPositions(copy_cells, y1, y2) 
+        solution_ApBpCp = self.swapPositions(copy_cells, z1, z2) 
+        copy_cells = np.copy(self.cells)
+        
+        acum_fitness = [[fitness_ABC,solution_ABC],
+                        [fitness_ApBC,solution_ApBC],
+                        [fitness_ABpC,solution_ABpC],
+                        [fitness_ABCp,solution_ABCp],
+                        [fitness_ApBpC,solution_ApBpC],
+                        [fitness_ABpCp,solution_ABpCp],
+                        [fitness_ApBCp,solution_ApBCp],
+                        [fitness_ApBpCp,solution_ApBpCp]]
+        
+        est_fitness = acum_fitness.max(axis=0)
 
-
-
-    def construct_partial_solution(self,partial_solucion, count):
+    def construct_partial_solution(self, partial_solucion, count):
         local_part = partial_solucion[count]
         i = np.random.randint(len(local_part)-1)
         pos_1 = local_part[i]
@@ -115,19 +146,19 @@ class solution:
     def new_fitness(self, Previous_Start, Start, End, Post_End):
         subtraction = self.problem.distance(Previous_Start, Start)+self.problem.distance(End, Post_End)
         addition = self.problem.distance(Previous_Start, End)+self.problem.distance(Start, Post_End)
-        return self.fitness-subtraction+addition
+        return addition - subtraction
     
-    def swapPositions(self, cells, start, end):
-        for i in range(len(cells)):
-            if cells[i] == start:
+    def swapPositions(self, copy_cells, start, end):
+        for i in range(len(copy_cells)):
+            if copy_cells[i] == start:
                 pos1 = i                
                 break
-        for j in range(len(cells)):
-            if cells[j] == end:
+        for j in range(len(copy_cells)):
+            if copy_cells[j] == end:
                 pos2 = j                
                 break                
-        cells[pos1], cells[pos2] = cells[pos2], cells[pos1]
-        return self.cells
+        copy_cells[pos1], copy_cells[pos2] = copy_cells[pos2], copy_cells[pos1]
+        return copy_cells
 
     def __str__(self):
         return "cells:" + str(self.cells) + \

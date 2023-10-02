@@ -56,9 +56,9 @@ class tsp:
 
     def evaluate(self, cells):
         fitness = 0
-        for i in range(self.size):
+        for i in range(len(cells)):
             j = i + 1
-            if j >= self.size:
+            if j >= len(cells):
                 j = 0
             fitness = fitness + self.distances[cells[i]][cells[j]]
         return fitness

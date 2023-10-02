@@ -11,7 +11,7 @@ from plot_convergence_curve import plot_convergence_curve
 # myPath = "/problems/"
 myPath = "Problema-viajero-TSP/problems/"
 
-max_efos = 50000
+max_efos = 5000
 repetitions = 31
 
 # Afinamiento de parametros

@@ -11,11 +11,11 @@ from plot_convergence_curve import plot_convergence_curve
 # myPath = "/problems/"
 myPath = "Problema-viajero-TSP/problems/"
 
-max_efos = 50000
+max_efos = 5000
 repetitions = 31
 
 # Afinamiento de parametros
-max_local = 500
+max_local = 501
 
 myP1 = tsp(myPath + "01-easy5.txt")
 myP2 = tsp(myPath + "02-ulysses16.txt")
@@ -23,13 +23,12 @@ myP3 = tsp(myPath + "03-fri26.txt")
 myP4 = tsp(myPath + "04-dantzig42.txt")
 myP5 = tsp(myPath + "05-att48.txt")
 problems = [myP1, myP2, myP3, myP4, myP5]
-#problems = [myP1]
 hc = HC(max_efos=max_efos)
 hcrr = HCRR(max_efos=max_efos, max_local=max_local)
 sa = SA(max_efos=max_efos)
 grasp = GRASP(max_efos=max_efos, max_local=max_local)
-#algorithms = [hc, hcrr, sa, grasp]
 algorithms = [hc, hcrr, sa, grasp]
+#algorithms = [grasp]
 
 df = pd.DataFrame({'Problem': pd.Series(dtype='str'),
                    'Average Fitness': pd.Series(dtype='float'),
@@ -37,24 +36,9 @@ df = pd.DataFrame({'Problem': pd.Series(dtype='str'),
                    'Best Fitness': pd.Series(dtype='float'),
                    'Worst Fitness': pd.Series(dtype='float'),
                    'Execution Time': pd.Series(dtype='float')})
-df2 = pd.DataFrame({'Problem': pd.Series(dtype='str'),
-                   'Average Fitness': pd.Series(dtype='float'),
-                    'Standard Deviation': pd.Series(dtype='float'),
-                    'Best Fitness': pd.Series(dtype='float'),
-                    'Worst Fitness': pd.Series(dtype='float'),
-                    'Execution Time': pd.Series(dtype='float')})
-df3 = pd.DataFrame({'Problem': pd.Series(dtype='str'),
-                   'Average Fitness': pd.Series(dtype='float'),
-                    'Standard Deviation': pd.Series(dtype='float'),
-                    'Best Fitness': pd.Series(dtype='float'),
-                    'Worst Fitness': pd.Series(dtype='float'),
-                    'Execution Time': pd.Series(dtype='float')})
-df4 = pd.DataFrame({'Problem': pd.Series(dtype='str'),
-                   'Average Fitness': pd.Series(dtype='float'),
-                    'Standard Deviation': pd.Series(dtype='float'),
-                    'Best Fitness': pd.Series(dtype='float'),
-                    'Worst Fitness': pd.Series(dtype='float'),
-                    'Execution Time': pd.Series(dtype='float')})
+df2 = df
+df3 = df
+df4 = df
 
 num_p = 0
 
@@ -120,22 +104,12 @@ for p in problems:
                              'Best Fitness': str(best_fitness_along_seeds[1]),
                              'Worst Fitness': str(worst_fitness_along_seeds[1]),
                              'Execution Time': str(alg_avg_time[1])}, index=[0])
+    new_row2 = new_row
+    new_row3 = new_row
+    new_row4 = new_row
+    df = pd.concat([df.loc[:], new_row]).reset_index(drop=True)
     df2 = pd.concat([df2.loc[:], new_row2]).reset_index(drop=True)
-
-    new_row3 = pd.DataFrame({'Problem': str(p),
-                             'Average Fitness': str(best_avg_fitness_alg[2]),
-                             'Standard Deviation': str(best_std_fitness_alg[2]),
-                             'Best Fitness': str(best_fitness_along_seeds[2]),
-                             'Worst Fitness': str(worst_fitness_along_seeds[2]),
-                             'Execution Time': str(alg_avg_time[2])}, index=[0])
     df3 = pd.concat([df3.loc[:], new_row3]).reset_index(drop=True)
-
-    new_row4 = pd.DataFrame({'Problem': str(p),
-                             'Average Fitness':str(best_avg_fitness_alg[3]),
-                             'Standard Deviation':str(best_std_fitness_alg[3]),
-                             'Best Fitness':str(best_fitness_along_seeds[3]),
-                             'Worst Fitness':str(worst_fitness_along_seeds[3]),
-                             'Execution Time': str(alg_avg_time[3])}, index=[0])
     df4 = pd.concat([df4.loc[:], new_row4]).reset_index(drop=True)
 
 df.to_csv("Problema-viajero-TSP/result/HC" +

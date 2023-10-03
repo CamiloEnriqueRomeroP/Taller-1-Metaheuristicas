@@ -40,9 +40,9 @@ class solution:
                 last_location = int(s_random_component[0])
 
         for i in range(0, self.cells.size):
-            constructing_solution = np.append(
-                constructing_solution, S_rand[i][0])
-        self.cells = constructing_solution.astype(int)
+            constructing_solution.append(S_rand[i][0])        
+        constructing_solution_np = np.array(constructing_solution)
+        self.cells = constructing_solution_np.astype(int)
         self.fitness = self.problem.evaluate(self.cells)
 
     # Original Tweak

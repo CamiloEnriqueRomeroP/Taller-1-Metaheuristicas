@@ -14,21 +14,21 @@ from algorithms.SA import SA
 from algorithms.GRASP import GRASP
 
 d = 50
-max_efos = 5000
+max_efos = 50000
 repetitions = 31
 
 # Afinamiento de parametros
 bw = 0.1
-max_local = 102
+max_local = 1000
 
-# functions = [sphere(), step(), schwefel(), ackley(), griewank(), rastrigin()]
-functions = [sphere()]
+functions = [sphere(), step(), schwefel(), ackley(), griewank(), rastrigin()]
+#functions = [schwefel(), ackley()]
 hc = HC(max_efos=max_efos, bandwidth=bw)
 hcrr = HCRR(max_efos=max_efos, max_local=max_local, bandwidth=bw)
 sa = SA(max_efos=max_efos, bandwidth=bw)
 grasp = GRASP(max_local=max_local, max_efos=max_efos, bandwidth=bw)
-#algorithms = [hc, hcrr, sa, grasp]
-algorithms = [grasp]
+algorithms = [hc, hcrr, sa, grasp]
+#algorithms = [grasp]
 
 df = pd.DataFrame({'Problem': pd.Series(dtype='str'),
                    'Average Fitness': pd.Series(dtype='float'),
@@ -36,24 +36,9 @@ df = pd.DataFrame({'Problem': pd.Series(dtype='str'),
                    'Best Fitness': pd.Series(dtype='float'),
                    'Worst Fitness': pd.Series(dtype='float'),
                    'Execution Time': pd.Series(dtype='float')})
-df2 = pd.DataFrame({'Problem': pd.Series(dtype='str'),
-                   'Average Fitness': pd.Series(dtype='float'),
-                    'Standard Deviation': pd.Series(dtype='float'),
-                    'Best Fitness': pd.Series(dtype='float'),
-                    'Worst Fitness': pd.Series(dtype='float'),
-                    'Execution Time': pd.Series(dtype='float')})
-df3 = pd.DataFrame({'Problem': pd.Series(dtype='str'),
-                   'Average Fitness': pd.Series(dtype='float'),
-                    'Standard Deviation': pd.Series(dtype='float'),
-                    'Best Fitness': pd.Series(dtype='float'),
-                    'Worst Fitness': pd.Series(dtype='float'),
-                    'Execution Time': pd.Series(dtype='float')})
-df4 = pd.DataFrame({'Problem': pd.Series(dtype='str'),
-                   'Average Fitness': pd.Series(dtype='float'),
-                    'Standard Deviation': pd.Series(dtype='float'),
-                    'Best Fitness': pd.Series(dtype='float'),
-                    'Worst Fitness': pd.Series(dtype='float'),
-                    'Execution Time': pd.Series(dtype='float')})
+df2 = df
+df3 = df
+df4 = df
 
 num_f = 0
 
@@ -89,7 +74,6 @@ for f in functions:
         avg_best_fitnes = np.average(best_fitnes)
         std_best_fitnes = np.std(best_fitnes)
         avg_time = np.average(time_by_repetition)
-
         names_alg.append(str(alg))
         avg_curve_alg.append(avg_curve)
         best_avg_fitness_alg.append(avg_best_fitnes)
@@ -112,30 +96,12 @@ for f in functions:
                             'Best Fitness': str(best_fitness_along_seeds[0]),
                             'Worst Fitness': str(worst_fitness_along_seeds[0]),
                             'Execution Time': str(alg_avg_time[0])}, index=[0])
+    new_row2 = new_row
+    new_row3 = new_row
+    new_row4 = new_row
     df = pd.concat([df.loc[:], new_row]).reset_index(drop=True)
-
-    new_row2 = pd.DataFrame({'Problem': str(f),
-                             'Average Fitness': str(best_avg_fitness_alg[1]),
-                             'Standard Deviation': str(best_std_fitness_alg[1]),
-                             'Best Fitness': str(best_fitness_along_seeds[1]),
-                             'Worst Fitness': str(worst_fitness_along_seeds[1]),
-                             'Execution Time': str(alg_avg_time[1])}, index=[0])
     df2 = pd.concat([df2.loc[:], new_row2]).reset_index(drop=True)
-
-    new_row3 = pd.DataFrame({'Problem': str(f),
-                             'Average Fitness': str(best_avg_fitness_alg[2]),
-                             'Standard Deviation': str(best_std_fitness_alg[2]),
-                             'Best Fitness': str(best_fitness_along_seeds[2]),
-                             'Worst Fitness': str(worst_fitness_along_seeds[2]),
-                             'Execution Time': str(alg_avg_time[2])}, index=[0])
     df3 = pd.concat([df3.loc[:], new_row3]).reset_index(drop=True)
-
-    new_row4 = pd.DataFrame({'Problem': str(f),
-                             'Average Fitness':str(best_avg_fitness_alg[3]),
-                             'Standard Deviation':str(best_std_fitness_alg[3]),
-                             'Best Fitness':str(best_fitness_along_seeds[3]),
-                             'Worst Fitness':str(worst_fitness_along_seeds[3]),
-                             'Execution Time':str(alg_avg_time[3])}, index=[0])
     df4 = pd.concat([df4.loc[:], new_row4]).reset_index(drop=True)
 
 df.to_csv("Funciones-continuas/result/HC" + "-bw-" + str(bw) +

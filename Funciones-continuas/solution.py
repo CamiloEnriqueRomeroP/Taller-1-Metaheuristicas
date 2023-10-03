@@ -1,6 +1,5 @@
 import numpy as np
 
-
 class solution:
 
     def __init__(self, d: int, f):
@@ -21,31 +20,36 @@ class solution:
             low=self.function.lower_bound, high=self.function.upper_bound, size=(self.size,))
         self.fitness = self.function.evaluate(self.cells)
         
-    def Initialization_GRASP(self):
-        self.cells = np.random.uniform(low=self.function.lower_bound, high=self.function.upper_bound, size=(self.size,))
-        self.fitness = self.function.evaluate(self.cells)
-        
-        S_rand = [] 
-        C_prima = self.size
+    def Initialization_GRASP(self):        
+        S_rand = []
+        param = []
+        fitness_component = []   
+        components = np.random.uniform(low=self.function.lower_bound, high=self.function.upper_bound, size=(self.size,))
+        for d in range (0, self.size):            
+            fitness_component.append(self.function.evaluate(components[d:d+1]))    
+        new_d_list = np.c_[fitness_component, components]
+        C_prima = np.copy(new_d_list)             
+        constructing_solution = []
         for var in range(self.cells.size):
-            if not bool(C_prima):
+            if len(C_prima) == 0:
                 break
             else:
-                C_Ordernado = sorted(C_prima, key=lambda x: x[3], reverse=True)                    
-                C_dos_prima = int(len(C_Ordernado)*0.33)+1
-                i = np.random.randint(C_dos_prima)
-                s_random_component = C_Ordernado[i]
-                weight_test = s_random_component[1]
-                total_weight = total_weight + weight_test           
-                if total_weight <= self.problem.capacity: 
-                    S_rand.append(s_random_component)      
-                    S_set = {tuple(sublista) for sublista in S_rand}
-                    C_prima = [sublista for sublista in self.problem.items if tuple(sublista) not in S_set]  
-                    self.cells[s_random_component[0]]=1      
-                else:
-                    self.fitness = self.function.evaluate(self.cells) 
-                    break  
-
+                C_sorted = sorted(C_prima, key=lambda x: x[0], reverse=False)
+                C_two_prima = int(len(C_sorted)*0.33)+1
+                pos = np.random.randint(C_two_prima)
+                s_random_component = C_sorted[pos]
+                S_rand.append(s_random_component)
+                S_set = {tuple(sublist) for sublist in S_rand}
+                C_prima = [sublist for sublist in new_d_list if tuple(
+                    sublist) not in S_set]
+        
+        for i in range(0, self.cells.size):
+            constructing_solution.append(S_rand[i][1])        
+        constructing_solution_np = np.array(constructing_solution)
+        self.cells = constructing_solution_np.astype(int)
+        self.fitness = self.function.evaluate(self.cells)
+        
+                
     def tweak(self, bandwidth: float):
         bandwidths = np.random.uniform(
             low=-bandwidth, high=bandwidth, size=(self.size,))
@@ -54,7 +58,7 @@ class solution:
                    self.function.lower_bound] = self.function.lower_bound
         self.cells[self.cells >
                    self.function.upper_bound] = self.function.upper_bound
-        self.fitness = self.function.evaluate(self.cells)
+        self.fitness = self.function.evaluate(self.cells)        
 
     # def Initialization(self):
     #     # Bimodal distribution

@@ -52,30 +52,9 @@ df = pd.DataFrame({'Problem': pd.Series(dtype='str'),
                    'Average Execution Time': pd.Series(dtype='float')
                    #,"Total Execution Time": pd.Series(dtype='float')
                    })
-df2 = pd.DataFrame({'Problem': pd.Series(dtype='str'),
-                   'Average Fitness': pd.Series(dtype='float'),
-                   'Standard Deviation': pd.Series(dtype='float'),
-                   'Best Fitness': pd.Series(dtype='float'),
-                   'Worst Fitness': pd.Series(dtype='float'),
-                   'Average Execution Time': pd.Series(dtype='float')
-                   #,"Total Execution Time": pd.Series(dtype='float')
-                   })
-df3 = pd.DataFrame({'Problem': pd.Series(dtype='str'),
-                   'Average Fitness': pd.Series(dtype='float'),
-                   'Standard Deviation': pd.Series(dtype='float'),
-                   'Best Fitness': pd.Series(dtype='float'),
-                   'Worst Fitness': pd.Series(dtype='float'),
-                   'Average Execution Time': pd.Series(dtype='float')
-                   #,"Total Execution Time": pd.Series(dtype='float')
-                   })
-df4 = pd.DataFrame({'Problem': pd.Series(dtype='str'),
-                   'Average Fitness': pd.Series(dtype='float'),
-                   'Standard Deviation': pd.Series(dtype='float'),
-                   'Best Fitness': pd.Series(dtype='float'),
-                   'Worst Fitness': pd.Series(dtype='float'),
-                   'Average Execution Time': pd.Series(dtype='float')
-                   #,"Total Execution Time": pd.Series(dtype='float')
-                   })
+df2 = df
+df3 = df
+df4 = df
 
 num_p = 0
 
@@ -131,44 +110,18 @@ for p in problems:
     time_p = end_timer_p - start_timer_p
     print("Tiempo de ejecucion " + str(name_problem[num_p]) + " : "+ str(time_p))
     num_p = num_p + 1
-    new_row = pd.DataFrame({'Problem': str(p),
+    new_row = pd.DataFrame({'Problem': str(f),
                             'Average Fitness': str(best_avg_fitness_alg[0]),
                             'Standard Deviation': str(best_std_fitness_alg[0]),
                             'Best Fitness': str(best_fitness_along_seeds[0]),
                             'Worst Fitness': str(worst_fitness_along_seeds[0]),
-                            'Average Execution Time': str(alg_avg_time[0]),
-                            #"Total Execution Time": str(total_time[0])
-                            }, index=[0])
+                            'Execution Time': str(alg_avg_time[0])}, index=[0])
+    new_row2 = new_row
+    new_row3 = new_row
+    new_row4 = new_row
     df = pd.concat([df.loc[:], new_row]).reset_index(drop=True)
-
-    new_row2 = pd.DataFrame({'Problem': str(p),
-                             'Average Fitness': str(best_avg_fitness_alg[1]),
-                             'Standard Deviation': str(best_std_fitness_alg[1]),
-                             'Best Fitness': str(best_fitness_along_seeds[1]),
-                             'Worst Fitness': str(worst_fitness_along_seeds[1]),
-                             'Average Execution Time': str(alg_avg_time[1])
-                             #,"Total Execution Time": str(total_time[1])
-                             }, index=[0])
     df2 = pd.concat([df2.loc[:], new_row2]).reset_index(drop=True)
-
-    new_row3 = pd.DataFrame({'Problem': str(p),
-                             'Average Fitness': str(best_avg_fitness_alg[2]),
-                             'Standard Deviation': str(best_std_fitness_alg[2]),
-                             'Best Fitness': str(best_fitness_along_seeds[2]),
-                             'Worst Fitness': str(worst_fitness_along_seeds[2]),
-                             'Average Execution Time': str(alg_avg_time[2])
-                             #,"Total Execution Time": str(total_time[2])
-                             }, index=[0])
     df3 = pd.concat([df3.loc[:], new_row3]).reset_index(drop=True)
-
-    new_row4 = pd.DataFrame({'Problem': str(p),
-                             'Average Fitness': str(best_avg_fitness_alg[3]),
-                             'Standard Deviation': str(best_std_fitness_alg[3]),
-                             'Best Fitness': str(best_fitness_along_seeds[3]),
-                             'Worst Fitness': str(worst_fitness_along_seeds[3]),
-                             'Average Execution Time': str(alg_avg_time[3])
-                             #,"Total Execution Time": str(total_time[2])
-                             }, index=[0])
     df4 = pd.concat([df4.loc[:], new_row4]).reset_index(drop=True)
     
 df.to_csv("Problema-de-la-mochila-binaria/result/HC" +

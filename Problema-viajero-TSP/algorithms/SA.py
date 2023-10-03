@@ -18,7 +18,7 @@ class SA:
         self.best = solution(self.problem)
         self.best.from_solution(S) # self.best is a full copy of S
         t= to
-        stop_optimal = self.problem.bestFitness
+        stop_optimal = self.problem.bestFitness+0.00001
         stop = False
         for iteration in range(1, self.max_efos):
             R = solution(S.problem)

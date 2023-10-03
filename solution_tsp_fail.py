@@ -523,6 +523,11 @@ class solution:
     def segment_solution(self):
         copy_solution = np.copy(self.cells)
         
+        n = np.random(self.problem.size)
+
+        n = n % len(copy_solution)  # Aseguramos que n esté dentro del rango del tamaño del vector
+        copy_solution[:] = np.concatenate((copy_solution[-n:], copy_solution[:-n]))
+        
         # Calculamos el tamaño objetivo para cada parte
         size_objetive = self.problem.size // 3
 

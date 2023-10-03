@@ -59,109 +59,35 @@ class solution:
     def tweak_3opt(self):
         
         part1, part2, part3 = self.segment_solution()
-        x1 = 0
-        x2 = part1[-1]
-        y1 = part2[0]
-        y2 = part2[-1]
-        z1 = part2[0]
-        z2 = part2[-1]
-        
-        
-        acum_fitness = [] 
-        x = False       
-        pos = np.random.choice(np.arange(1, self.problem.size-1), 3, replace=False)
-        pos.sort()
-        while x == False:
-            if abs(pos[0]-pos[1]) == 1:
-                pos[1] = pos[1] + 1
-            if abs(pos[1]-pos[2]) <= 1:
-                pos[2] = pos[2] + 1  
-                if pos[2] > self.problem.size-1:
-                    pos[2] = 0
-                    if pos[0] == 0:
-                        pos[0] = 1
-                    else:
-                        x = True
-                else:
-                    x = True        
-            else:
-                x = True
+        x2, y1, y2, z1, z2, x1 = 0, part1[-1], part2[0], part2[-1], part3[0], part3[-1]  
             
-        for index in range(0,len(pos)):
-            
-            if pos[index] == 0:
-                if pos[2] == self.problem.size-1:
-                    pos[index] = 1
-                    #previous_index = pos[index]-1
-                    local_index = pos[index]
-                    next_index = pos[index] + 1
-                    #last_index = pos[index] + 2
-                else: 
-                    #previous_index = self.problem.size-1
-                    local_index = pos[index]
-                    next_index = 1
-                    #last_index = 2
-            elif pos[index] == self.problem.size-1:
-                #previous_index = pos[index] - 1                
-                local_index = pos[index]
-                next_index = 0
-                #last_index = 1
-            elif pos[index] == self.problem.size-2:  
-                #previous_index = pos[index]-1               
-                next_index = self.problem.size-1
-                local_index = pos[index]
-                #last_index = 0
-            else:
-                #previous_index = pos[index]-1
-                local_index = pos[index]
-                next_index = pos[index] + 1
-                #last_index = pos[index] + 2
-            if index == 0:
-                x1, x2 = self.cells[local_index], self.cells[next_index]
-            if index == 1:
-                y1, y2 = self.cells[local_index], self.cells[next_index]
-            if index == 2:
-                z1, z2 = self.cells[local_index], self.cells[next_index]
-               
-        copy_cells = np.copy(self.cells)
-                        
         # A, B, C
         fitness_ABC = self.fitness
-        solution_ABC = np.copy(self.cells)
-        
+        solution_ABC = np.concatenate((part1,part2,part3))       
         # A', B, C
-        fitness_ApBC = self.fitness+self.new_fitness(x0, x1, x2, x3)  
-        solution_ApBC = self.swapPositions(copy_cells, x1, x2) 
-        copy_cells = np.copy(self.cells)
+        fitness_ApBC = self.fitness+self.new_fitness(x1, x2, y1, y2)  
+        A_prima = self.swapPositions(part1) 
+        solution_ApBC = np.concatenate((A_prima,part2,part3))
         # A, B', C        
-        fitness_ABpC = self.fitness+self.new_fitness(y0, y1, y2, y3)  
-        solution_ABpC = self.swapPositions(copy_cells, y1, y2) 
-        copy_cells = np.copy(self.cells)
+        fitness_ABpC = self.fitness+self.new_fitness(y1, y2, z1, z2)  
+        B_prima = self.swapPositions(part2) 
+        solution_ABpC = np.concatenate((part1,B_prima,part3)) 
         # A, B, C'
-        fitness_ABCp = self.fitness+self.new_fitness(z0, z1, z2, z3)  
-        solution_ABCp = self.swapPositions(copy_cells, z1, z2) 
-        copy_cells = np.copy(self.cells)
+        fitness_ABCp = self.fitness+self.new_fitness(z1, z2, x1, x2)  
+        C_prima = self.swapPositions(part3) 
+        solution_ABCp = np.concatenate((part1,part2,C_prima)) 
         # A', B', C
-        fitness_ApBpC = self.fitness+self.new_fitness(x0, x1, x2, x3)+self.new_fitness(y0, y1, y2, y3)   
-        solution_ApBpC = self.swapPositions(copy_cells, x1, x2) 
-        solution_ApBpC = self.swapPositions(copy_cells, y1, y2) 
-        copy_cells = np.copy(self.cells)
+        fitness_ApBpC = self.fitness+self.new_fitness(x1, x2, y1, y2)+self.new_fitness(y1, y2, z1, z2)    
+        solution_ApBpC = np.concatenate((A_prima,B_prima,part3))  
         # A, B', C'
-        fitness_ABpCp = self.fitness+self.new_fitness(y0, y1, y2, y3)+self.new_fitness(z0, z1, z2, z3)    
-        solution_ABpCp = self.swapPositions(copy_cells, y1, y2)   
-        solution_ABpCp = self.swapPositions(copy_cells, z1, z2) 
-        copy_cells = np.copy(self.cells)
+        fitness_ABpCp = self.fitness+self.new_fitness(y1, y2, z1, z2)+self.new_fitness(z1, z2, x1, x2)     
+        solution_ABpCp = np.concatenate((part1,B_prima,C_prima)) 
         # A', B, C'
-        fitness_ApBCp = self.fitness+self.new_fitness(x0, x1, x2, x3)+self.new_fitness(z0, z1, z2, z3)  
-        solution_ApBCp = self.swapPositions(copy_cells, x1, x2) 
-        solution_ApBCp = self.swapPositions(copy_cells, z1, z2) 
-        copy_cells = np.copy(self.cells)
+        fitness_ApBCp = self.fitness+self.new_fitness(x1, x2, y1, y2)+self.new_fitness(z1, z2, x1, x2)  
+        solution_ApBCp = np.concatenate((A_prima,part2,C_prima)) 
         # A', B', C'
-        fitness_ApBpCp = self.fitness+self.new_fitness(x0, x1, x2, x3)+self.new_fitness(y0, y1, y2, y3)+self.new_fitness(z0, z1, z2, z3)     
-        solution_ApBpCp = self.swapPositions(copy_cells, x1, x2) 
-        solution_ApBpCp = self.swapPositions(copy_cells, y1, y2) 
-        solution_ApBpCp = self.swapPositions(copy_cells, z1, z2) 
-        copy_cells = np.copy(self.cells)
+        fitness_ApBpCp = self.fitness+self.new_fitness(x1, x2, y1, y2)+self.new_fitness(y1, y2, z1, z2)+self.new_fitness(z1, z2, x1, x2)  
+        solution_ApBpCp = np.concatenate((A_prima,B_prima,C_prima)) 
         
         acum_fitness = [[fitness_ABC,solution_ABC],
                         [fitness_ApBC,solution_ApBC],
@@ -173,8 +99,8 @@ class solution:
                         [fitness_ApBpCp,solution_ApBpCp]]
         
         best_acum_fitness = sorted(acum_fitness, key=lambda x: x[0], reverse=False)[0][0]
-        solution_fitness = sorted(acum_fitness, key=lambda x: x[0], reverse=False)[0][1]
-        self.cells = np.copy(solution_fitness)
+        best_solution = sorted(acum_fitness, key=lambda x: x[0], reverse=False)[0][1]
+        self.cells = np.copy(best_solution)
         self.fitness = self.problem.evaluate(self.cells)
         
     def construct_partial_solution(self, partial_solucion, count):
@@ -207,17 +133,9 @@ class solution:
         addition = self.problem.distance(Previous_Start, End)+self.problem.distance(Start, Post_End)
         return addition - subtraction
     
-    def swapPositions(self, copy_cells, start, end):
-        for i in range(len(copy_cells)):
-            if copy_cells[i] == start:
-                pos1 = i                
-                break
-        for j in range(len(copy_cells)):
-            if copy_cells[j] == end:
-                pos2 = j                
-                break                
-        copy_cells[pos1], copy_cells[pos2] = copy_cells[pos2], copy_cells[pos1]
-        return copy_cells
+    def swapPositions(self, part):
+        reversed_part = part[::-1]           
+        return reversed_part
 
     def __str__(self):
         return "cells:" + str(self.cells) + \
@@ -225,6 +143,11 @@ class solution:
 
     def segment_solution(self):
         copy_solution = np.copy(self.cells)
+                        
+        n = np.random.randint(0,self.cells.size)
+
+        n = n % len(copy_solution)  # Aseguramos que n esté dentro del rango del tamaño del vector
+        copy_solution[:] = np.concatenate((copy_solution[-n:], copy_solution[:-n]))
         
         # Calculamos el tamaño objetivo para cada parte
         size_objetive = self.problem.size // 3
@@ -256,5 +179,7 @@ class solution:
             part1 = copy_solution[:section1]
             part2 = copy_solution[section1:section2]
             part3 = copy_solution[section2:]
-            
+            part1 = np.array(part1)
+            part2 = np.array(part2)
+            part3 = np.array(part3)
         return part1, part2, part3

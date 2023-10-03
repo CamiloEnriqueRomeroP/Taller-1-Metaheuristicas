@@ -12,7 +12,7 @@ class GRASP:
         np.random.seed(seed)
         best_fitness_history = np.zeros(self.max_efos, float)
         efos = 0
-        stop_optimal = self.problem.bestFitness
+        stop_optimal = self.problem.bestFitness+0.00001
         stop = False                 
         while efos < self.max_efos:            
             S = solution(problem) 

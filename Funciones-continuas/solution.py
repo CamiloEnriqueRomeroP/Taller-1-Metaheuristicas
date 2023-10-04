@@ -21,32 +21,33 @@ class solution:
         self.fitness = self.function.evaluate(self.cells)
         
     def Initialization_GRASP(self):
+        dimensions = 0
         S_rand = []
-        fitness_component = []
-        components = np.random.uniform(low=self.function.lower_bound, high=self.function.upper_bound, size=(self.size,))
-        for d in range (0, self.size):
-            fitness_component.append(self.function.evaluate(components[d:d+1]))
-        new_d_list = np.c_[fitness_component, components]
-        C_prima = np.copy(new_d_list)
+        fitnessComponent = []
+        randomSolutions = []
+        for i  in range (0, int(self.size*0.5)):
+            components = np.random.uniform(low=self.function.lower_bound, high=self.function.upper_bound, size=(self.size,))
+            randomSolutions.append(components)
+            fitnessComponent.append(self.function.evaluate(components))
+        population = np.c_[fitnessComponent, randomSolutions]
+        C_prima = np.copy(population)
         constructing_solution = []
-        for var in range(self.cells.size):
+        for var in range(10):
             if len(C_prima) == 0:
                 break
             else:
                 C_sorted = sorted(C_prima, key=lambda x: x[0], reverse=False)
                 C_two_prima = int(len(C_sorted)*0.33)+1
-                pos = np.random.randint(C_two_prima)
-                s_random_component = C_sorted[pos]
-                S_rand.append(s_random_component)
-                S_set = {tuple(sublist) for sublist in S_rand}
-                C_prima = [sublist for sublist in new_d_list if tuple(
-                    sublist) not in S_set]
-        
-        for i in range(0, self.cells.size):
-            constructing_solution.append(S_rand[i][1])        
-        constructing_solution_np = np.array(constructing_solution)
-        self.cells = constructing_solution_np.astype(int)
-        self.fitness = self.function.evaluate(self.cells)        
+                for i in range (0, 5):
+                    pos = np.random.randint(C_two_prima)
+                    s_random_component = C_sorted[pos]
+                    dimensions = dimensions + 1
+                    S_rand.append(s_random_component[dimensions])
+                    if dimensions == 50:
+                        break
+                
+        self.cells = np.copy(S_rand)
+        self.fitness = self.function.evaluate(self.cells)
                 
     def tweak(self, bandwidth: float):
         bandwidths = np.random.uniform(low=-bandwidth, high=bandwidth, size=(self.size,))
@@ -56,7 +57,7 @@ class solution:
         self.fitness = self.function.evaluate(self.cells)   
                      
     def tweakSegment(self, bandwidth: float, efos):
-        bandwidth = bandwidth + 0.00001*efos
+        bandwidth = bandwidth - 0.0001*efos
         bandwidths = np.random.uniform(low=-bandwidth, high=bandwidth, size=(self.size,))        
         self.cells = self.cells + bandwidths
         self.cells[self.cells <self.function.lower_bound] = self.function.lower_bound

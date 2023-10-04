@@ -54,6 +54,20 @@ class solution:
                     self.evaluate()  
                     break  
 
+    def tweakUpperDensity(self):
+        selectedPositions = np.where(self.cells == 1)[0]
+        unselectedPositions = np.where(self.cells == 0)[0]
+        selectedItems = []
+        for i in selectedPositions:
+            selectedItems.append(self.problem.items[i])  
+        sortedSelected = sorted(selectedItems, key=lambda x: x[3], reverse=False)
+        x = np.random.randint(int(len(sortedSelected)*0.5)+1, size=1)
+        elementSelected = sortedSelected[x[0]]
+        self.cells[elementSelected[0]] = 0
+        self.weight = self.weight - self.problem.weights[elementSelected[0]]
+        self.fitness = self.fitness - self.problem.profits[elementSelected[0]]
+        self.completeDensity(unselectedPositions, False)
+
     def tweak(self):
         selectedPositions = np.where(self.cells == 1)[0]
         unselectedPositions = np.where(self.cells == 0)[0]
@@ -70,15 +84,12 @@ class solution:
 
         empty = self.problem.capacity - self.weight
         while empty > 0 and len(unselectedPositions) > 0:
-            fitUnselected = np.array(
-                [unselectedPositions, self.problem.weights[unselectedPositions]])
-            fitUnselected = fitUnselected[:, np.where(
-                fitUnselected[1, :] < empty)][0]
+            fitUnselected = np.array([unselectedPositions, self.problem.weights[unselectedPositions]])
+            fitUnselected = fitUnselected[:, np.where(fitUnselected[1, :] < empty)][0]
             unselectedPositions = np.copy(fitUnselected[0])
             if len(fitUnselected[0]) == 0:
                 break
-            elementToAdd = int(
-                fitUnselected[0][np.random.randint(len(fitUnselected[0]))])
+            elementToAdd = int(unselectedPositions[np.random.randint(len(unselectedPositions))])
             self.cells[elementToAdd] = 1
             self.weight = self.weight + self.problem.weights[elementToAdd]
             self.fitness = self.fitness + self.problem.profits[elementToAdd]
@@ -86,6 +97,33 @@ class solution:
                                            dtype=int)
             empty = self.problem.capacity - self.weight
 
+    def completeDensity(self, unselectedPositions, calculatePositions):
+        if calculatePositions:
+            unselectedPositions = np.where(self.cells == 0)[0]
+        
+        unselectedItems = []
+        empty = self.problem.capacity - self.weight
+        while empty > 0 and len(unselectedPositions) > 0:
+            fitUnselected = np.array([unselectedPositions, self.problem.weights[unselectedPositions]])
+            fitUnselected = fitUnselected[:, np.where(fitUnselected[1, :] < empty)][0]
+            unselectedPositions = np.copy(fitUnselected[0])
+            if len(fitUnselected[0]) == 0:
+                break            
+            for i in unselectedPositions:
+                unselectedItems.append(self.problem.items[int(i)]) 
+            sortedUnselected = sorted(unselectedItems, key=lambda x: x[3], reverse=True)
+            x = np.random.randint(int(len(sortedUnselected)*0.5)+1, size=1)
+            element = sortedUnselected[x[0]]
+            elementToAdd = element[0]
+            elementToAdd = int(unselectedPositions[np.random.randint(len(unselectedPositions))])
+            self.cells[elementToAdd] = 1
+            self.weight = self.weight + self.problem.weights[elementToAdd]
+            self.fitness = self.fitness + self.problem.profits[elementToAdd]
+            unselectedPositions = np.array(unselectedPositions[np.where(unselectedPositions != elementToAdd)],
+                                           dtype=int)
+            empty = self.problem.capacity - self.weight
+
+                
     def __str__(self):
         result = "Cells:" + str(self.cells) + \
                  "-fitness:" + str(self.fitness)

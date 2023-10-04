@@ -14,12 +14,12 @@ from algorithms.SA import SA
 from algorithms.GRASP import GRASP
 
 d = 50
-max_efos = 50000
+max_efos = 5000
 repetitions = 31
 
 # Afinamiento de parametros
 bw = 0.1
-max_local = 1000
+max_local = 100
 
 functions = [sphere(), step(), schwefel(), ackley(), griewank(), rastrigin()]
 #functions = [schwefel(), ackley()]
@@ -39,6 +39,12 @@ df = pd.DataFrame({'Problem': pd.Series(dtype='str'),
 df2 = df
 df3 = df
 df4 = df
+
+df5 = pd.DataFrame({'Problem': pd.Series(dtype='str'),
+                   'Average Fitness HC': pd.Series(dtype='float'),
+                   'Average Fitness HCRR': pd.Series(dtype='float'),
+                   'Average Fitness SA': pd.Series(dtype='float'),
+                   'Average Fitness GRASP': pd.Series(dtype='float')})
 
 num_f = 0
 
@@ -99,10 +105,18 @@ for f in functions:
     new_row2 = new_row
     new_row3 = new_row
     new_row4 = new_row
+    
+    new_row5 = pd.DataFrame({'Problem': str(f),
+                   'Average Fitness HC': str(best_avg_fitness_alg[0]),
+                   'Average Fitness HCRR': str(best_avg_fitness_alg[1]),
+                   'Average Fitness SA': str(best_avg_fitness_alg[2]),
+                   'Average Fitness GRASP': str(best_avg_fitness_alg[3])}, index=[0])
+    
     df = pd.concat([df.loc[:], new_row]).reset_index(drop=True)
     df2 = pd.concat([df2.loc[:], new_row2]).reset_index(drop=True)
     df3 = pd.concat([df3.loc[:], new_row3]).reset_index(drop=True)
     df4 = pd.concat([df4.loc[:], new_row4]).reset_index(drop=True)
+    df5 = pd.concat([df5.loc[:], new_row5]).reset_index(drop=True)
 
 df.to_csv("Funciones-continuas/result/HC" + "-bw-" + str(bw) +
           "-max_local-" + str(max_local) + ".csv", index=False)
@@ -111,4 +125,6 @@ df2.to_csv("Funciones-continuas/result/HCRR" + "-bw-" + str(bw) +
 df3.to_csv("Funciones-continuas/result/SA" + "-bw-" + str(bw) +
            "-max_local-" + str(max_local) + ".csv", index=False)
 df4.to_csv("Funciones-continuas/result/GRASP" + "-bw-" + str(bw) +
+           "-max_local-" + str(max_local) + ".csv", index=False)
+df5.to_csv("Funciones-continuas/result/Comparison_dataset" + "-bw-" + str(bw) +
            "-max_local-" + str(max_local) + ".csv", index=False)

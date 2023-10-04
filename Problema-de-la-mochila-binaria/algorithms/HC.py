@@ -21,7 +21,8 @@ class HC:
         for iteration in range(1, self.max_efos):
             R = solution(S.problem)
             R.from_solution(S)  # R is a full copy of S
-            R.tweak()
+            #R.tweak()
+            R.tweakUpperDensity()
             if R.fitness > S.fitness:
                 S.from_solution(R)
             best_fitness_history[iteration] = self.best.fitness

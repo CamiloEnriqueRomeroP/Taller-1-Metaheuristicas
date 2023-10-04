@@ -12,11 +12,11 @@ import math
 myPath = "Problema-de-la-mochila-binaria/problems/"
 # myPath = "content/sample_data/problems/"
 
-max_efos = 50000
+max_efos = 5000
 repetitions = 31
 
 # Afinamiento de parametros
-max_local = 501
+max_local = 101
 
 myP1 = knapsack(myPath + "f1.txt")
 myP2 = knapsack(myPath + "f2.txt")
@@ -34,15 +34,15 @@ myP13 = knapsack(myPath + "Knapsack3.txt")
 myP14 = knapsack(myPath + "Knapsack4.txt")
 myP15 = knapsack(myPath + "Knapsack5.txt")
 myP16 = knapsack(myPath + "Knapsack6.txt")
-problems = [myP1, myP2, myP3, myP4, myP5, myP6, myP7, myP8, myP9, myP10, myP11, myP12, myP13, myP14, myP15, myP16]
-#problems = [myP1, myP2, myP3, myP4, myP5, myP6, myP7, myP8, myP9, myP10, myP11, myP12, myP13, myP14, myP15]
-#problems = [myP7]
+#problems = [myP1, myP2, myP3, myP4, myP5, myP6, myP7, myP8, myP9, myP10, myP11, myP12, myP13, myP14, myP15, myP16]
+problems = [myP1, myP2, myP3, myP4, myP5, myP6, myP7, myP8, myP9, myP10]
+#problems = [myP1]
 hc = HC(max_efos=max_efos)
 hcrr = HCRR(max_efos=max_efos, max_local=max_local)
 sa = SA(max_efos=max_efos)
 grasp = GRASP(max_efos=max_efos, max_local=max_local)
-#algorithms = [hc, hcrr, sa, grasp]
-algorithms = [grasp]
+algorithms = [hc, hcrr, sa, grasp]
+#algorithms = [grasp]
 
 df = pd.DataFrame({'Problem': pd.Series(dtype='str'),
                    'Average Fitness': pd.Series(dtype='float'),
@@ -56,6 +56,11 @@ df2 = df
 df3 = df
 df4 = df
 
+df5 = pd.DataFrame({'Problem': pd.Series(dtype='str'),
+                   'Average Fitness HC': pd.Series(dtype='float'),
+                   'Average Fitness HCRR': pd.Series(dtype='float'),
+                   'Average Fitness SA': pd.Series(dtype='float'),
+                   'Average Fitness GRASP': pd.Series(dtype='float')})
 num_p = 0
 
 for p in problems:
@@ -110,7 +115,7 @@ for p in problems:
     time_p = end_timer_p - start_timer_p
     print("Tiempo de ejecucion " + str(name_problem[num_p]) + " : "+ str(time_p))
     num_p = num_p + 1
-    new_row = pd.DataFrame({'Problem': str(f),
+    new_row = pd.DataFrame({'Problem': str(p),
                             'Average Fitness': str(best_avg_fitness_alg[0]),
                             'Standard Deviation': str(best_std_fitness_alg[0]),
                             'Best Fitness': str(best_fitness_along_seeds[0]),
@@ -119,10 +124,18 @@ for p in problems:
     new_row2 = new_row
     new_row3 = new_row
     new_row4 = new_row
+    
+    new_row5 = pd.DataFrame({'Problem': str(p),
+                   'Average Fitness HC': str(best_avg_fitness_alg[0]),
+                   'Average Fitness HCRR': str(best_avg_fitness_alg[1]),
+                   'Average Fitness SA': str(best_avg_fitness_alg[2]),
+                   'Average Fitness GRASP': str(best_avg_fitness_alg[3])}, index=[0])
+    
     df = pd.concat([df.loc[:], new_row]).reset_index(drop=True)
     df2 = pd.concat([df2.loc[:], new_row2]).reset_index(drop=True)
     df3 = pd.concat([df3.loc[:], new_row3]).reset_index(drop=True)
     df4 = pd.concat([df4.loc[:], new_row4]).reset_index(drop=True)
+    df5 = pd.concat([df5.loc[:], new_row5]).reset_index(drop=True)
     
 df.to_csv("Problema-de-la-mochila-binaria/result/HC" +
           "-max_local-" + str(max_local) + ".csv", index=False)
@@ -131,4 +144,6 @@ df2.to_csv("Problema-de-la-mochila-binaria/result/HCRR" +
 df3.to_csv("Problema-de-la-mochila-binaria/result/SA" +
            "-max_local-" + str(max_local) + ".csv", index=False)
 df4.to_csv("Problema-de-la-mochila-binaria/result/GRASP" +
+           "-max_local-" + str(max_local) + ".csv", index=False)
+df5.to_csv("Problema-de-la-mochila-binaria/result/Comparison_dataset" +
            "-max_local-" + str(max_local) + ".csv", index=False)

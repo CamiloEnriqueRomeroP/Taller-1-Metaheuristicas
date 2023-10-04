@@ -26,7 +26,6 @@ class HC:
                 S.from_solution(R)
             best_fitness_history[iteration] = self.best.fitness
             if S.fitness <= stop_optimal:
-                print(iteration)
                 best_fitness_history[iteration:self.max_efos] = self.best.fitness
                 iteration = self.max_efos                
                 stop = True

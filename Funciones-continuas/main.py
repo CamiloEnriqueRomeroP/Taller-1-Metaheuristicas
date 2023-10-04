@@ -14,8 +14,8 @@ from algorithms.SA import SA
 from algorithms.GRASP import GRASP
 
 d = 50
-max_efos = 5000
-repetitions = 31
+max_efos = 50000
+repetitions = 3
 
 # Afinamiento de parametros
 bw = 0.1

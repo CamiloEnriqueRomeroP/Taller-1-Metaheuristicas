@@ -22,7 +22,6 @@ class solution:
         
     def Initialization_GRASP(self):
         S_rand = []
-        param = []
         fitness_component = []
         components = np.random.uniform(low=self.function.lower_bound, high=self.function.upper_bound, size=(self.size,))
         for d in range (0, self.size):
@@ -50,15 +49,20 @@ class solution:
         self.fitness = self.function.evaluate(self.cells)        
                 
     def tweak(self, bandwidth: float):
-        bandwidths = np.random.uniform(
-            low=-bandwidth, high=bandwidth, size=(self.size,))
+        bandwidths = np.random.uniform(low=-bandwidth, high=bandwidth, size=(self.size,))
         self.cells = self.cells + bandwidths
-        self.cells[self.cells <
-                   self.function.lower_bound] = self.function.lower_bound
-        self.cells[self.cells >
-                   self.function.upper_bound] = self.function.upper_bound
+        self.cells[self.cells <self.function.lower_bound] = self.function.lower_bound
+        self.cells[self.cells >self.function.upper_bound] = self.function.upper_bound
         self.fitness = self.function.evaluate(self.cells)   
-
+                     
+    def tweakSegment(self, bandwidth: float, efos):
+        bandwidth = bandwidth + 0.00001*efos
+        bandwidths = np.random.uniform(low=-bandwidth, high=bandwidth, size=(self.size,))        
+        self.cells = self.cells + bandwidths
+        self.cells[self.cells <self.function.lower_bound] = self.function.lower_bound
+        self.cells[self.cells >self.function.upper_bound] = self.function.upper_bound
+        self.fitness = self.function.evaluate(self.cells)   
+        
     def __str__(self):
         return "cells:" + str(self.cells) + \
                "-fit:" + str(self.fitness)

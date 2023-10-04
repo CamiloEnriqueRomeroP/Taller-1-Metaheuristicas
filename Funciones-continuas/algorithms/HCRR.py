@@ -25,7 +25,8 @@ class HCRR:
             for opt in range(1, self.max_local):
                 R = solution(S.size, S.function)
                 R.from_solution(S)  # R is a full copy of S
-                R.tweak(self.bandwidth)  # Tweeking and calculating fitness
+                #R.tweakSegment(self.bandwidth,efos)
+                R.tweak(self.bandwidth)
                 if R.fitness < S.fitness:
                     S.from_solution(R)
                 if S.fitness < self.best.fitness:

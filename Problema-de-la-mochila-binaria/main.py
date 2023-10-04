@@ -16,7 +16,7 @@ max_efos = 5000
 repetitions = 31
 
 # Afinamiento de parametros
-max_local = 101
+max_local = 100
 
 myP1 = knapsack(myPath + "f1.txt")
 myP2 = knapsack(myPath + "f2.txt")

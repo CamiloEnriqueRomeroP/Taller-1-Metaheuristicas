@@ -23,6 +23,7 @@ class SA:
         for iteration in range(1, self.max_efos):
             R = solution(S.size, S.function)
             R.from_solution(S) # R is a full copy of S
+            #R.tweakSegment(self.bandwidth, iteration)
             R.tweak(self.bandwidth)
             t = t - to/(self.max_efos + 1)
             ale = np.random.uniform()            

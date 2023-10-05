@@ -21,6 +21,8 @@ class GRASP:
                 self.best = solution(d, f)
                 self.best.from_solution(S)  # self.best is a full copy of S
                 best_fitness_history[0] = self.best.fitness
+            for i  in range (0, int(self.best.size*0.5)):
+                best_fitness_history[efos] = self.best.fitness
             # Perform the hill climbig optimization (local)
             for opt in range(1, self.max_local):
                 R = solution(S.size, S.function)

@@ -11,11 +11,11 @@ from plot_convergence_curve import plot_convergence_curve
 # myPath = "/problems/"
 myPath = "Problema-viajero-TSP/problems/"
 
-max_efos = 5000
+max_efos = 50000
 repetitions = 31
 
 # Afinamiento de parametros
-max_local = 501
+max_local = 1000
 
 myP1 = tsp(myPath + "01-easy5.txt")
 myP2 = tsp(myPath + "02-ulysses16.txt")
@@ -28,7 +28,6 @@ hcrr = HCRR(max_efos=max_efos, max_local=max_local)
 sa = SA(max_efos=max_efos)
 grasp = GRASP(max_efos=max_efos, max_local=max_local)
 algorithms = [hc, hcrr, sa, grasp]
-#algorithms = [grasp]
 
 df = pd.DataFrame({'Problem': pd.Series(dtype='str'),
                    'Average Fitness': pd.Series(dtype='float'),

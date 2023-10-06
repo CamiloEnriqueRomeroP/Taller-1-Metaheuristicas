@@ -10,13 +10,12 @@ from plot_convergence_curve import plot_convergence_curve
 import math
 
 myPath = "Problema-de-la-mochila-binaria/problems/"
-# myPath = "content/sample_data/problems/"
 
-max_efos = 5000
+max_efos = 50000
 repetitions = 31
 
 # Afinamiento de parametros
-max_local = 100
+max_local = 1000
 
 myP1 = knapsack(myPath + "f1.txt")
 myP2 = knapsack(myPath + "f2.txt")
@@ -34,15 +33,12 @@ myP13 = knapsack(myPath + "Knapsack3.txt")
 myP14 = knapsack(myPath + "Knapsack4.txt")
 myP15 = knapsack(myPath + "Knapsack5.txt")
 myP16 = knapsack(myPath + "Knapsack6.txt")
-#problems = [myP1, myP2, myP3, myP4, myP5, myP6, myP7, myP8, myP9, myP10, myP11, myP12, myP13, myP14, myP15, myP16]
-problems = [myP1, myP2, myP3, myP4, myP5, myP6, myP7, myP8, myP9, myP10]
-#problems = [myP1]
+problems = [myP1, myP2, myP3, myP4, myP5, myP6, myP7, myP8, myP9, myP10, myP11, myP12, myP13, myP14, myP15, myP16]
 hc = HC(max_efos=max_efos)
 hcrr = HCRR(max_efos=max_efos, max_local=max_local)
 sa = SA(max_efos=max_efos)
 grasp = GRASP(max_efos=max_efos, max_local=max_local)
 algorithms = [hc, hcrr, sa, grasp]
-#algorithms = [grasp]
 
 df = pd.DataFrame({'Problem': pd.Series(dtype='str'),
                    'Average Fitness': pd.Series(dtype='float'),
@@ -115,15 +111,42 @@ for p in problems:
     time_p = end_timer_p - start_timer_p
     print("Tiempo de ejecucion " + str(name_problem[num_p]) + " : "+ str(time_p))
     num_p = num_p + 1
+    
     new_row = pd.DataFrame({'Problem': str(p),
                             'Average Fitness': str(best_avg_fitness_alg[0]),
                             'Standard Deviation': str(best_std_fitness_alg[0]),
                             'Best Fitness': str(best_fitness_along_seeds[0]),
                             'Worst Fitness': str(worst_fitness_along_seeds[0]),
                             'Execution Time': str(alg_avg_time[0])}, index=[0])
-    new_row2 = new_row
-    new_row3 = new_row
-    new_row4 = new_row
+    
+    new_row2 = pd.DataFrame({'Problem': str(p),
+                            'Average Fitness': str(best_avg_fitness_alg[1]),
+                            'Standard Deviation': str(best_std_fitness_alg[1]),
+                            'Best Fitness': str(best_fitness_along_seeds[1]),
+                            'Worst Fitness': str(worst_fitness_along_seeds[1]),
+                            'Execution Time': str(alg_avg_time[1])}, index=[0])
+    
+    new_row3 = pd.DataFrame({'Problem': str(p),
+                            'Average Fitness': str(best_avg_fitness_alg[2]),
+                            'Standard Deviation': str(best_std_fitness_alg[2]),
+                            'Best Fitness': str(best_fitness_along_seeds[2]),
+                            'Worst Fitness': str(worst_fitness_along_seeds[2]),
+                            'Execution Time': str(alg_avg_time[2])}, index=[0])
+    
+    new_row4 = pd.DataFrame({'Problem': str(p),
+                            'Average Fitness': str(best_avg_fitness_alg[3]),
+                            'Standard Deviation': str(best_std_fitness_alg[3]),
+                            'Best Fitness': str(best_fitness_along_seeds[3]),
+                            'Worst Fitness': str(worst_fitness_along_seeds[3]),
+                            'Execution Time': str(alg_avg_time[3])}, index=[0])
+   
+    
+    new_row5 = pd.DataFrame({'Problem': str(p),
+                   'Average Fitness HC': str(best_avg_fitness_alg[0]),
+                   'Average Fitness HCRR': str(best_avg_fitness_alg[1]),
+                   'Average Fitness SA': str(best_avg_fitness_alg[2]),
+                   'Average Fitness GRASP': str(best_avg_fitness_alg[3])}, index=[0])
+    
     
     new_row5 = pd.DataFrame({'Problem': str(p),
                    'Average Fitness HC': str(best_avg_fitness_alg[0]),

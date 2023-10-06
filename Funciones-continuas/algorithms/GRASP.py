@@ -19,10 +19,12 @@ class GRASP:
             S.Initialization_GRASP()
             if efos == 0:
                 self.best = solution(d, f)
-                self.best.from_solution(S)  # self.best is a full copy of S
-                best_fitness_history[0] = self.best.fitness
-            for i  in range (0, int(self.best.size*0.5)):
-                best_fitness_history[efos] = self.best.fitness
+                self.best.from_solution(S)  # self.best is a full copy of S  
+            else:
+                if S.fitness < self.best.fitness:
+                    self.best.from_solution(S)  # self.best is a full copy of S                              
+            best_fitness_history[efos:efos+26] = self.best.fitness
+            efos += 26
             # Perform the hill climbig optimization (local)
             for opt in range(1, self.max_local):
                 R = solution(S.size, S.function)

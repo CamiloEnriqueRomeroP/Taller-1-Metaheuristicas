@@ -19,8 +19,12 @@ class HCRR:
             S.Initialization()  # Random initialization and calculating fitness
             if efos == 0:
                 self.best = solution(d, f)
-                self.best.from_solution(S)  # self.best is a full copy of S
-                best_fitness_history[0] = self.best.fitness
+                self.best.from_solution(S)  
+            else:
+                if S.fitness < self.best.fitness:
+                    self.best.from_solution(S)  # self.best is a full copy of S                              
+            best_fitness_history[efos] = self.best.fitness
+            efos += 1
             # Perform the hill climbig optimization (local)
             for opt in range(1, self.max_local):
                 R = solution(S.size, S.function)

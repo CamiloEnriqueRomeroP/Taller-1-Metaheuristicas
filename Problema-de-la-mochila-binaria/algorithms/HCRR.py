@@ -22,7 +22,11 @@ class HCRR:
             if efos == 0:
                 self.best = solution(problem)
                 self.best.from_solution(S)  # self.best is a full copy of S
-                best_fitness_history[0] = self.best.fitness
+            else:
+                if S.fitness < self.best.fitness:
+                    self.best.from_solution(S)  # self.best is a full copy of S                              
+            best_fitness_history[efos] = self.best.fitness
+            efos += 1
             # Perform the hill climbig optimization (local)
             for opt in range(1, self.max_local):
                 R = solution(S.problem)

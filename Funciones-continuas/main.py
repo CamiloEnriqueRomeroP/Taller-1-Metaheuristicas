@@ -19,16 +19,16 @@ repetitions = 31
 
 # Afinamiento de parametros
 bw = 0.1
-max_local = 101
+max_local = 5000
 
 functions = [sphere(), step(), schwefel(), ackley(), griewank(), rastrigin()]
-functions = [schwefel()]
+#functions = [schwefel()]
 hc = HC(max_efos=max_efos, bandwidth=bw)
 hcrr = HCRR(max_efos=max_efos, max_local=max_local, bandwidth=bw)
 sa = SA(max_efos=max_efos, bandwidth=bw)
 grasp = GRASP(max_local=max_local, max_efos=max_efos, bandwidth=bw)
-#algorithms = [hc, hcrr, sa, grasp]
-algorithms = [grasp]
+algorithms = [hc, hcrr, sa, grasp]
+#algorithms = [grasp]
 
 df = pd.DataFrame({'Problem': pd.Series(dtype='str'),
                    'Average Fitness': pd.Series(dtype='float'),
@@ -45,6 +45,12 @@ df5 = pd.DataFrame({'Problem': pd.Series(dtype='str'),
                    'Average Fitness HCRR': pd.Series(dtype='float'),
                    'Average Fitness SA': pd.Series(dtype='float'),
                    'Average Fitness GRASP': pd.Series(dtype='float')})
+
+df6 = pd.DataFrame({'Problem': pd.Series(dtype='str'),
+                   'Execution Time HC': pd.Series(dtype='float'),
+                   'Execution Time HCRR': pd.Series(dtype='float'),
+                   'Execution Time SA': pd.Series(dtype='float'),
+                   'Execution Time GRASP': pd.Series(dtype='float')})
 
 num_f = 0
 
@@ -130,12 +136,21 @@ for f in functions:
                    'Average Fitness HCRR': str(best_avg_fitness_alg[1]),
                    'Average Fitness SA': str(best_avg_fitness_alg[2]),
                    'Average Fitness GRASP': str(best_avg_fitness_alg[3])}, index=[0])
+
+    new_row6 = pd.DataFrame({'Problem': str(f),
+                    'Execution Time HC': str(alg_avg_time[0]),
+                    'Execution Time HCRR': str(alg_avg_time[1]),
+                    'Execution Time SA': str(alg_avg_time[2]),
+                    'Execution Time GRASP': str(alg_avg_time[3])}, index=[0])
+
     
     df = pd.concat([df.loc[:], new_row]).reset_index(drop=True)
     df2 = pd.concat([df2.loc[:], new_row2]).reset_index(drop=True)
     df3 = pd.concat([df3.loc[:], new_row3]).reset_index(drop=True)
     df4 = pd.concat([df4.loc[:], new_row4]).reset_index(drop=True)
     df5 = pd.concat([df5.loc[:], new_row5]).reset_index(drop=True)
+    df6 = pd.concat([df6.loc[:], new_row6]).reset_index(drop=True)
+
 
 df.to_csv("Funciones-continuas/result/HC" + "-bw-" + str(bw) +
           "-max_local-" + str(max_local) + ".csv", index=False)
@@ -146,4 +161,6 @@ df3.to_csv("Funciones-continuas/result/SA" + "-bw-" + str(bw) +
 df4.to_csv("Funciones-continuas/result/GRASP" + "-bw-" + str(bw) +
            "-max_local-" + str(max_local) + ".csv", index=False)
 df5.to_csv("Funciones-continuas/result/Comparison_dataset" + "-bw-" + str(bw) +
+           "-max_local-" + str(max_local) + ".csv", index=False)
+df6.to_csv("Funciones-continuas/result/Comparison_time" + "-bw-" + str(bw) +
            "-max_local-" + str(max_local) + ".csv", index=False)

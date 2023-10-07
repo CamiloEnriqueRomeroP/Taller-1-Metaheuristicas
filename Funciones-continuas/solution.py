@@ -31,15 +31,14 @@ class solution:
             fitnessComponent.append(self.function.evaluate(components))
         population = np.c_[fitnessComponent, randomSolutions]
         C_prima = np.copy(population)
-        constructing_solution = []
+        C_sorted = sorted(C_prima, key=lambda x: x[0], reverse=False)
+        C_two_prima = int(len(C_sorted)*0.33)+1                
         for var in range(10):
             if len(C_prima) == 0:
                 break
             else:
-                C_sorted = sorted(C_prima, key=lambda x: x[0], reverse=False)
-                C_two_prima = int(len(C_sorted)*0.33)+1
+                pos = np.random.randint(C_two_prima)                    
                 for i in range (0, 5):
-                    pos = np.random.randint(C_two_prima)
                     s_random_component = C_sorted[pos]
                     dimensions = dimensions + 1
                     S_rand.append(s_random_component[dimensions])
@@ -56,7 +55,7 @@ class solution:
         self.cells[self.cells >self.function.upper_bound] = self.function.upper_bound
         self.fitness = self.function.evaluate(self.cells)   
                      
-    def tweakSegment(self, bandwidth: float, efos):
+    def tweakSegment(self, bandwidth: float,efos):
         bandwidth = bandwidth - 0.0001*efos
         bandwidths = np.random.uniform(low=-bandwidth, high=bandwidth, size=(self.size,))        
         self.cells = self.cells + bandwidths

@@ -1,7 +1,6 @@
 from solution import solution
 import numpy as np
 
-
 class HC:
     def __init__(self, max_efos: int, bandwidth: float):
         self.max_efos = max_efos

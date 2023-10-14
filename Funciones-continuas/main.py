@@ -18,8 +18,8 @@ max_efos = 50000
 repetitions = 31
 
 # Afinamiento de parametros
-bw = 0.1
-max_local = 5000
+bw = 0.05
+max_local = 1000
 
 functions = [sphere(), step(), schwefel(), ackley(), griewank(), rastrigin()]
 #functions = [schwefel()]

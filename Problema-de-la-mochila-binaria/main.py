@@ -15,7 +15,7 @@ max_efos = 50000
 repetitions = 31
 
 # Afinamiento de parametros
-max_local = 1000
+max_local = 1500
 
 myP1 = knapsack(myPath + "f1.txt")
 myP2 = knapsack(myPath + "f2.txt")
@@ -180,5 +180,5 @@ df4.to_csv("Problema-de-la-mochila-binaria/result/GRASP" +
            "-max_local-" + str(max_local) + ".csv", index=False)
 df5.to_csv("Problema-de-la-mochila-binaria/result/Comparison_dataset" +
            "-max_local-" + str(max_local) + ".csv", index=False)
-df6.to_csv("Funciones-continuas/result/Comparison_time" +
+df6.to_csv("Problema-de-la-mochila-binaria/result/Comparison_time" +
            "-max_local-" + str(max_local) + ".csv", index=False)

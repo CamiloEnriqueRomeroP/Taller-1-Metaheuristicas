@@ -10,11 +10,9 @@ class HC:
         self.problem = problem
         np.random.seed(seed)
         best_fitness_history = np.zeros(self.max_efos, float)
-
         self.best = solution(self.problem)
         self.best.Initialization()
         best_fitness_history[0] = self.best.fitness
-
         S = self.best  # S is a pointer to self.best, not a full copy
         stop_optimal = S.problem.OptimalKnown
         stop = False

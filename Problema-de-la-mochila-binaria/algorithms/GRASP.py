@@ -22,7 +22,7 @@ class GRASP:
                 self.best = solution(problem) 
                 self.best.from_solution(S)  # self.best is a full copy of S
             else:
-                if S.fitness < self.best.fitness:
+                if S.fitness > self.best.fitness:
                     self.best.from_solution(S)  # self.best is a full copy of S                              
             best_fitness_history[efos] = self.best.fitness
             efos += 1

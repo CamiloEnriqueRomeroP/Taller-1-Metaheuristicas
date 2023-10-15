@@ -1,7 +1,6 @@
 import numpy as np
 from solution import solution
 
-
 class HCRR:
     def __init__(self, max_efos: int, max_local: int):
         self.max_efos = max_efos
@@ -13,17 +12,15 @@ class HCRR:
         best_fitness_history = np.zeros(self.max_efos, float)
         efos = 0
         stop_optimal = self.problem.OptimalKnown
-        #stop_optimal = optimal - 0.00001
         stop = False
         while efos < self.max_efos:
-
             S = solution(problem)  # S is a new Solution
             S.Initialization()  # Random initialization and calculating fitness
             if efos == 0:
                 self.best = solution(problem)
                 self.best.from_solution(S)  # self.best is a full copy of S
             else:
-                if S.fitness < self.best.fitness:
+                if S.fitness > self.best.fitness:
                     self.best.from_solution(S)  # self.best is a full copy of S                              
             best_fitness_history[efos] = self.best.fitness
             efos += 1

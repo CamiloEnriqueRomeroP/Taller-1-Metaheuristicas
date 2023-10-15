@@ -1,0 +1,99 @@
+\documentclass[a4paper,10pt]{article}
+\usepackage{graphicx}
+\usepackage{lscape}
+\title{Output tables for the test of Multiple comparisons.}
+\author{}
+\date{\today}
+\begin{document}
+\begin{landscape}
+\pagestyle{empty}
+\maketitle
+\thispagestyle{empty}
+\section{Average rankings of Friedman test}
+
+
+
+Average ranks obtained by applying the Friedman procedure
+
+\begin{table}[!htp]
+\centering
+\begin{tabular}{|c|c|}\hline
+Algorithm&Ranking\\\hline
+Average Fitness HC     & 3.3333\\
+Average Fitness HCRR    & 2\\
+Average Fitness SA   & 1.6667\\
+Average Fitness GRASP & 3\\
+\hline
+\end{tabular}
+\caption{Average Rankings of the algorithms}
+\end{table}
+
+Friedman statistic considering reduction performance (distributed according to chi-square with 3 degrees of freedom: 6.8.
+
+P-value computed by Friedman Test: 0.07855315984340194.\newline
+
+
+
+\pagebreak
+
+\section{Post hoc comparisons}
+
+Results achieved on post hoc comparisons for $\alpha = 0.05$, $\alpha = 0.10$ and adjusted p-values.
+
+\subsection{P-values for $\alpha=0.05$}
+
+\begin{table}[!htp]
+\centering\scriptsize
+\begin{tabular}{cccc}
+$i$&algorithms&$z=(R_0 - R_i)/SE$&$p$\\
+\hline6&Average Fitness HC     vs. Average Fitness SA  &2.236068&0.025347\\
+5&Average Fitness HC     vs. Average Fitness HCRR   &1.788854&0.073638\\
+4&Average Fitness SA   vs. Average Fitness GRASP&1.788854&0.073638\\
+3&Average Fitness HCRR    vs. Average Fitness GRASP&1.341641&0.179712\\
+2&Average Fitness HC     vs. Average Fitness GRASP&0.447214&0.654721\\
+1&Average Fitness HCRR    vs. Average Fitness SA  &0.447214&0.654721\\
+\hline
+\end{tabular}
+\caption{P-values Table for $\alpha=0.05$}
+\end{table}Nemenyi's procedure rejects those hypotheses that have an unadjusted p-value $\le0.008333$.
+
+\pagebreak
+
+\subsection{P-values for $\alpha=0.10$}
+
+\begin{table}[!htp]
+\centering\scriptsize
+\begin{tabular}{cccc}
+$i$&algorithms&$z=(R_0 - R_i)/SE$&$p$\\
+\hline6&Average Fitness HC     vs. Average Fitness SA  &2.236068&0.025347\\
+5&Average Fitness HC     vs. Average Fitness HCRR   &1.788854&0.073638\\
+4&Average Fitness SA   vs. Average Fitness GRASP&1.788854&0.073638\\
+3&Average Fitness HCRR    vs. Average Fitness GRASP&1.341641&0.179712\\
+2&Average Fitness HC     vs. Average Fitness GRASP&0.447214&0.654721\\
+1&Average Fitness HCRR    vs. Average Fitness SA  &0.447214&0.654721\\
+\hline
+\end{tabular}
+\caption{P-values Table for $\alpha=0.10$}
+\end{table}Nemenyi's procedure rejects those hypotheses that have an unadjusted p-value $\le0.016667$.
+
+\pagebreak
+
+\subsection{Adjusted p-values}
+
+\begin{table}[!htp]
+\centering\scriptsize
+\begin{tabular}{cccc}
+i&hypothesis&unadjusted $p$&$p_{Neme}$\\
+\hline1&Average Fitness HC     vs .Average Fitness SA  &0.025347&0.152084\\
+2&Average Fitness HC     vs .Average Fitness HCRR   &0.073638&0.44183\\
+3&Average Fitness SA   vs .Average Fitness GRASP&0.073638&0.44183\\
+4&Average Fitness HCRR    vs .Average Fitness GRASP&0.179712&1.078275\\
+5&Average Fitness HC     vs .Average Fitness GRASP&0.654721&3.928325\\
+6&Average Fitness HCRR    vs .Average Fitness SA  &0.654721&3.928325\\
+\hline
+\end{tabular}
+\caption{Adjusted $p$-values}
+\end{table}
+
+\end{landscape}
+\end{document}

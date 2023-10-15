@@ -33,7 +33,7 @@ myP13 = knapsack(myPath + "Knapsack3.txt")
 myP14 = knapsack(myPath + "Knapsack4.txt")
 myP15 = knapsack(myPath + "Knapsack5.txt")
 myP16 = knapsack(myPath + "Knapsack6.txt")
-problems = [#myP1, myP2, myP3, myP4, myP5, myP6, myP7, myP8, myP9, myP10, myP11, myP12, myP13, myP14, myP15, 
+problems = [myP1, myP2, myP3, myP4, myP5, myP6, myP7, myP8, myP9, myP10, myP11, myP12, myP13, myP14, myP15, 
             myP16]
 hc = HC(max_efos=max_efos)
 hcrr = HCRR(max_efos=max_efos, max_local=max_local)

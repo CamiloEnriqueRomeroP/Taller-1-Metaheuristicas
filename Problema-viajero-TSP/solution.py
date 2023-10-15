@@ -53,7 +53,6 @@ class solution:
         i = pos[0]
         k = pos[1]
         self.cells[i:k] = self.cells[k - 1:i - 1:-1]
-        print(self.cells)
         self.fitness = self.problem.evaluate(self.cells)
 
     def tweak_3opt(self):

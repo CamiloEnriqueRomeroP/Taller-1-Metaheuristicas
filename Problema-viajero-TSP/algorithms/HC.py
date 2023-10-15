@@ -20,8 +20,8 @@ class HC:
         for iteration in range(1, self.max_efos):
             R = solution(S.problem)
             R.from_solution(S) # R is a full copy of S
-            R.tweak_3opt()  # 3opt Tweak
-            #R.tweak()  # Tweeking and calculating fitness
+            #R.tweak_3opt()  # 3opt Tweak
+            R.tweak()  # Tweeking and calculating fitness
             if R.fitness < S.fitness: # Minimizing
                 S.from_solution(R)
             best_fitness_history[iteration] = self.best.fitness

@@ -19,8 +19,8 @@ class HC:
         for iteration in range(1, self.max_efos):
             R = solution(S.size, S.function)
             R.from_solution(S)  # R is a full copy of S
-            R.tweakSegment(self.bandwidth,iteration)
-            #R.tweak(self.bandwidth)
+            #R.tweakSegment(self.bandwidth,iteration)
+            R.tweak(self.bandwidth)
             if R.fitness < S.fitness:
                 S.from_solution(R)
             best_fitness_history[iteration] = self.best.fitness

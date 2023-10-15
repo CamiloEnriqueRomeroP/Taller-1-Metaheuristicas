@@ -23,8 +23,8 @@ class SA:
         for iteration in range(1, self.max_efos):
             R = solution(S.problem)
             R.from_solution(S)  # R is a full copy of S
-            R.tweakUpperDensity()
-            #R.tweak()
+            #R.tweakUpperDensity()
+            R.tweak()
             t = t - to/(self.max_efos + 1)
             ale = np.random.uniform()            
             try: 

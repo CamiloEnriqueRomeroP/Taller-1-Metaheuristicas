@@ -28,8 +28,8 @@ class HCRR:
             for opt in range(1, self.max_local):
                 R = solution(S.problem)
                 R.from_solution(S)  # R is a full copy of S
-                #R.tweak()
-                R.tweakUpperDensity()
+                R.tweak()
+                #R.tweakUpperDensity()
                 if R.fitness > S.fitness:
                     S.from_solution(R)
                 if S.fitness > self.best.fitness:

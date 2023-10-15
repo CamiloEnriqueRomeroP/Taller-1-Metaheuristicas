@@ -15,7 +15,7 @@ max_efos = 50000
 repetitions = 31
 
 # Afinamiento de parametros
-max_local = 500
+max_local = 501
 
 myP1 = tsp(myPath + "01-easy5.txt")
 myP2 = tsp(myPath + "02-ulysses16.txt")

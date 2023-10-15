@@ -15,7 +15,7 @@ max_efos = 50000
 repetitions = 31
 
 # Afinamiento de parametros
-max_local = 1000
+max_local = 500
 
 myP1 = tsp(myPath + "01-easy5.txt")
 myP2 = tsp(myPath + "02-ulysses16.txt")
@@ -44,6 +44,12 @@ df5 = pd.DataFrame({'Problem': pd.Series(dtype='str'),
                    'Average Fitness HCRR': pd.Series(dtype='float'),
                    'Average Fitness SA': pd.Series(dtype='float'),
                    'Average Fitness GRASP': pd.Series(dtype='float')})
+
+df6 = pd.DataFrame({'Problem': pd.Series(dtype='str'),
+                   'Execution Time HC': pd.Series(dtype='float'),
+                   'Execution Time HCRR': pd.Series(dtype='float'),
+                   'Execution Time SA': pd.Series(dtype='float'),
+                   'Execution Time GRASP': pd.Series(dtype='float')})
 
 num_p = 0
 
@@ -130,11 +136,18 @@ for p in problems:
                    'Average Fitness SA': str(best_avg_fitness_alg[2]),
                    'Average Fitness GRASP': str(best_avg_fitness_alg[3])}, index=[0])
     
+    new_row6 = pd.DataFrame({'Problem': str(p),
+                    'Execution Time HC': str(alg_avg_time[0]),
+                    'Execution Time HCRR': str(alg_avg_time[1]),
+                    'Execution Time SA': str(alg_avg_time[2]),
+                    'Execution Time GRASP': str(alg_avg_time[3])}, index=[0])
+    
     df = pd.concat([df.loc[:], new_row]).reset_index(drop=True)
     df2 = pd.concat([df2.loc[:], new_row2]).reset_index(drop=True)
     df3 = pd.concat([df3.loc[:], new_row3]).reset_index(drop=True)
     df4 = pd.concat([df4.loc[:], new_row4]).reset_index(drop=True)
     df5 = pd.concat([df5.loc[:], new_row5]).reset_index(drop=True)
+    df6 = pd.concat([df6.loc[:], new_row6]).reset_index(drop=True)
 
 df.to_csv("Problema-viajero-TSP/result/HC" +
           "-max_local-" + str(max_local) + ".csv", index=False)
@@ -145,4 +158,6 @@ df3.to_csv("Problema-viajero-TSP/result/SA" +
 df4.to_csv("Problema-viajero-TSP/result/GRASP" +
            "-max_local-" + str(max_local) + ".csv", index=False)
 df5.to_csv("Problema-viajero-TSP/result/Comparison_dataset" +
+           "-max_local-" + str(max_local) + ".csv", index=False)
+df6.to_csv("Problema-viajero-TSP/result/Comparison_time" +
            "-max_local-" + str(max_local) + ".csv", index=False)

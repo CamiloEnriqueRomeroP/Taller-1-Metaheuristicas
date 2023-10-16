@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.1) (preloaded format=pdflatex 2023.10.15)  15 OCT 2023 20:08
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.1) (preloaded format=pdflatex 2023.10.15)  15 OCT 2023 20:33
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -142,7 +142,7 @@ Here is how much of TeX's memory you used:
  23062 multiletter control sequences out of 15000+600000
  562016 words of font info for 49 fonts, out of 8000000 for 9000
  0 hyphenation exceptions out of 8191
- 57i,10n,65p,213b,271s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 57i,9n,65p,213b,271s stack positions out of 5000i,500n,10000p,200000b,80000s
 </Users/camilo/Library/Application Support/MiKTeX/texmfs/install/fonts/type1/
 public/amsfonts/cm/cmbx12.pfb></Users/camilo/Library/Application Support/MiKTeX
 /texmfs/install/fonts/type1/public/amsfonts/cm/cmmi10.pfb></Users/camilo/Librar
@@ -157,12 +157,10 @@ MiKTeX/texmfs/install/fonts/type1/public/amsfonts/cm/cmr17.pfb></Users/camilo/L
 ibrary/Application Support/MiKTeX/texmfs/install/fonts/type1/public/amsfonts/cm
 /cmr5.pfb></Users/camilo/Library/Application Support/MiKTeX/texmfs/install/font
 s/type1/public/amsfonts/cm/cmr7.pfb></Users/camilo/Library/Application Support/
-MiKTeX/texmfs/install/fonts/type1/public/amsfonts/cm/cmsy10.pfb></Users/camilo/
-Library/Application Support/MiKTeX/texmfs/install/fonts/type1/public/amsfonts/c
-m/cmsy7.pfb>
-Output written on avgs-1-friedman.pdf (4 pages, 142162 bytes).
+MiKTeX/texmfs/install/fonts/type1/public/amsfonts/cm/cmsy7.pfb>
+Output written on avgs-1-friedman.pdf (4 pages, 131790 bytes).
 PDF statistics:
- 75 PDF objects out of 1000 (max. 8388607)
+ 70 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 

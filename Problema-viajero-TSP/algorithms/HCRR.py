@@ -28,8 +28,8 @@ class HCRR:
             for opt in range(1, self.max_local):
                 R = solution(S.problem)
                 R.from_solution(S)  # R is a full copy of S
-                #R.tweak_3opt()  # 3opt Tweak
-                R.tweak()  # Tweeking and calculating fitness
+                R.tweak_3opt()  # 3opt Tweak
+                #R.tweak()  # Tweeking and calculating fitness
                 if R.fitness < S.fitness:  # Minimizing
                     S.from_solution(R)
                 if S.fitness < self.best.fitness:  # Minimizing

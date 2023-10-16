@@ -19,18 +19,18 @@ Average ranks obtained by applying the Friedman procedure
 \centering
 \begin{tabular}{|c|c|}\hline
 Algorithm&Ranking\\\hline
-Average Fitness HC     & 1.6667\\
-Average Fitness HCRR    & 3\\
-Average Fitness SA   & 3.3333\\
+Average Fitness HC & 4\\
+Average Fitness HCRR & 2.4\\
+Average Fitness SA & 1.6\\
 Average Fitness GRASP & 2\\
 \hline
 \end{tabular}
 \caption{Average Rankings of the algorithms}
 \end{table}
 
-Friedman statistic considering reduction performance (distributed according to chi-square with 3 degrees of freedom: 6.8.
+Friedman statistic considering reduction performance (distributed according to chi-square with 3 degrees of freedom: 9.96.
 
-P-value computed by Friedman Test: 0.07855315984340205.\newline
+P-value computed by Friedman Test: 0.018909228254433197.\newline
 
 
 
@@ -46,12 +46,12 @@ Results achieved on post hoc comparisons for $\alpha = 0.05$, $\alpha = 0.10$ an
 \centering\scriptsize
 \begin{tabular}{cccc}
 $i$&algorithms&$z=(R_0 - R_i)/SE$&$p$\\
-\hline6&Average Fitness HC     vs. Average Fitness SA  &2.236068&0.025347\\
-5&Average Fitness HC     vs. Average Fitness HCRR   &1.788854&0.073638\\
-4&Average Fitness SA   vs. Average Fitness GRASP&1.788854&0.073638\\
-3&Average Fitness HCRR    vs. Average Fitness GRASP&1.341641&0.179712\\
-2&Average Fitness HC     vs. Average Fitness GRASP&0.447214&0.654721\\
-1&Average Fitness HCRR    vs. Average Fitness SA  &0.447214&0.654721\\
+\hline6&Average Fitness HC vs. Average Fitness SA&2.939388&0.003289\\
+5&Average Fitness HC vs. Average Fitness GRASP&2.44949&0.014306\\
+4&Average Fitness HC vs. Average Fitness HCRR&1.959592&0.050044\\
+3&Average Fitness HCRR vs. Average Fitness SA&0.979796&0.327187\\
+2&Average Fitness HCRR vs. Average Fitness GRASP&0.489898&0.624206\\
+1&Average Fitness SA vs. Average Fitness GRASP&0.489898&0.624206\\
 \hline
 \end{tabular}
 \caption{P-values Table for $\alpha=0.05$}
@@ -65,12 +65,12 @@ $i$&algorithms&$z=(R_0 - R_i)/SE$&$p$\\
 \centering\scriptsize
 \begin{tabular}{cccc}
 $i$&algorithms&$z=(R_0 - R_i)/SE$&$p$\\
-\hline6&Average Fitness HC     vs. Average Fitness SA  &2.236068&0.025347\\
-5&Average Fitness HC     vs. Average Fitness HCRR   &1.788854&0.073638\\
-4&Average Fitness SA   vs. Average Fitness GRASP&1.788854&0.073638\\
-3&Average Fitness HCRR    vs. Average Fitness GRASP&1.341641&0.179712\\
-2&Average Fitness HC     vs. Average Fitness GRASP&0.447214&0.654721\\
-1&Average Fitness HCRR    vs. Average Fitness SA  &0.447214&0.654721\\
+\hline6&Average Fitness HC vs. Average Fitness SA&2.939388&0.003289\\
+5&Average Fitness HC vs. Average Fitness GRASP&2.44949&0.014306\\
+4&Average Fitness HC vs. Average Fitness HCRR&1.959592&0.050044\\
+3&Average Fitness HCRR vs. Average Fitness SA&0.979796&0.327187\\
+2&Average Fitness HCRR vs. Average Fitness GRASP&0.489898&0.624206\\
+1&Average Fitness SA vs. Average Fitness GRASP&0.489898&0.624206\\
 \hline
 \end{tabular}
 \caption{P-values Table for $\alpha=0.10$}
@@ -84,12 +84,12 @@ $i$&algorithms&$z=(R_0 - R_i)/SE$&$p$\\
 \centering\scriptsize
 \begin{tabular}{cccc}
 i&hypothesis&unadjusted $p$&$p_{Neme}$\\
-\hline1&Average Fitness HC     vs .Average Fitness SA  &0.025347&0.152084\\
-2&Average Fitness HC     vs .Average Fitness HCRR   &0.073638&0.44183\\
-3&Average Fitness SA   vs .Average Fitness GRASP&0.073638&0.44183\\
-4&Average Fitness HCRR    vs .Average Fitness GRASP&0.179712&1.078275\\
-5&Average Fitness HC     vs .Average Fitness GRASP&0.654721&3.928325\\
-6&Average Fitness HCRR    vs .Average Fitness SA  &0.654721&3.928325\\
+\hline1&Average Fitness HC vs .Average Fitness SA&0.003289&0.019732\\
+2&Average Fitness HC vs .Average Fitness GRASP&0.014306&0.085835\\
+3&Average Fitness HC vs .Average Fitness HCRR&0.050044&0.300261\\
+4&Average Fitness HCRR vs .Average Fitness SA&0.327187&1.963121\\
+5&Average Fitness HCRR vs .Average Fitness GRASP&0.624206&3.745237\\
+6&Average Fitness SA vs .Average Fitness GRASP&0.624206&3.745237\\
 \hline
 \end{tabular}
 \caption{Adjusted $p$-values}

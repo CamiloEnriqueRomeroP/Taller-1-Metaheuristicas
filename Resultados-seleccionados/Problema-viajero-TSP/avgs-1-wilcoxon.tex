@@ -1,0 +1,217 @@
+\documentclass[a4paper,10pt]{article}
+\title{Wilcoxon Signed Ranks test.}
+\date{\today}
+\author{KEEL non-parametric statistical module}
+\begin{document}
+
+\pagestyle{empty}
+\maketitle
+\thispagestyle{empty}
+
+
+
+\section{Detailed results for Average Fitness HC}
+
+
+\subsection{Results}
+
+\begin{table}[!htp]
+\centering\small
+\begin{tabular}{
+|c|c|c|c|c|}
+\hline
+ VS & $R^{+}$ & $R^{-}$ & Exact P-value & Asymptotic P-value \\ \hline 
+Average Fitness HCRR & 0.0 & 15.0 & $\geq$ 0.2 & 1\\ \hline 
+Average Fitness SA & 0.0 & 15.0 & $\geq$ 0.2 & 1\\ \hline 
+Average Fitness GRASP & 0.0 & 15.0 & $\geq$ 0.2 & 1\\ \hline 
+
+\end{tabular}
+\caption{Results obtained by the Wilcoxon test for algorithm Average Fitness HC}
+\end{table}
+
+\subsection{Confidence intervals for Median of diferences}
+
+\begin{table}[!htp]
+\centering\small
+\begin{tabular}{
+|c|c|c|}
+\hline
+ $\alpha$=0.90 & Confidence interval & Exact confidence \\ \hline 
+Average Fitness HCRR & [0.903226 , 7,276.693548] & 0.9375\\ \hline 
+Average Fitness SA & [0.903226 , 3,694.419355] & 0.9375\\ \hline 
+Average Fitness GRASP & [0.903226 , 7,347.645161] & 0.9375\\ \hline 
+
+\end{tabular}
+\caption{Confidence intervals for algorithm Average Fitness HC ($\alpha$=0.90)}
+\end{table}
+\begin{table}[!htp]
+\centering\small
+\begin{tabular}{
+|c|c|c|}
+\hline
+ $\alpha$=0.95 & Confidence interval & Exact confidence \\ \hline 
+Average Fitness HCRR & [0.903226 , 7,276.693548] & 0.9375\\ \hline 
+Average Fitness SA & [0.903226 , 3,694.419355] & 0.9375\\ \hline 
+Average Fitness GRASP & [0.903226 , 7,347.645161] & 0.9375\\ \hline 
+
+\end{tabular}
+\caption{Confidence intervals for algorithm Average Fitness HC ($\alpha$=0.95)}
+\end{table}
+
+ \clearpage 
+
+
+\section{Detailed results for Average Fitness HCRR}
+
+
+\subsection{Results}
+
+\begin{table}[!htp]
+\centering\small
+\begin{tabular}{
+|c|c|c|c|c|}
+\hline
+ VS & $R^{+}$ & $R^{-}$ & Exact P-value & Asymptotic P-value \\ \hline 
+Average Fitness HC & 15.0 & 0.0 & 0.0625 & 0.030971\\ \hline 
+Average Fitness SA & 4.0 & 6.0 & $\geq$ 0.2 & 1\\ \hline 
+Average Fitness GRASP & 2.0 & 8.0 & $\geq$ 0.2 & 1\\ \hline 
+
+\end{tabular}
+\caption{Results obtained by the Wilcoxon test for algorithm Average Fitness HCRR}
+\end{table}
+
+\subsection{Confidence intervals for Median of diferences}
+
+\begin{table}[!htp]
+\centering\small
+\begin{tabular}{
+|c|c|c|}
+\hline
+ $\alpha$=0.90 & Confidence interval & Exact confidence \\ \hline 
+Average Fitness HC & [-7,276.693548 , -0.903226] & 0.9375\\ \hline 
+Average Fitness SA & [-3,664.967742 , 165.387097] & 0.9375\\ \hline 
+Average Fitness GRASP & [-1.451613 , 70.951613] & 0.9375\\ \hline 
+
+\end{tabular}
+\caption{Confidence intervals for algorithm Average Fitness HCRR ($\alpha$=0.90)}
+\end{table}
+\begin{table}[!htp]
+\centering\small
+\begin{tabular}{
+|c|c|c|}
+\hline
+ $\alpha$=0.95 & Confidence interval & Exact confidence \\ \hline 
+Average Fitness HC & [-7,276.693548 , -0.903226] & 0.9375\\ \hline 
+Average Fitness SA & [-3,664.967742 , 165.387097] & 0.9375\\ \hline 
+Average Fitness GRASP & [-1.451613 , 70.951613] & 0.9375\\ \hline 
+
+\end{tabular}
+\caption{Confidence intervals for algorithm Average Fitness HCRR ($\alpha$=0.95)}
+\end{table}
+
+ \clearpage 
+
+
+\section{Detailed results for Average Fitness SA}
+
+
+\subsection{Results}
+
+\begin{table}[!htp]
+\centering\small
+\begin{tabular}{
+|c|c|c|c|c|}
+\hline
+ VS & $R^{+}$ & $R^{-}$ & Exact P-value & Asymptotic P-value \\ \hline 
+Average Fitness HC & 15.0 & 0.0 & 0.0625 & 0.030971\\ \hline 
+Average Fitness HCRR & 6.0 & 4.0 & $\geq$ 0.2 & 0.583882\\ \hline 
+Average Fitness GRASP & 6.0 & 4.0 & $\geq$ 0.2 & 0.583882\\ \hline 
+
+\end{tabular}
+\caption{Results obtained by the Wilcoxon test for algorithm Average Fitness SA}
+\end{table}
+
+\subsection{Confidence intervals for Median of diferences}
+
+\begin{table}[!htp]
+\centering\small
+\begin{tabular}{
+|c|c|c|}
+\hline
+ $\alpha$=0.90 & Confidence interval & Exact confidence \\ \hline 
+Average Fitness HC & [-3,694.419355 , -0.903226] & 0.9375\\ \hline 
+Average Fitness HCRR & [-165.387097 , 3,664.967742] & 0.9375\\ \hline 
+Average Fitness GRASP & [-149.096774 , 3,727.774194] & 0.9375\\ \hline 
+
+\end{tabular}
+\caption{Confidence intervals for algorithm Average Fitness SA ($\alpha$=0.90)}
+\end{table}
+\begin{table}[!htp]
+\centering\small
+\begin{tabular}{
+|c|c|c|}
+\hline
+ $\alpha$=0.95 & Confidence interval & Exact confidence \\ \hline 
+Average Fitness HC & [-3,694.419355 , -0.903226] & 0.9375\\ \hline 
+Average Fitness HCRR & [-165.387097 , 3,664.967742] & 0.9375\\ \hline 
+Average Fitness GRASP & [-149.096774 , 3,727.774194] & 0.9375\\ \hline 
+
+\end{tabular}
+\caption{Confidence intervals for algorithm Average Fitness SA ($\alpha$=0.95)}
+\end{table}
+
+ \clearpage 
+
+
+\section{Detailed results for Average Fitness GRASP}
+
+
+\subsection{Results}
+
+\begin{table}[!htp]
+\centering\small
+\begin{tabular}{
+|c|c|c|c|c|}
+\hline
+ VS & $R^{+}$ & $R^{-}$ & Exact P-value & Asymptotic P-value \\ \hline 
+Average Fitness HC & 15.0 & 0.0 & 0.0625 & 0.030971\\ \hline 
+Average Fitness HCRR & 8.0 & 2.0 & $\geq$ 0.2 & 0.201243\\ \hline 
+Average Fitness SA & 4.0 & 6.0 & $\geq$ 0.2 & 1\\ \hline 
+
+\end{tabular}
+\caption{Results obtained by the Wilcoxon test for algorithm Average Fitness GRASP}
+\end{table}
+
+\subsection{Confidence intervals for Median of diferences}
+
+\begin{table}[!htp]
+\centering\small
+\begin{tabular}{
+|c|c|c|}
+\hline
+ $\alpha$=0.90 & Confidence interval & Exact confidence \\ \hline 
+Average Fitness HC & [-7,347.645161 , -0.903226] & 0.9375\\ \hline 
+Average Fitness HCRR & [-70.951613 , 1.451613] & 0.9375\\ \hline 
+Average Fitness SA & [-3,727.774194 , 149.096774] & 0.9375\\ \hline 
+
+\end{tabular}
+\caption{Confidence intervals for algorithm Average Fitness GRASP ($\alpha$=0.90)}
+\end{table}
+\begin{table}[!htp]
+\centering\small
+\begin{tabular}{
+|c|c|c|}
+\hline
+ $\alpha$=0.95 & Confidence interval & Exact confidence \\ \hline 
+Average Fitness HC & [-7,347.645161 , -0.903226] & 0.9375\\ \hline 
+Average Fitness HCRR & [-70.951613 , 1.451613] & 0.9375\\ \hline 
+Average Fitness SA & [-3,727.774194 , 149.096774] & 0.9375\\ \hline 
+
+\end{tabular}
+\caption{Confidence intervals for algorithm Average Fitness GRASP ($\alpha$=0.95)}
+\end{table}
+
+ \clearpage 
+
+
+\end{document}

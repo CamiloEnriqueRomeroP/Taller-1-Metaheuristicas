@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 23.10.12) (preloaded format=pdflatex 2023.10.14)  14 OCT 2023 14:49
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.1) (preloaded format=pdflatex 2023.10.15)  15 OCT 2023 20:08
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -6,9 +6,13 @@ entering extended mode
 (avgs-1-friedman.tex
 LaTeX2e <2023-06-01> patch level 1
 L3 programming layer <2023-10-10>
-(C:\Users\Camilo\AppData\Local\Programs\MiKTeX\tex/latex/base\article.cls
+
+(/Users/camilo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/base
+/article.cls
 Document Class: article 2023/05/17 v1.4n Standard LaTeX document class
-(C:\Users\Camilo\AppData\Local\Programs\MiKTeX\tex/latex/base\size10.clo
+
+(/Users/camilo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/base
+/size10.clo
 File: size10.clo 2023/05/17 v1.4n Standard LaTeX file (size option)
 )
 \c@part=\count185
@@ -23,41 +27,47 @@ File: size10.clo 2023/05/17 v1.4n Standard LaTeX file (size option)
 \belowcaptionskip=\skip49
 \bibindent=\dimen140
 )
-(C:\Users\Camilo\AppData\Local\Programs\MiKTeX\tex/latex/graphics\graphicx.sty
+(/Users/camilo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/grap
+hics/graphicx.sty
 Package: graphicx 2021/09/16 v1.2d Enhanced LaTeX Graphics (DPC,SPQR)
 
-(C:\Users\Camilo\AppData\Local\Programs\MiKTeX\tex/latex/graphics\keyval.sty
+(/Users/camilo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/grap
+hics/keyval.sty
 Package: keyval 2022/05/29 v1.15 key=value parser (DPC)
 \KV@toks@=\toks17
 )
-(C:\Users\Camilo\AppData\Local\Programs\MiKTeX\tex/latex/graphics\graphics.sty
+(/Users/camilo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/grap
+hics/graphics.sty
 Package: graphics 2022/03/10 v1.4e Standard LaTeX Graphics (DPC,SPQR)
 
-(C:\Users\Camilo\AppData\Local\Programs\MiKTeX\tex/latex/graphics\trig.sty
+(/Users/camilo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/grap
+hics/trig.sty
 Package: trig 2021/08/11 v1.11 sin cos tan (DPC)
 )
-(C:\Users\Camilo\AppData\Local\Programs\MiKTeX\tex/latex/graphics-cfg\graphics.
-cfg
+(/Users/camilo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/grap
+hics-cfg/graphics.cfg
 File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
 )
 Package graphics Info: Driver file: pdftex.def on input line 107.
 
-(C:\Users\Camilo\AppData\Local\Programs\MiKTeX\tex/latex/graphics-def\pdftex.de
-f
+(/Users/camilo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/grap
+hics-def/pdftex.def
 File: pdftex.def 2022/09/22 v1.2b Graphics/color driver for pdftex
 ))
 \Gin@req@height=\dimen141
 \Gin@req@width=\dimen142
 )
-(C:\Users\Camilo\AppData\Local\Programs\MiKTeX\tex/latex/graphics\lscape.sty
+(/Users/camilo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/grap
+hics/lscape.sty
 Package: lscape 2020/05/28 v3.02 Landscape Pages (DPC)
 )
-(C:\Users\Camilo\AppData\Local\Programs\MiKTeX\tex/latex/l3backend\l3backend-pd
-ftex.def
+(/Users/camilo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/l3ba
+ckend/l3backend-pdftex.def
 File: l3backend-pdftex.def 2023-10-10 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count193
 \l__pdf_internal_box=\box51
-) (avgs-1-friedman.aux)
+)
+No file avgs-1-friedman.aux.
 \openout1 = `avgs-1-friedman.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 7.
@@ -75,8 +85,8 @@ LaTeX Font Info:    ... okay on input line 7.
 LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 7.
 LaTeX Font Info:    ... okay on input line 7.
 
-(C:\Users\Camilo\AppData\Local\Programs\MiKTeX\tex/context/base/mkii\supp-pdf.m
-kii
+(/Users/camilo/Library/Application Support/MiKTeX/texmfs/install/tex/context/ba
+se/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count194
 \scratchdimen=\dimen143
@@ -90,14 +100,14 @@ kii
 \makeMPintoPDFobject=\count199
 \everyMPtoPDFconversion=\toks19
 )
-(C:\Users\Camilo\AppData\Local\Programs\MiKTeX\tex/latex/epstopdf-pkg\epstopdf-
-base.sty
+(/Users/camilo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/epst
+opdf-pkg/epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
 Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
 85.
 
-(C:\Users\Camilo\AppData\Local\Programs\MiKTeX\tex/latex/00miktex\epstopdf-sys.
-cfg
+(/Users/camilo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/00mi
+ktex/epstopdf-sys.cfg
 File: epstopdf-sys.cfg 2021/03/18 v2.0 Configuration of epstopdf for MiKTeX
 ))
 LaTeX Font Info:    External font `cmex10' loaded for size
@@ -118,36 +128,39 @@ Underfull \hbox (badness 10000) in paragraph at lines 33--34
 [1
 
 
-{C:/Users/Camilo/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}] [2]
-[3] [4] (avgs-1-friedman.aux)
+{/Users/camilo/Library/Application Support/MiKTeX/texmfs/data/fonts/map/pdftex/
+pdftex.map}] [2] [3] [4] (avgs-1-friedman.aux)
  ***********
 LaTeX2e <2023-06-01> patch level 1
 L3 programming layer <2023-10-10>
  ***********
  ) 
 Here is how much of TeX's memory you used:
- 1325 strings out of 474823
- 22700 string characters out of 5750483
- 1925043 words of memory out of 5000000
- 23309 multiletter control sequences out of 15000+600000
+ 1321 strings out of 476758
+ 23051 string characters out of 2800513
+ 1925040 words of memory out of 3000000
+ 23062 multiletter control sequences out of 15000+600000
  562016 words of font info for 49 fonts, out of 8000000 for 9000
- 1141 hyphenation exceptions out of 8191
- 57i,10n,65p,213b,271s stack positions out of 10000i,1000n,20000p,200000b,200000s
-<C:/Users/Camilo/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm
-/cmbx12.pfb><C:/Users/Camilo/AppData/Local/Programs/MiKTeX/fonts/type1/public/a
-msfonts/cm/cmmi10.pfb><C:/Users/Camilo/AppData/Local/Programs/MiKTeX/fonts/type
-1/public/amsfonts/cm/cmmi12.pfb><C:/Users/Camilo/AppData/Local/Programs/MiKTeX/
-fonts/type1/public/amsfonts/cm/cmmi5.pfb><C:/Users/Camilo/AppData/Local/Program
-s/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi7.pfb><C:/Users/Camilo/AppData/Loca
-l/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/Camilo/App
-Data/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/C
-amilo/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr17.pfb><C
-:/Users/Camilo/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr
-5.pfb><C:/Users/Camilo/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfont
-s/cm/cmr7.pfb><C:/Users/Camilo/AppData/Local/Programs/MiKTeX/fonts/type1/public
-/amsfonts/cm/cmsy10.pfb><C:/Users/Camilo/AppData/Local/Programs/MiKTeX/fonts/ty
-pe1/public/amsfonts/cm/cmsy7.pfb>
-Output written on avgs-1-friedman.pdf (4 pages, 142329 bytes).
+ 0 hyphenation exceptions out of 8191
+ 57i,10n,65p,213b,271s stack positions out of 5000i,500n,10000p,200000b,80000s
+</Users/camilo/Library/Application Support/MiKTeX/texmfs/install/fonts/type1/
+public/amsfonts/cm/cmbx12.pfb></Users/camilo/Library/Application Support/MiKTeX
+/texmfs/install/fonts/type1/public/amsfonts/cm/cmmi10.pfb></Users/camilo/Librar
+y/Application Support/MiKTeX/texmfs/install/fonts/type1/public/amsfonts/cm/cmmi
+12.pfb></Users/camilo/Library/Application Support/MiKTeX/texmfs/install/fonts/t
+ype1/public/amsfonts/cm/cmmi5.pfb></Users/camilo/Library/Application Support/Mi
+KTeX/texmfs/install/fonts/type1/public/amsfonts/cm/cmmi7.pfb></Users/camilo/Lib
+rary/Application Support/MiKTeX/texmfs/install/fonts/type1/public/amsfonts/cm/c
+mr10.pfb></Users/camilo/Library/Application Support/MiKTeX/texmfs/install/fonts
+/type1/public/amsfonts/cm/cmr12.pfb></Users/camilo/Library/Application Support/
+MiKTeX/texmfs/install/fonts/type1/public/amsfonts/cm/cmr17.pfb></Users/camilo/L
+ibrary/Application Support/MiKTeX/texmfs/install/fonts/type1/public/amsfonts/cm
+/cmr5.pfb></Users/camilo/Library/Application Support/MiKTeX/texmfs/install/font
+s/type1/public/amsfonts/cm/cmr7.pfb></Users/camilo/Library/Application Support/
+MiKTeX/texmfs/install/fonts/type1/public/amsfonts/cm/cmsy10.pfb></Users/camilo/
+Library/Application Support/MiKTeX/texmfs/install/fonts/type1/public/amsfonts/c
+m/cmsy7.pfb>
+Output written on avgs-1-friedman.pdf (4 pages, 142162 bytes).
 PDF statistics:
  75 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)

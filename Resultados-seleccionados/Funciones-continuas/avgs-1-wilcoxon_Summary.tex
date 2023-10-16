@@ -84,4 +84,90 @@ Average Fitness GRASP & 0 & 2 & 0 & 2\\
  \clearpage 
 
 
+\end{document}\documentclass[a4paper,10pt]{article}
+\title{Wilcoxon Signed Ranks test.}
+\usepackage{rotating}
+\usepackage{textcomp}
+\date{\today}
+\author{KEEL non-parametric statistical module}
+\begin{document}
+
+\pagestyle{empty}
+\maketitle
+\thispagestyle{empty}
+
+
+\begin{sidewaystable}[!htp]
+\centering\scriptsize
+\resizebox{\textwidth}{!}{\begin{tabular}{
+|c|r|r|r|r|}
+\hline
+&(1) &(2) &(3) &(4) \\
+\hline
+Average Fitness HC     (1)& -& 17.0& 21.0& 15.0\\
+\hline
+Average Fitness HCRR    (2)& 4.0& -& 10.0& 0.0\\
+\hline
+Average Fitness SA   (3)& 0.0& 11.0& -& 11.0\\
+\hline
+Average Fitness GRASP (4)& 6.0& 21.0& 10.0& -\\
+\hline
+
+\end{tabular}}
+\caption{Ranks computed by the Wilcoxon test}
+
+\end{sidewaystable}
+
+ \clearpage 
+
+
+\begin{sidewaystable}[!htp]
+\centering\scriptsize
+\resizebox{\textwidth}{!}{\begin{tabular}{
+|c|c|c|c|c|}
+\hline
+&(1) &(2) &(3) &(4) \\
+\hline
+Average Fitness HC     (1)& -&  & \textbullet &  \\
+\hline
+Average Fitness HCRR    (2)&  & -&  & \textopenbullet \\
+\hline
+Average Fitness SA   (3)& \textopenbullet &  & -&  \\
+\hline
+Average Fitness GRASP (4)&  & \textbullet &  & -\\
+\hline
+
+\end{tabular}}
+\caption{Summary of the Wilcoxon test. \textbullet = the method in the row improves the method of the column. \textopenbullet = the method in the column improves the method of the row. Upper diagonal of level significance $\alpha=0.9$,Lower diagonal level of significance $\alpha=0.95$}
+
+\end{sidewaystable}
+
+ \clearpage 
+
+
+\begin{table}[!htp]
+\centering\scriptsize
+\begin{tabular}{
+|c|c|c|c|c|}
+\hline
+&\multicolumn{2}{c|}{$\alpha=0.9$} & \multicolumn{2}{c|}{$\alpha=0.95$}\\\hline
+Method & + & $\pm$ & + & $\pm$ \\
+\hline
+Average Fitness HC     & 1 & 3 & 1 & 3\\
+\hline
+Average Fitness HCRR    & 0 & 2 & 0 & 2\\
+\hline
+Average Fitness SA   & 0 & 2 & 0 & 2\\
+\hline
+Average Fitness GRASP & 1 & 3 & 1 & 3\\
+\hline
+
+\end{tabular}
+\caption{Wilcoxon test summary results}
+
+\end{table}
+
+ \clearpage 
+
+
 \end{document}

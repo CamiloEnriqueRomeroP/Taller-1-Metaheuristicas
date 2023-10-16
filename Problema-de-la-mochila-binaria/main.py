@@ -46,8 +46,7 @@ df = pd.DataFrame({'Problem': pd.Series(dtype='str'),
                    'Standard Deviation': pd.Series(dtype='float'),
                    'Best Fitness': pd.Series(dtype='float'),
                    'Worst Fitness': pd.Series(dtype='float'),
-                   'Average Execution Time': pd.Series(dtype='float')
-                   #,"Total Execution Time": pd.Series(dtype='float')
+                   'Execution Time': pd.Series(dtype='float')
                    })
 df2 = df
 df3 = df
